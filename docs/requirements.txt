@@ -1,0 +1,10 @@
+sphinx-copybutton>=0.2
+nbsphinx>=0.5
+astropy>=4.0
+julian>=0.14
+pandas>=1.0
+matplotlib>=3.2
+ruamel.yaml
+ipywidgets
+ipython
+bokeh
