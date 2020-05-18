@@ -62,8 +62,8 @@ exclude_patterns = ['_build', 'Thumbs.db', '.DS_Store']
 #
 html_theme = 'sphinx_rtd_theme'
 
-html_logo = 'images/icons/Full.png'
-html_favicon = 'images/icons/Small.ico'
+html_logo = 'images/icons/Full_white_background.png'
+html_favicon = 'images/icons/Small_white_background.ico'
 
 html_title = 'Epidemic Models'
 html_short_title = 'EM'
