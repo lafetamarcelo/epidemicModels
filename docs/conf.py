@@ -15,7 +15,7 @@ import sys
 sys.path.insert(0, os.path.abspath('..'))
 
 import sphinx_rtd_theme
-
+import sphinxemoji
 
 # -- Project information -----------------------------------------------------
 
@@ -36,16 +36,20 @@ master_doc = 'index'
 # ones.
 extensions = [
   'nbsphinx',
+  'sphinxcontrib.youtube',
   'sphinx_rtd_theme',
   'sphinx.ext.autodoc',
   'sphinx.ext.mathjax',
   'sphinx_copybutton',
   'sphinx.ext.githubpages',
   'sphinx.ext.imgconverter',
-  'bokeh.sphinxext.bokeh_autodoc'
+  'bokeh.sphinxext.bokeh_autodoc',
+  'sphinxemoji.sphinxemoji',
 ]
 
 highlight_language = 'python3'
+
+sphinxemoji_style = 'twemoji'
 
 # Add any paths that contain templates here, relative to this directory.
 templates_path = ['_templates']

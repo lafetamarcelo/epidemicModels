@@ -6,9 +6,31 @@
 Welcome to IMT Epidemic Models's documentation!
 ===============================================
 
+
+
 .. toctree::
    :maxdepth: 2
    :caption: Contents:
+
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Modelos Analíticos
+
+   analytic
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Modelos Estocásticos
+
+   stochastic
+
+.. toctree::
+   :maxdepth: 2
+   :caption: Baseados em Dados
+
+   data_driven
+
 
 
 
