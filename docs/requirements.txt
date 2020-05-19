@@ -1,4 +1,5 @@
 sphinx-copybutton>=0.2
+sphinxemoji
 nbsphinx>=0.5
 astropy>=4.0
 julian>=0.14

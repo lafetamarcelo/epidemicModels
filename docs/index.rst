@@ -34,8 +34,8 @@ Welcome to IMT Epidemic Models's documentation!
 
 
 
-Indices and tables
-==================
+Indices e tabelas
+=================
 
 * :ref:`genindex`
 * :ref:`modindex`
