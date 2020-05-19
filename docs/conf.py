@@ -36,7 +36,6 @@ master_doc = 'index'
 # ones.
 extensions = [
   'nbsphinx',
-  'sphinxcontrib.youtube',
   'sphinx_rtd_theme',
   'sphinx.ext.autodoc',
   'sphinx.ext.mathjax',
