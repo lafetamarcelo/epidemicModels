@@ -6,7 +6,9 @@
 Welcome to IMT Epidemic Models's documentation!
 ===============================================
 
+.. toctree::
 
+   notebooks/SIR - Real Data - United Kingdom - Introduction Results
 
 .. toctree::
    :maxdepth: 2
