@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Dados artificiais &mdash; Epidemic Models</title>
+  <title>SIR Dados artificiais &mdash; Epidemic Models</title>
   
 
   
@@ -46,8 +46,8 @@
   <link rel="stylesheet" href="../_static/twemoji.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Dados Reais" href="SIR Real Data - United Kingdom.html" />
-    <link rel="prev" title="SIR Dados Artificiais" href="../data_driven.html" /> 
+    <link rel="next" title="SIR United Kingdom Data" href="SIR Real Data - United Kingdom.html" />
+    <link rel="prev" title="Modelo Reed Frost" href="Reed Frost Model.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,18 +94,18 @@
               
             
             
-              <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
+              <p class="caption"><span class="caption-text">Modelos analíticos</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../analytic.html"><strong>Modelo SIR</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="SIR Model.html">Modelo SIR</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Modelos Estocásticos</span></p>
+<p class="caption"><span class="caption-text">Modelos estocásticos</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="../stochastic.html"><strong>Modelo Reed Frost</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="Reed Frost Model.html">Modelo Reed Frost</a></li>
 </ul>
-<p class="caption"><span class="caption-text">Baseados em Dados</span></p>
+<p class="caption"><span class="caption-text">Baseados em dados</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="reference internal" href="../data_driven.html"><strong>SIR Dados Artificiais</strong></a><ul class="current">
-<li class="toctree-l2 current"><a class="current reference internal" href="#">Dados artificiais</a><ul>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SIR Dados Artificiais</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#Dados-artificiais">Dados artificiais</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Visualizando-os-dados">Visualizando os dados</a></li>
 </ul>
 </li>
@@ -120,7 +120,7 @@
 <li class="toctree-l2"><a class="reference internal" href="#Referências">Referências</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="SIR Real Data - United Kingdom.html">SIR |:gb:| United KingdomData</a></li>
 </ul>
 
             
@@ -166,9 +166,7 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-          <li><a href="../data_driven.html"><strong>SIR Dados Artificiais</strong></a> &raquo;</li>
-        
-      <li>Dados artificiais</li>
+      <li><strong>SIR Dados artificiais</strong></li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -429,6 +427,8 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
+<div class="section" id="SIR-Dados-artificiais">
+<h1><strong>SIR Dados artificiais</strong><a class="headerlink" href="#SIR-Dados-artificiais" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -769,7 +769,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </script></div>
 </div>
 <div class="section" id="Dados-artificiais">
-<h1>Dados artificiais<a class="headerlink" href="#Dados-artificiais" title="Permalink to this headline">¶</a></h1>
+<h2>Dados artificiais<a class="headerlink" href="#Dados-artificiais" title="Permalink to this headline">¶</a></h2>
 <p>Uma prática interessante na análise de dados é testarmos se o algoritmo proposto e principalmente sua estrutura está consistente. Podemos então utilizar dados artificiais para avaliar se o processo de ajuste está estruturado corretamente.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
@@ -882,7 +882,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Visualizando-os-dados">
-<h2>Visualizando os dados<a class="headerlink" href="#Visualizando-os-dados" title="Permalink to this headline">¶</a></h2>
+<h3>Visualizando os dados<a class="headerlink" href="#Visualizando-os-dados" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -957,7 +957,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="O-problema">
-<h1>O problema<a class="headerlink" href="#O-problema" title="Permalink to this headline">¶</a></h1>
+<h2>O problema<a class="headerlink" href="#O-problema" title="Permalink to this headline">¶</a></h2>
 <p>O conjunto de equações diferenciais que caracteriza o modelo é descrito abaixo. No modelo $:nbsphinx-math:<cite>beta `- :nbsphinx-math:</cite>text{representa a taxa de transmissão ou taxa efetiva de contato}` $ e <span class="math notranslate nohighlight">\(r - \text{a taxa de remoção ou recuperação.}\)</span></p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
@@ -986,7 +986,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Obtendo-y_s(\theta,k)-=-[S-\;-I-\:-R]">
-<h1>Obtendo <span class="math notranslate nohighlight">\(y_s(\theta,k) = [S \; I \: R]\)</span><a class="headerlink" href="#Obtendo-y_s(\theta,k)-=-[S-\;-I-\:-R]" title="Permalink to this headline">¶</a></h1>
+<h2>Obtendo <span class="math notranslate nohighlight">\(y_s(\theta,k) = [S \; I \: R]\)</span><a class="headerlink" href="#Obtendo-y_s(\theta,k)-=-[S-\;-I-\:-R]" title="Permalink to this headline">¶</a></h2>
 <p>O trecho a seguir retorna os valores sintetizados <span class="math notranslate nohighlight">\(y_s(\theta,k) = [S \; I \: R]\)</span> representa o dado sintetizado a partir de um modelo sintetizado para uma determinada amostra <span class="math notranslate nohighlight">\(k\)</span> e <span class="math notranslate nohighlight">\(\theta\)</span> representa o vetor ed parâmetros <span class="math notranslate nohighlight">\(\theta = [ \beta \; \; r]^T\)</span>. A partir de uma condição inicial <span class="math notranslate nohighlight">\(y_0\)</span>.</p>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
@@ -1006,7 +1006,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Condições-inicias---y_0-e-\theta_0">
-<h1>Condições inicias - <span class="math notranslate nohighlight">\(y_0\)</span> e <span class="math notranslate nohighlight">\(\theta_0\)</span><a class="headerlink" href="#Condições-inicias---y_0-e-\theta_0" title="Permalink to this headline">¶</a></h1>
+<h2>Condições inicias - <span class="math notranslate nohighlight">\(y_0\)</span> e <span class="math notranslate nohighlight">\(\theta_0\)</span><a class="headerlink" href="#Condições-inicias---y_0-e-\theta_0" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput nblast docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
 </pre></div>
@@ -1038,7 +1038,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Estimação-de-parâmetros">
-<h1>Estimação de parâmetros<a class="headerlink" href="#Estimação-de-parâmetros" title="Permalink to this headline">¶</a></h1>
+<h2>Estimação de parâmetros<a class="headerlink" href="#Estimação-de-parâmetros" title="Permalink to this headline">¶</a></h2>
 <p>Para estimarmos os parâmetros do modelo <span class="math notranslate nohighlight">\(\mathbf{\beta}\)</span> e <span class="math notranslate nohighlight">\(\mathbf{r}\)</span>, vamos utilizar inicialmente o método de mínimos quadrados. Podemos então formular o problema a partir da Equação abaixo. Na Equação <span class="math notranslate nohighlight">\(y_m(k)\)</span> representa o dado real em cada amostra <span class="math notranslate nohighlight">\(k\)</span>; <span class="math notranslate nohighlight">\(y_s(\theta,k)\)</span> representa o <strong>valor estimado</strong> a partir da simulação do modelo para uma determinada amostra <span class="math notranslate nohighlight">\(k\)</span> e <span class="math notranslate nohighlight">\(\theta\)</span> representa o vetor ed parâmetros <span class="math notranslate nohighlight">\(\theta = [ \beta \; \; r]^T\)</span>.</p>
 <div class="math notranslate nohighlight">
 \[min_{\theta}= \sum_{k=1}^{K}(y_m(k) - y_s(\theta,k))^2\]</div>
@@ -1067,7 +1067,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Minimização-da-função-custo">
-<h2>Minimização da função custo<a class="headerlink" href="#Minimização-da-função-custo" title="Permalink to this headline">¶</a></h2>
+<h3>Minimização da função custo<a class="headerlink" href="#Minimização-da-função-custo" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
 </pre></div>
@@ -1090,7 +1090,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Visualização">
-<h2>Visualização<a class="headerlink" href="#Visualização" title="Permalink to this headline">¶</a></h2>
+<h3>Visualização<a class="headerlink" href="#Visualização" title="Permalink to this headline">¶</a></h3>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
@@ -1153,12 +1153,13 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Referências">
-<h1>Referências<a class="headerlink" href="#Referências" title="Permalink to this headline">¶</a></h1>
+<h2>Referências<a class="headerlink" href="#Referências" title="Permalink to this headline">¶</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://cmdlinetips.com/2018/02/how-to-subset-pandas-dataframe-based-on-values-of-a-column/">https://cmdlinetips.com/2018/02/how-to-subset-pandas-dataframe-based-on-values-of-a-column/</a></p></li>
 <li><p><a class="reference external" href="https://cmdlinetips.com/2018/04/how-to-concatenate-arrays-in-numpy/">https://cmdlinetips.com/2018/04/how-to-concatenate-arrays-in-numpy/</a></p></li>
 <li><p><a class="reference external" href="https://stackoverflow.com/questions/11278836/fitting-data-to-system-of-odes-using-python-via-scipy-numpy">https://stackoverflow.com/questions/11278836/fitting-data-to-system-of-odes-using-python-via-scipy-numpy</a></p></li>
 </ul>
+</div>
 </div>
 
 
@@ -1169,10 +1170,10 @@ var element = document.currentScript.previousSibling.previousSibling;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="SIR Real Data - United Kingdom.html" class="btn btn-neutral float-right" title="Dados Reais" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="SIR Real Data - United Kingdom.html" class="btn btn-neutral float-right" title="SIR United Kingdom Data" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../data_driven.html" class="btn btn-neutral float-left" title="SIR Dados Artificiais" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="Reed Frost Model.html" class="btn btn-neutral float-left" title="Modelo Reed Frost" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
