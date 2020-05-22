@@ -9,7 +9,7 @@ Welcome to IMT Epidemic Models's documentation!
 .. raw:: html
 
    <iframe 
-      src="./media_content/UK_result.html" 
+      src="UK_result.html" 
       height="780" 
       width="650"
       style="border:none;"
