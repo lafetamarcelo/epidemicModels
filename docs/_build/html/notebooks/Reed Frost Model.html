@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Modelo Reed Frost &mdash; Epidemic Models</title>
+  <title>Configurações &mdash; Epidemic Models</title>
   
 
   
@@ -46,8 +46,8 @@
   <link rel="stylesheet" href="../_static/twemoji.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="SIR Dados artificiais" href="SIR Data Driven.html" />
-    <link rel="prev" title="Modelo SIR" href="SIR Model.html" /> 
+    <link rel="next" title="SIR Dados Artificiais" href="../data_driven.html" />
+    <link rel="prev" title="Modelo Reed Frost" href="../stochastic.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,14 +94,14 @@
               
             
             
-              <p class="caption"><span class="caption-text">Modelos analíticos</span></p>
+              <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="SIR Model.html">Modelo SIR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../analytic.html"><strong>Modelo SIR</strong></a></li>
 </ul>
-<p class="caption"><span class="caption-text">Modelos estocásticos</span></p>
+<p class="caption"><span class="caption-text">Modelos Estocásticos</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Modelo Reed Frost</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Configurações">Configurações</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../stochastic.html"><strong>Modelo Reed Frost</strong></a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configurações</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Modelo-para-pequeno-grupo">Modelo para pequeno grupo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Generalizando-o-modelo">Generalizando o modelo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Análise-dos-cenários-para-cada-geração-nova-de-infectados">Análise dos cenários para cada geração nova de infectados</a></li>
@@ -110,10 +110,10 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Baseados em dados</span></p>
+<p class="caption"><span class="caption-text">Baseados em Dados</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="SIR Data Driven.html">SIR Dados Artificiais</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SIR Real Data - United Kingdom.html">SIR |:gb:| United KingdomData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
 </ul>
 
             
@@ -159,7 +159,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li><strong>Modelo Reed Frost</strong></li>
+          <li><a href="../stochastic.html"><strong>Modelo Reed Frost</strong></a> &raquo;</li>
+        
+      <li>Configurações</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -420,8 +422,6 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Modelo-Reed-Frost">
-<h1><strong>Modelo Reed Frost</strong><a class="headerlink" href="#Modelo-Reed-Frost" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -450,7 +450,7 @@ div.rendered_html tbody tr:hover {
 ></iframe></div>
 </div>
 <div class="section" id="Configurações">
-<h2>Configurações<a class="headerlink" href="#Configurações" title="Permalink to this headline">¶</a></h2>
+<h1>Configurações<a class="headerlink" href="#Configurações" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -791,7 +791,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Modelo-para-pequeno-grupo">
-<h2>Modelo para pequeno grupo<a class="headerlink" href="#Modelo-para-pequeno-grupo" title="Permalink to this headline">¶</a></h2>
+<h1>Modelo para pequeno grupo<a class="headerlink" href="#Modelo-para-pequeno-grupo" title="Permalink to this headline">¶</a></h1>
 <p>Há no senso comum o entendimento que há uma chance de “pegar” uma doença. Supondo que a probailidade que representa esta sensação seja <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> e que a probilidade de escapar desta doença seja <span class="math notranslate nohighlight">\(\mathbf{q}\)</span>. Vamos admitir um cenário onde tenhamos uma família de três pessoas <span class="math notranslate nohighlight">\(\mathbf{N}=3\)</span> e um dos individuos estaje <strong>i</strong>nfectado (<strong>I</strong>). Supondo que neste caso <span class="math notranslate nohighlight">\(\mathbf{p}=0.4\)</span> logo <span class="math notranslate nohighlight">\(\mathbf{q}=0.6\)</span>. Admitindo este cenário pode-se explorar as seguintes
 progressões da doença (<span class="math notranslate nohighlight">\(P_i\)</span> - infectado e <span class="math notranslate nohighlight">\(\overline{P_i}\)</span> - não infectado) :</p>
 <p>Pensando em casos:</p>
@@ -849,7 +849,7 @@ P(I_{t+1}=i_{t+1}\vert S_t=s_t,I_t=i_t) \sim \binom{s_t}{i_t} (1-q^i_t)^{I_{t+1}
 \end{align*}</span></p>
 </div>
 <div class="section" id="Generalizando-o-modelo">
-<h2>Generalizando o modelo<a class="headerlink" href="#Generalizando-o-modelo" title="Permalink to this headline">¶</a></h2>
+<h1>Generalizando o modelo<a class="headerlink" href="#Generalizando-o-modelo" title="Permalink to this headline">¶</a></h1>
 <p>A partir da proposta que o contágio é dependente de uma probabilidade <span class="math notranslate nohighlight">\(\mathbf{p}\)</span> de transmissão da doença, que corresponde a uma probabilidade <span class="math notranslate nohighlight">\(\mathbf{q}\)</span> de escapar de ser contaminado, pode-se estabelecer um modelo que seja capaz de representar a cadeia de transmissão.</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}\begin{split}
@@ -957,7 +957,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Análise-dos-cenários-para-cada-geração-nova-de-infectados">
-<h2>Análise dos cenários para cada geração nova de infectados<a class="headerlink" href="#Análise-dos-cenários-para-cada-geração-nova-de-infectados" title="Permalink to this headline">¶</a></h2>
+<h1>Análise dos cenários para cada geração nova de infectados<a class="headerlink" href="#Análise-dos-cenários-para-cada-geração-nova-de-infectados" title="Permalink to this headline">¶</a></h1>
 <p>Observe que para cada nova geração a distribuição estatística varia e pode-se observar o comportamento da distribuição Binomial. Neste sentido pode-se observar quem “governa” a incerteza da evolução da epidemia. A linha pontilhada em cada histograma representa a média para cada geração.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
@@ -1100,7 +1100,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Evolução-da-média-e-desvio-padrão">
-<h2>Evolução da média e desvio padrão<a class="headerlink" href="#Evolução-da-média-e-desvio-padrão" title="Permalink to this headline">¶</a></h2>
+<h1>Evolução da média e desvio padrão<a class="headerlink" href="#Evolução-da-média-e-desvio-padrão" title="Permalink to this headline">¶</a></h1>
 <p>Para uma visão mais clara podemos visualizar a média e o desvio padrão para cada geração.</p>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
@@ -1170,13 +1170,12 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Referências">
-<h2>Referências<a class="headerlink" href="#Referências" title="Permalink to this headline">¶</a></h2>
+<h1>Referências<a class="headerlink" href="#Referências" title="Permalink to this headline">¶</a></h1>
 <p>Inspirado no material disponível em:</p>
 <ul class="simple">
 <li><p><a class="reference external" href="https://math.unm.edu/~sulsky/mathcamp/">https://math.unm.edu/~sulsky/mathcamp/</a></p></li>
 <li><p><a class="reference external" href="https://esc.fnwi.uva.nl/thesis/centraal/files/f70136284.pdf">https://esc.fnwi.uva.nl/thesis/centraal/files/f70136284.pdf</a></p></li>
 </ul>
-</div>
 </div>
 
 
@@ -1187,10 +1186,10 @@ var element = document.currentScript.previousSibling.previousSibling;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="SIR Data Driven.html" class="btn btn-neutral float-right" title="SIR Dados artificiais" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../data_driven.html" class="btn btn-neutral float-right" title="SIR Dados Artificiais" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="SIR Model.html" class="btn btn-neutral float-left" title="Modelo SIR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../stochastic.html" class="btn btn-neutral float-left" title="Modelo Reed Frost" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

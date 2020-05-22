@@ -6,9 +6,14 @@
 Welcome to IMT Epidemic Models's documentation!
 ===============================================
 
-.. toctree::
+.. raw:: html
 
-   notebooks/SIR - Real Data - United Kingdom - Introduction Results
+   <iframe 
+      src="./media_content/UK_result.html" 
+      height="780" 
+      width="650"
+      style="border:none;"
+   ></iframe> 
 
 .. toctree::
    :maxdepth: 2

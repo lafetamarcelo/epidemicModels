@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Modelo SIR &mdash; Epidemic Models</title>
+  <title>Configurações &mdash; Epidemic Models</title>
   
 
   
@@ -46,8 +46,8 @@
   <link rel="stylesheet" href="../_static/twemoji.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Modelo Reed Frost" href="Reed Frost Model.html" />
-    <link rel="prev" title="Welcome to IMT Epidemic Models’s documentation!" href="../index.html" /> 
+    <link rel="next" title="Modelo Reed Frost" href="../stochastic.html" />
+    <link rel="prev" title="Modelo SIR" href="../analytic.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -94,10 +94,10 @@
               
             
             
-              <p class="caption"><span class="caption-text">Modelos analíticos</span></p>
+              <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
 <ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Modelo SIR</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="#Configurações">Configurações</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../analytic.html"><strong>Modelo SIR</strong></a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Configurações</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Suscetível,-Infectado-e-Removido-(Recuperado)">Suscetível, Infectado e Removido (Recuperado)</a></li>
 <li class="toctree-l2"><a class="reference internal" href="#Analisando-a-evolução-de-\beta-e-r">Analisando a evolução de <span class="math notranslate nohighlight">\(\beta\)</span> e <span class="math notranslate nohighlight">\(r\)</span></a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#Salvando-o-modelo">Salvando o modelo</a></li>
@@ -107,14 +107,14 @@
 </ul>
 </li>
 </ul>
-<p class="caption"><span class="caption-text">Modelos estocásticos</span></p>
+<p class="caption"><span class="caption-text">Modelos Estocásticos</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="Reed Frost Model.html">Modelo Reed Frost</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../stochastic.html"><strong>Modelo Reed Frost</strong></a></li>
 </ul>
-<p class="caption"><span class="caption-text">Baseados em dados</span></p>
+<p class="caption"><span class="caption-text">Baseados em Dados</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="SIR Data Driven.html">SIR Dados Artificiais</a></li>
-<li class="toctree-l1"><a class="reference internal" href="SIR Real Data - United Kingdom.html">SIR |:gb:| United KingdomData</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
 </ul>
 
             
@@ -160,7 +160,9 @@
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
         
-      <li><strong>Modelo SIR</strong></li>
+          <li><a href="../analytic.html"><strong>Modelo SIR</strong></a> &raquo;</li>
+        
+      <li>Configurações</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -421,8 +423,6 @@ div.rendered_html tbody tr:hover {
     text-align: unset;
 }
 </style>
-<div class="section" id="Modelo-SIR">
-<h1><strong>Modelo SIR</strong><a class="headerlink" href="#Modelo-SIR" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
 </pre></div>
@@ -451,7 +451,7 @@ div.rendered_html tbody tr:hover {
 ></iframe></div>
 </div>
 <div class="section" id="Configurações">
-<h2>Configurações<a class="headerlink" href="#Configurações" title="Permalink to this headline">¶</a></h2>
+<h1>Configurações<a class="headerlink" href="#Configurações" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
@@ -789,7 +789,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Suscetível,-Infectado-e-Removido-(Recuperado)">
-<h2>Suscetível, Infectado e Removido (Recuperado)<a class="headerlink" href="#Suscetível,-Infectado-e-Removido-(Recuperado)" title="Permalink to this headline">¶</a></h2>
+<h1>Suscetível, Infectado e Removido (Recuperado)<a class="headerlink" href="#Suscetível,-Infectado-e-Removido-(Recuperado)" title="Permalink to this headline">¶</a></h1>
 <p>A proposta é introduzir um modelo determinístico para análise de evolução de uma epidemia. O modelo aqui representado foi inicialmente proposto por Kermack, W. and McKendrick, A., 1927. A contribution to the mathematical theory of epidemics. Proc. R. Soc. London A 115, 700-721. O modelo tem as seguintes premissas:</p>
 <ol class="arabic simple">
 <li><p>Uma posulação invariante no tempo com <strong>N</strong> individuos (fechada).</p></li>
@@ -849,7 +849,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Analisando-a-evolução-de-\beta-e-r">
-<h2>Analisando a evolução de <span class="math notranslate nohighlight">\(\beta\)</span> e <span class="math notranslate nohighlight">\(r\)</span><a class="headerlink" href="#Analisando-a-evolução-de-\beta-e-r" title="Permalink to this headline">¶</a></h2>
+<h1>Analisando a evolução de <span class="math notranslate nohighlight">\(\beta\)</span> e <span class="math notranslate nohighlight">\(r\)</span><a class="headerlink" href="#Analisando-a-evolução-de-\beta-e-r" title="Permalink to this headline">¶</a></h1>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
 </pre></div>
@@ -935,7 +935,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 </script></div>
 </div>
 <div class="section" id="Salvando-o-modelo">
-<h3>Salvando o modelo<a class="headerlink" href="#Salvando-o-modelo" title="Permalink to this headline">¶</a></h3>
+<h2>Salvando o modelo<a class="headerlink" href="#Salvando-o-modelo" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
 </pre></div>
@@ -976,12 +976,11 @@ var element = document.currentScript.previousSibling.previousSibling;
 </div>
 </div>
 <div class="section" id="Referências">
-<h2>Referências<a class="headerlink" href="#Referências" title="Permalink to this headline">¶</a></h2>
+<h1>Referências<a class="headerlink" href="#Referências" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">
 <li><p><a class="reference external" href="http://courses.washington.edu/b578a/readings/">Material aberto para o modelo definido</a></p></li>
 <li><p><a class="reference external" href="https://scipython.com/book/chapter-8-scipy/additional-examples/the-sir-epidemic-model/">Referência para o modelo desenvolvido</a></p></li>
 </ul>
-</div>
 </div>
 
 
@@ -992,10 +991,10 @@ var element = document.currentScript.previousSibling.previousSibling;
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
-        <a href="Reed Frost Model.html" class="btn btn-neutral float-right" title="Modelo Reed Frost" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+        <a href="../stochastic.html" class="btn btn-neutral float-right" title="Modelo Reed Frost" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
       
-        <a href="../index.html" class="btn btn-neutral float-left" title="Welcome to IMT Epidemic Models’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+        <a href="../analytic.html" class="btn btn-neutral float-left" title="Modelo SIR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   
