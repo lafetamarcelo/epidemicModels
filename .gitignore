@@ -1,3 +1,5 @@
 PG_IMT/
 *checkpoints*
 *DS_Store*
+*.pickle
+SIRpd

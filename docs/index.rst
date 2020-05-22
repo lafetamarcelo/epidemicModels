@@ -6,7 +6,7 @@
 Welcome to IMT Epidemic Models's documentation!
 ===============================================
 
-|docs|
+|docs| |last commit| |most used lang| |join slack| |join discord|
 
 Este projeto tem o objetivo de divulgar como desenvolver modelos para epidemias, desde 
 sua modelagem matemática até sua concepção computacional em Python. Sendo assim composto 
@@ -68,9 +68,23 @@ Indices e tabelas
 * :ref:`modindex`
 * :ref:`search`
 
+.. |join discord| image:: https://img.shields.io/discord/713442259210600448?label=join%20discord
+   :alt: Join discussion Discord
+   :target: https://discord.gg/EenaYE5
+
+.. |join slack| image:: https://img.shields.io/badge/join%20slack-%23nsee-brightgreen.svg 
+   :alt: Join discussion Slack
+   :target: https://nseecorot.slack.com/archives/C013Q9068NB
+
+.. |most used lang| image:: https://img.shields.io/github/languages/top/lafetamarcelo/epidemicModels   
+   :alt: GitHub top language
+
+
+.. |last commit| image:: https://img.shields.io/github/last-commit/lafetamarcelo/epidemicModels   
+   :alt: GitHub last commit
+   :target: https://github.com/lafetamarcelo/epidemicModels/
 
 
 .. |docs| image:: https://readthedocs.org/projects/epidemicmodels/badge/?version=latest
    :alt: Documentation Status
-   :scale: 100%
    :target: https://readthedocs.org/projects/epidemicmodels/

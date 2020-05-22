@@ -1,10 +1,15 @@
 
 
-Vanderlei Cunha Parro
-======================
+Vanderlei Cunha Parro |user image|
+==================================
 
 
-|linkedIn| |GitHub| |Gmail| |Youtube|
+|linkedIn| |GitHub| 
+
+|Gmail| |Youtube|
+
+.. |user image| image:: ./images/vcp.png
+  :scale: 10%
 
 .. |linkedIn| image:: ./images/linkedInButton.png
   :alt: LinkedIn Link
