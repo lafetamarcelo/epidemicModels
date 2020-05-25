@@ -23,12 +23,30 @@ juntamente com os dados, estão apresentadas na figura a seguir:
 
 .. raw:: html
 
-   <iframe 
-      src="UK_result.html" 
-      height="780" 
-      width="650"
-      style="border:none;"
-   ></iframe> 
+   <h3 style="text-align:center;">
+      <iframe 
+         id="UKiFrame"
+         style="border:none;"
+         src="UK_result.html"
+         height="780"
+         width="680"
+      ></iframe>
+   </h3>
+   <script>
+      const iframe = document.getElementById("UKiFrame")
+      if (screen.width < 600) {
+         iframe.setAttribute("src", "UK_result.html")
+         iframe.setAttribute("height", 400)
+         iframe.setAttribute("width", 300)
+      }
+   </script>
+
+Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades 
+durante os períodos de epidemias:
+
+.. image:: images/res/UK_models_corr.png
+   :width: 700
+
 
 .. toctree::
    :maxdepth: 2
@@ -53,6 +71,11 @@ juntamente com os dados, estão apresentadas na figura a seguir:
 
    data_driven
 
+.. toctree::
+   :maxdepth: 3
+   :caption: Code APIs
+
+   modules
 
 .. toctree::
    :maxdepth: 1
@@ -61,12 +84,27 @@ juntamente com os dados, estão apresentadas na figura a seguir:
    authors
 
 
+.. raw:: html 
+
+   <h3 style="text-align:center;">
+      <iframe 
+         src="https://discordapp.com/widget?id=713442259210600448&theme=dark" 
+         width="500" 
+         height="300"
+         allowtransparency="true" 
+         frameborder="0"
+      ></iframe>
+   </h3>
+
+
 Indices e tabelas
 =================
 
 * :ref:`genindex`
 * :ref:`modindex`
 * :ref:`search`
+
+
 
 .. |join discord| image:: https://img.shields.io/discord/713442259210600448?label=join%20discord
    :alt: Join discussion Discord

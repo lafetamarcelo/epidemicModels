@@ -105,6 +105,11 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code APIs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">epidemicModels</a></li>
 </ul>
 <p class="caption"><span class="caption-text">Autores</span></p>
 <ul>
@@ -212,12 +217,26 @@ entendimento do conteúdo apresentado.</p>
 do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos, é possível
 obter modelos capazes de fazer previsões dos surtos epidêmicos dos dados. Essas previsões,
 juntamente com os dados, estão apresentadas na figura a seguir:</p>
-<iframe
-   src="UK_result.html"
-   height="780"
-   width="650"
-   style="border:none;"
-></iframe><div class="toctree-wrapper compound">
+<h3 style="text-align:center;">
+   <iframe
+      id="UKiFrame"
+      style="border:none;"
+      src="UK_result.html"
+      height="780"
+      width="680"
+   ></iframe>
+</h3>
+<script>
+   const iframe = document.getElementById("UKiFrame")
+   if (screen.width < 600) {
+      iframe.setAttribute("src", "UK_result.html")
+      iframe.setAttribute("height", 400)
+      iframe.setAttribute("width", 300)
+   }
+</script><p>Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades
+durante os períodos de epidemias:</p>
+<a class="reference internal image-reference" href="_images/UK_models_corr.png"><img alt="_images/UK_models_corr.png" src="_images/UK_models_corr.png" style="width: 700px;" /></a>
+<div class="toctree-wrapper compound">
 </div>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
@@ -269,6 +288,26 @@ juntamente com os dados, estão apresentadas na figura a seguir:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html#Análise-anual">Análise anual</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html#Determinando-os-parâmetros---SIR">Determinando os parâmetros - SIR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html#Obtendo-informações-de-Lat-e-Long">Obtendo informações de Lat e Long</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html#Correlação-dos-modelos">Correlação dos modelos</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">Code APIs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="modules.html">epidemicModels</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="models.html">models package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="models.html#module-models.stochastic_search">Stochastic Search - Learning models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#module-models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </div>
 <div class="toctree-wrapper compound">
@@ -278,7 +317,15 @@ juntamente com os dados, estão apresentadas na figura a seguir:</p>
 <li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
 </ul>
 </div>
-</div>
+<h3 style="text-align:center;">
+   <iframe
+      src="https://discordapp.com/widget?id=713442259210600448&theme=dark"
+      width="500"
+      height="300"
+      allowtransparency="true"
+      frameborder="0"
+   ></iframe>
+</h3></div>
 <div class="section" id="indices-e-tabelas">
 <h1>Indices e tabelas<a class="headerlink" href="#indices-e-tabelas" title="Permalink to this headline">¶</a></h1>
 <ul class="simple">

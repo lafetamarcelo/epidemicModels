@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>&lt;no title&gt; &mdash; Epidemic Models</title>
+  <title>models package &mdash; Epidemic Models</title>
   
 
   
@@ -29,7 +29,11 @@
         <script src="_static/language_data.js"></script>
         <script src="_static/clipboard.min.js"></script>
         <script src="_static/copybutton.js"></script>
+        <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+        <script src="_static/twemoji.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
@@ -39,9 +43,11 @@
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
-    <link rel="prev" title="Welcome to IMT Epidemic Models’s documentation!" href="index.html" /> 
+    <link rel="next" title="&lt;no title&gt;" href="authors.html" />
+    <link rel="prev" title="epidemicModels" href="modules.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -88,10 +94,37 @@
               
             
             
-              <!-- Local TOC -->
-              <div class="local-toc"><ul class="simple">
+              <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="analytic.html"><strong>Modelo SIR</strong></a></li>
 </ul>
-</div>
+<p class="caption"><span class="caption-text">Modelos Estocásticos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="stochastic.html"><strong>Modelo Reed Frost</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Baseados em Dados</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code APIs</span></p>
+<ul class="current">
+<li class="toctree-l1 current"><a class="reference internal" href="modules.html">epidemicModels</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">models package</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#module-models.stochastic_search">Stochastic Search - Learning models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-models">Module contents</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption"><span class="caption-text">Autores</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="author/vanderlei.html">Vanderlei Cunha Parro </a></li>
+<li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
+</ul>
+
             
           
         </div>
@@ -135,7 +168,9 @@
     
       <li><a href="index.html">Docs</a> &raquo;</li>
         
-      <li>&lt;no title&gt;</li>
+          <li><a href="modules.html">epidemicModels</a> &raquo;</li>
+        
+      <li>models package</li>
     
     
       <li class="wy-breadcrumbs-aside">
@@ -178,6 +213,182 @@
     text-align: unset;
 }
 </style>
+<div class="section" id="models-package">
+<h1>models package<a class="headerlink" href="#models-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="module-models.stochastic_search">
+<span id="stochastic-search-learning-models"></span><h2>Stochastic Search - Learning models<a class="headerlink" href="#module-models.stochastic_search" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="models.stochastic_search.SIR">
+<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>This model concentrate all the developed algorithms to 
+represent data driven SIR model. Using the Scipy default 
+model structure.</p>
+<dl class="method">
+<dt id="models.stochastic_search.SIR.cost_function">
+<code class="sig-name descname">cost_function</code><span class="sig-paren">(</span><em class="sig-param">p</em>, <em class="sig-param">S</em>, <em class="sig-param">I</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.cost_function" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function to compute the error to guide the learning
+algorithm. It computes the quadratic error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>tuple</em>) – Tuple with Beta and r parameters, respectivelly.</p></li>
+<li><p><strong>S</strong> (<em>array</em>) – The suceptible data values.</p></li>
+<li><p><strong>I</strong> (<em>array</em>) – The infected data values.</p></li>
+<li><p><strong>initial</strong> (<em>array</em>) – The initial values of suceptible and infected, respectivelly.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each sample.</p></li>
+<li><p><strong>w</strong> (<em>array</em>) – The weight respective to the suceptible and infected errors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The sum of the quadratic error, between simulated and real data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.stochastic_search.SIR.differential_model">
+<code class="sig-name descname">differential_model</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">Beta</em>, <em class="sig-param">r</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.differential_model" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function that computes the diferential set of 
+equations of the SIR Epidemic Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>tuple</em>) – Tuple with the suceptible and infected data.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each y set of samples.</p></li>
+<li><p><strong>Beta</strong> (<em>float</em>) – The Beta parameter.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The r parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The derivative of the suceptible and infected data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.stochastic_search.SIR.fit">
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Bd, td, threshold_prop=1, cases_before=10, filt_estimate=False, filt_window=55, beta_sens=[100, 100], r_sens=[100, 1000], out_type=0, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method responsible for estimating a set of beta and r 
+parameters for each epidemy period existent in the provided
+dataset.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Sd</strong> (<em>array</em>) – Array with the suceptible data.</p></li>
+<li><p><strong>Id</strong> (<em>array</em>) – Array with the infected data.</p></li>
+<li><p><strong>Bd</strong> (<em>array</em>) – Array with the births data.</p></li>
+<li><p><strong>td</strong> (<em>array</em>) – The time respective to each set of samples.</p></li>
+<li><p><strong>threshold_prop</strong> (<em>float</em>) – The standard deviation proportion used as threshold for windowing. Default is <cite>1.0</cite>.</p></li>
+<li><p><strong>cases_before</strong> (<em>int</em>) – The number of back samples to check for the initial window point. Default is <cite>10</cite>.</p></li>
+<li><p><strong>filt_estimate</strong> (<em>bool</em>) – Flag to use filtered data to estimate the model parameters. Default is <cite>False</cite>.</p></li>
+<li><p><strong>filt_window</strong> (<em>int</em>) – The window size used on the filtering technique, only if <code class="code docutils literal notranslate"><span class="pre">filt_estimate=True</span></code>. Default is <cite>55</cite>.</p></li>
+<li><p><strong>beta_sens</strong> (<em>list</em>) – The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <cite>[100,100]</cite>.</p></li>
+</ul>
+</dd>
+</dl>
+<p>:param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <cite>[100,1000]</cite>.
+:param int out_type: The output type, it can be <cite>1</cite> or <cite>0</cite>. Default is <cite>0</cite>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>If the <cite>out_type=0</cite>, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If <cite>out_type=1</cite> it returns the self.data of the model, a summary with all model information.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.stochastic_search.SIR.result_summary">
+<code class="sig-name descname">result_summary</code><span class="sig-paren">(</span><em class="sig-param">out_plot=False, plot_size=[600, 400], save_results=False, folder_path='./', file_name='SIR_result_summary.png'</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.result_summary" title="Permalink to this definition">¶</a></dt>
+<dd><p>Method responsible for building a proper summary plot of 
+the estimate process of the SIR model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>out_plot</strong> (<em>bool</em>) – Flag to output the bokeh.figure object.</p></li>
+<li><p><strong>plot_size</strong> (<em>list</em>) – List with the plot size as <cite>[width, height]</cite>.</p></li>
+<li><p><strong>save_results</strong> (<em>bool</em>) – Flag to save the results as a .png image.</p></li>
+<li><p><strong>folder_path</strong> (<em>string</em>) – The path to the folder the user wants to save resulted image.</p></li>
+<li><p><strong>file_name</strong> (<em>string</em>) – The name of the resulted image that will be saved.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If <cite>out_plot=True</cite>, it returns a bokeh.figure object with the builded plots.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>bokeh.figure</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.stochastic_search.SIR.simulate">
+<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">initial</em>, <em class="sig-param">time</em>, <em class="sig-param">theta</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.simulate" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function that simulate the differential SIR
+model, by computing the integration of the 
+differential equations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>initial</strong> (<em>array</em>) – The initial values of the infected and suceptible data.</p></li>
+<li><p><strong>time</strong> (<em>array</em>) – The time points to simulate the model.</p></li>
+<li><p><strong>theta</strong> (<em>array</em>) – The Beta parameter, and r parameter, respectivelly.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The values of the suceptible and infected, at time, respectivelly.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="models.stochastic_search.findEpidemyBreaks">
+<code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">findEpidemyBreaks</code><span class="sig-paren">(</span><em class="sig-param">cases</em>, <em class="sig-param">threshold_prop=1.0</em>, <em class="sig-param">cases_before=10</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.findEpidemyBreaks" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function responsible for determining the initial 
+and final points of the epidemies windows.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>cases</strong> (<em>array</em>) – The array with the cases values along time.</p></li>
+<li><p><strong>threshold_prop</strong> (<em>float</em>) – The standard deviation proportion used as threshold for windowing. Default is <cite>1.0</cite>.</p></li>
+<li><p><strong>cases_before</strong> (<em>int</em>) – The number of back samples to check for the initial window point. Default is <cite>10</cite>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>With the list of window’s starting points and window’s final points, respectively.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-models">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-models" title="Permalink to this headline">¶</a></h2>
+<dl class="field-list simple">
+<dt class="field-odd">copyright</dt>
+<dd class="field-odd"><p>2010 Marcelo Lima</p>
+</dd>
+<dt class="field-even">license</dt>
+<dd class="field-even"><p>BSD-3-Clause</p>
+</dd>
+</dl>
+</div>
+</div>
 
 
            </div>
@@ -187,8 +398,10 @@
   
     <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
       
+        <a href="authors.html" class="btn btn-neutral float-right" title="&lt;no title&gt;" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
       
-        <a href="index.html" class="btn btn-neutral float-left" title="Welcome to IMT Epidemic Models’s documentation!" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+        <a href="modules.html" class="btn btn-neutral float-left" title="epidemicModels" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
       
     </div>
   

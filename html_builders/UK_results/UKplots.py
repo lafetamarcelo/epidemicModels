@@ -9,7 +9,6 @@ from bokeh.io import output_notebook
 
 if __name__ == "__main__":
 
-
   with open('UK_estimated_data.pickle', 'rb') as handle:
     pickle_data = pickle.load(handle)
 
