@@ -171,6 +171,7 @@ class SIR:
       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
       :param dict **kwargs: The differential evolution arguments.
+      
     """
     # Computing the approximate values 
     # of the parameters to build the 
@@ -193,7 +194,6 @@ class SIR:
       print("\t ├─ beta bound ─  ", lower[0], " ─ ", upper[0])
       print("\t ├─ r bound ─  ", lower[1], " ─ ", upper[1])
       print("\t ├─ equation weights ─  ", w)
-    initial = [[1e-08, 0.01] for k in range(15)]
     # Minimaze the cost function
     summary = differential_evolution(
         self.cost_function, 
