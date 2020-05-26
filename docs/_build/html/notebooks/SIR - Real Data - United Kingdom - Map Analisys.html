@@ -45,7 +45,9 @@
   <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
   <link rel="stylesheet" href="../_static/twemoji.css" type="text/css" />
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" /> 
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="epidemicModels" href="../modules.html" />
+    <link rel="prev" title="Dados Reais" href="SIR Real Data - United Kingdom.html" /> 
 </head>
 
 <body class="wy-body-for-nav">
@@ -101,10 +103,30 @@
 <li class="toctree-l1"><a class="reference internal" href="../stochastic.html"><strong>Modelo Reed Frost</strong></a></li>
 </ul>
 <p class="caption"><span class="caption-text">Baseados em Dados</span></p>
-<ul>
+<ul class="current">
 <li class="toctree-l1"><a class="reference internal" href="../data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Determinando-os-parâmetros---SIR">Determinando os parâmetros - SIR</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Para-uma-única-cidade">Para uma única cidade</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Estimando-para-todas-cidades">Estimando para todas cidades</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#Obtendo-informações-de-Lat-e-Long">Obtendo informações de Lat e Long</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Correlação-dos-modelos">Correlação dos modelos</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#Interpolando-os-modelos-estimados">Interpolando os modelos estimados</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#Visualizando-a-interpolação">Visualizando a interpolação</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#Criando-os-data-frames-para-matrix-de-correlação">Criando os data frames para matrix de correlação</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Correlação-do-parâmetro-\beta">Correlação do parâmetro <span class="math notranslate nohighlight">\(\beta\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Correlação-do-parâmetro-r">Correlação do parâmetro <span class="math notranslate nohighlight">\(r\)</span></a></li>
+<li class="toctree-l3"><a class="reference internal" href="#Correlação-do-modelo">Correlação do modelo</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 <p class="caption"><span class="caption-text">Code APIs</span></p>
 <ul>
@@ -158,6 +180,8 @@
   <ul class="wy-breadcrumbs">
     
       <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="../data_driven.html"><strong>SIR Dados Artificiais</strong></a> &raquo;</li>
         
       <li>Os dados</li>
     
@@ -1210,7 +1234,7 @@ Finished -  Sheffield  -  20  of  20
 <span class="kn">from</span> <span class="nn">bokeh.palettes</span> <span class="kn">import</span> <span class="n">brewer</span><span class="p">,</span> <span class="n">Inferno256</span>
 <span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">show</span>
 <span class="kn">from</span> <span class="nn">bokeh.layouts</span>  <span class="kn">import</span> <span class="n">column</span>
-<span class="kn">from</span> <span class="nn">bokeh.io</span>       <span class="kn">import</span> <span class="n">output_notebook</span><span class="p">,</span> <span class="n">export_png</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span>       <span class="kn">import</span> <span class="n">output_notebook</span>
 
 
 <span class="n">p_beta</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span>
@@ -1604,7 +1628,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 <div class="section" id="Correlação-do-modelo">
 <h2>Correlação do modelo<a class="headerlink" href="#Correlação-do-modelo" title="Permalink to this headline">¶</a></h2>
 <div class="nbinput docutils container">
-<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[10]:
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[11]:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
@@ -1621,7 +1645,7 @@ var element = document.currentScript.previousSibling.previousSibling;
 
 <span class="n">f</span><span class="o">.</span><span class="n">subplots_adjust</span><span class="p">(</span><span class="n">top</span><span class="o">=</span><span class="mf">0.93</span><span class="p">)</span>
 
-<span class="n">t</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;r Parameter - Features Correlation Heatmap&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
+<span class="n">t</span> <span class="o">=</span> <span class="n">f</span><span class="o">.</span><span class="n">suptitle</span><span class="p">(</span><span class="s1">&#39;Model - Features Correlation Heatmap&#39;</span><span class="p">,</span> <span class="n">fontsize</span><span class="o">=</span><span class="mi">14</span><span class="p">)</span>
 
 </pre></div>
 </div>
@@ -1641,6 +1665,15 @@ var element = document.currentScript.previousSibling.previousSibling;
            
           </div>
           <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../modules.html" class="btn btn-neutral float-right" title="epidemicModels" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="SIR Real Data - United Kingdom.html" class="btn btn-neutral float-left" title="Dados Reais" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
   
 
   <hr/>

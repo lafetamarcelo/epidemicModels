@@ -25,3 +25,11 @@
 
   notebooks/SIR - Real Data - United Kingdom - Map Analisys
   
+
+**SIR** |:br:| **Brasil COVID Dados Reais**
+=============================================
+
+.. toctree::
+  :maxdepth: 2
+
+  notebooks/COVID - SIR Model

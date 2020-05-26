@@ -1,0 +1,1766 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Os dados &mdash; Epidemic Models</title>
+  
+
+  
+  
+    <link rel="shortcut icon" href="../_static/Small_white_background.ico"/>
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script src="../_static/jquery.js"></script>
+        <script src="../_static/underscore.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/language_data.js"></script>
+        <script src="../_static/clipboard.min.js"></script>
+        <script src="../_static/copybutton.js"></script>
+        <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
+        <script src="../_static/twemoji.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/twemoji.css" type="text/css" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> IMT Epidemic Models
+          
+
+          
+            
+            <img src="../_static/Full_white_background.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../analytic.html"><strong>Modelo SIR</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Modelos Estocásticos</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../stochastic.html"><strong>Modelo Reed Frost</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Baseados em Dados</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="../data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">Code APIs</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../modules.html">epidemicModels</a></li>
+</ul>
+<p class="caption"><span class="caption-text">Autores</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="../author/vanderlei.html">Vanderlei Cunha Parro </a></li>
+<li class="toctree-l1"><a class="reference internal" href="../author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">IMT Epidemic Models</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Os dados</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/notebooks/COVID - SIR Model.ipynb.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  
+<style>
+/* CSS for nbsphinx extension */
+
+/* remove conflicting styling from Sphinx themes */
+div.nbinput.container,
+div.nbinput.container div.prompt,
+div.nbinput.container div.input_area,
+div.nbinput.container div[class*=highlight],
+div.nbinput.container div[class*=highlight] pre,
+div.nboutput.container,
+div.nboutput.container div.prompt,
+div.nboutput.container div.output_area,
+div.nboutput.container div[class*=highlight],
+div.nboutput.container div[class*=highlight] pre {
+    background: none;
+    border: none;
+    padding: 0 0;
+    margin: 0;
+    box-shadow: none;
+}
+
+/* avoid gaps between output lines */
+div.nboutput.container div[class*=highlight] pre {
+    line-height: normal;
+}
+
+/* input/output containers */
+div.nbinput.container,
+div.nboutput.container {
+    display: -webkit-flex;
+    display: flex;
+    align-items: flex-start;
+    margin: 0;
+    width: 100%;
+}
+@media (max-width: 540px) {
+    div.nbinput.container,
+    div.nboutput.container {
+        flex-direction: column;
+    }
+}
+
+/* input container */
+div.nbinput.container {
+    padding-top: 5px;
+}
+
+/* last container */
+div.nblast.container {
+    padding-bottom: 5px;
+}
+
+/* input prompt */
+div.nbinput.container div.prompt pre {
+    color: #307FC1;
+}
+
+/* output prompt */
+div.nboutput.container div.prompt pre {
+    color: #BF5B3D;
+}
+
+/* all prompts */
+div.nbinput.container div.prompt,
+div.nboutput.container div.prompt {
+    min-width: 5ex;
+    padding-top: 0.3rem;
+    padding-right: 0.3rem;
+    text-align: right;
+    flex: 0;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.prompt,
+    div.nboutput.container div.prompt {
+        text-align: left;
+        padding: 0.4em;
+    }
+    div.nboutput.container div.prompt.empty {
+        padding: 0;
+    }
+}
+
+/* disable scrollbars on prompts */
+div.nbinput.container div.prompt pre,
+div.nboutput.container div.prompt pre {
+    overflow: hidden;
+}
+
+/* input/output area */
+div.nbinput.container div.input_area,
+div.nboutput.container div.output_area {
+    -webkit-flex: 1;
+    flex: 1;
+    overflow: auto;
+}
+@media (max-width: 540px) {
+    div.nbinput.container div.input_area,
+    div.nboutput.container div.output_area {
+        width: 100%;
+    }
+}
+
+/* input area */
+div.nbinput.container div.input_area {
+    border: 1px solid #e0e0e0;
+    border-radius: 2px;
+    background: #f5f5f5;
+}
+
+/* override MathJax center alignment in output cells */
+div.nboutput.container div[class*=MathJax] {
+    text-align: left !important;
+}
+
+/* override sphinx.ext.imgmath center alignment in output cells */
+div.nboutput.container div.math p {
+    text-align: left;
+}
+
+/* standard error */
+div.nboutput.container div.output_area.stderr {
+    background: #fdd;
+}
+
+/* ANSI colors */
+.ansi-black-fg { color: #3E424D; }
+.ansi-black-bg { background-color: #3E424D; }
+.ansi-black-intense-fg { color: #282C36; }
+.ansi-black-intense-bg { background-color: #282C36; }
+.ansi-red-fg { color: #E75C58; }
+.ansi-red-bg { background-color: #E75C58; }
+.ansi-red-intense-fg { color: #B22B31; }
+.ansi-red-intense-bg { background-color: #B22B31; }
+.ansi-green-fg { color: #00A250; }
+.ansi-green-bg { background-color: #00A250; }
+.ansi-green-intense-fg { color: #007427; }
+.ansi-green-intense-bg { background-color: #007427; }
+.ansi-yellow-fg { color: #DDB62B; }
+.ansi-yellow-bg { background-color: #DDB62B; }
+.ansi-yellow-intense-fg { color: #B27D12; }
+.ansi-yellow-intense-bg { background-color: #B27D12; }
+.ansi-blue-fg { color: #208FFB; }
+.ansi-blue-bg { background-color: #208FFB; }
+.ansi-blue-intense-fg { color: #0065CA; }
+.ansi-blue-intense-bg { background-color: #0065CA; }
+.ansi-magenta-fg { color: #D160C4; }
+.ansi-magenta-bg { background-color: #D160C4; }
+.ansi-magenta-intense-fg { color: #A03196; }
+.ansi-magenta-intense-bg { background-color: #A03196; }
+.ansi-cyan-fg { color: #60C6C8; }
+.ansi-cyan-bg { background-color: #60C6C8; }
+.ansi-cyan-intense-fg { color: #258F8F; }
+.ansi-cyan-intense-bg { background-color: #258F8F; }
+.ansi-white-fg { color: #C5C1B4; }
+.ansi-white-bg { background-color: #C5C1B4; }
+.ansi-white-intense-fg { color: #A1A6B2; }
+.ansi-white-intense-bg { background-color: #A1A6B2; }
+
+.ansi-default-inverse-fg { color: #FFFFFF; }
+.ansi-default-inverse-bg { background-color: #000000; }
+
+.ansi-bold { font-weight: bold; }
+.ansi-underline { text-decoration: underline; }
+
+
+div.nbinput.container div.input_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight] > pre,
+div.nboutput.container div.output_area div[class*=highlight].math,
+div.nboutput.container div.output_area.rendered_html,
+div.nboutput.container div.output_area > div.output_javascript,
+div.nboutput.container div.output_area:not(.rendered_html) > img{
+    padding: 0.3rem;
+}
+
+/* fix copybtn overflow problem in chromium (needed for 'sphinx_copybutton') */
+div.nbinput.container div.input_area > div[class^='highlight'],
+div.nboutput.container div.output_area > div[class^='highlight']{
+    overflow-y: hidden;
+}
+
+/* hide copybtn icon on prompts (needed for 'sphinx_copybutton') */
+.prompt a.copybtn {
+    display: none;
+}
+
+/* Some additional styling taken form the Jupyter notebook CSS */
+div.rendered_html table {
+  border: none;
+  border-collapse: collapse;
+  border-spacing: 0;
+  color: black;
+  font-size: 12px;
+  table-layout: fixed;
+}
+div.rendered_html thead {
+  border-bottom: 1px solid black;
+  vertical-align: bottom;
+}
+div.rendered_html tr,
+div.rendered_html th,
+div.rendered_html td {
+  text-align: right;
+  vertical-align: middle;
+  padding: 0.5em 0.5em;
+  line-height: normal;
+  white-space: normal;
+  max-width: none;
+  border: none;
+}
+div.rendered_html th {
+  font-weight: bold;
+}
+div.rendered_html tbody tr:nth-child(odd) {
+  background: #f5f5f5;
+}
+div.rendered_html tbody tr:hover {
+  background: rgba(66, 165, 245, 0.2);
+}
+
+/* CSS overrides for sphinx_rtd_theme */
+
+/* 24px margin */
+.nbinput.nblast.container,
+.nboutput.nblast.container {
+    margin-bottom: 19px;  /* padding has already 5px */
+}
+
+/* ... except between code cells! */
+.nblast.container + .nbinput.container {
+    margin-top: -19px;
+}
+
+.admonition > p:before {
+    margin-right: 4px;  /* make room for the exclamation icon */
+}
+
+/* Fix math alignment, see https://github.com/rtfd/sphinx_rtd_theme/pull/686 */
+.math {
+    text-align: unset;
+}
+</style>
+<div class="section" id="Os-dados">
+<h1>Os dados<a class="headerlink" href="#Os-dados" title="Permalink to this headline">¶</a></h1>
+<p>Lendo e visualizandos os dados do Brasil do COVID até</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
+
+<span class="c1"># reading csv file</span>
+<span class="n">BRdata</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">read_csv</span><span class="p">(</span><span class="s2">&quot;./PG_IMT/DadosEpidemia/CoVid19.csv&quot;</span><span class="p">)</span>
+<span class="n">BRdata</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>country</th>
+      <th>state</th>
+      <th>city</th>
+      <th>newDeaths</th>
+      <th>deaths</th>
+      <th>newCases</th>
+      <th>totalCases</th>
+      <th>deathsMS</th>
+      <th>totalCasesMS</th>
+      <th>deaths_per_100k_inhabitants</th>
+      <th>totalCases_per_100k_inhabitants</th>
+      <th>deaths_by_totalCases</th>
+      <th>recovered</th>
+      <th>suspects</th>
+      <th>tests</th>
+      <th>tests_per_100k_inhabitants</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>2020-02-25</td>
+      <td>Brazil</td>
+      <td>SP</td>
+      <td>TOTAL</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.00218</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>2020-02-25</td>
+      <td>Brazil</td>
+      <td>TOTAL</td>
+      <td>TOTAL</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>1</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0.0</td>
+      <td>0.00048</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>2020-02-26</td>
+      <td>Brazil</td>
+      <td>SP</td>
+      <td>TOTAL</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.00218</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>2020-02-26</td>
+      <td>Brazil</td>
+      <td>TOTAL</td>
+      <td>TOTAL</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.00048</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>2020-02-27</td>
+      <td>Brazil</td>
+      <td>SP</td>
+      <td>TOTAL</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0</td>
+      <td>1</td>
+      <td>0.0</td>
+      <td>0.00218</td>
+      <td>0.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="section" id="Filtrando-e-limpando-os-dados">
+<h2>Filtrando e limpando os dados<a class="headerlink" href="#Filtrando-e-limpando-os-dados" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="n">is_SP</span> <span class="o">=</span>  <span class="n">BRdata</span><span class="p">[</span><span class="s1">&#39;state&#39;</span><span class="p">]</span><span class="o">==</span><span class="s1">&#39;TOTAL&#39;</span>
+<span class="n">SPdata</span> <span class="o">=</span> <span class="n">BRdata</span><span class="p">[</span><span class="n">is_SP</span><span class="p">]</span>
+
+<span class="c1"># SPdata = SPdata.fillna(0)</span>
+
+<span class="n">SPLimpo</span> <span class="o">=</span> <span class="n">SPdata</span><span class="p">[</span><span class="n">SPdata</span><span class="o">.</span><span class="n">recovered</span><span class="o">.</span><span class="n">notnull</span><span class="p">()]</span>
+<span class="n">SPLimpo</span><span class="o">.</span><span class="n">head</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="output_area rendered_html docutils container">
+<div>
+<style scoped>
+    .dataframe tbody tr th:only-of-type {
+        vertical-align: middle;
+    }
+
+    .dataframe tbody tr th {
+        vertical-align: top;
+    }
+
+    .dataframe thead th {
+        text-align: right;
+    }
+</style>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>date</th>
+      <th>country</th>
+      <th>state</th>
+      <th>city</th>
+      <th>newDeaths</th>
+      <th>deaths</th>
+      <th>newCases</th>
+      <th>totalCases</th>
+      <th>deathsMS</th>
+      <th>totalCasesMS</th>
+      <th>deaths_per_100k_inhabitants</th>
+      <th>totalCases_per_100k_inhabitants</th>
+      <th>deaths_by_totalCases</th>
+      <th>recovered</th>
+      <th>suspects</th>
+      <th>tests</th>
+      <th>tests_per_100k_inhabitants</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>321</th>
+      <td>2020-03-23</td>
+      <td>Brazil</td>
+      <td>TOTAL</td>
+      <td>TOTAL</td>
+      <td>9</td>
+      <td>34</td>
+      <td>358</td>
+      <td>1952</td>
+      <td>34</td>
+      <td>1891</td>
+      <td>0.01618</td>
+      <td>0.92887</td>
+      <td>0.01742</td>
+      <td>8.0</td>
+      <td>15867.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>349</th>
+      <td>2020-03-24</td>
+      <td>Brazil</td>
+      <td>TOTAL</td>
+      <td>TOTAL</td>
+      <td>13</td>
+      <td>47</td>
+      <td>303</td>
+      <td>2255</td>
+      <td>46</td>
+      <td>2201</td>
+      <td>0.02237</td>
+      <td>1.07306</td>
+      <td>0.02084</td>
+      <td>20.0</td>
+      <td>17700.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>377</th>
+      <td>2020-03-25</td>
+      <td>Brazil</td>
+      <td>TOTAL</td>
+      <td>TOTAL</td>
+      <td>12</td>
+      <td>59</td>
+      <td>311</td>
+      <td>2566</td>
+      <td>57</td>
+      <td>2433</td>
+      <td>0.02808</td>
+      <td>1.22105</td>
+      <td>0.02299</td>
+      <td>27.0</td>
+      <td>27227.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>405</th>
+      <td>2020-03-26</td>
+      <td>Brazil</td>
+      <td>TOTAL</td>
+      <td>TOTAL</td>
+      <td>18</td>
+      <td>77</td>
+      <td>424</td>
+      <td>2990</td>
+      <td>77</td>
+      <td>2915</td>
+      <td>0.03664</td>
+      <td>1.42281</td>
+      <td>0.02575</td>
+      <td>42.0</td>
+      <td>48793.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+    <tr>
+      <th>433</th>
+      <td>2020-03-27</td>
+      <td>Brazil</td>
+      <td>TOTAL</td>
+      <td>TOTAL</td>
+      <td>16</td>
+      <td>93</td>
+      <td>486</td>
+      <td>3476</td>
+      <td>92</td>
+      <td>3417</td>
+      <td>0.04425</td>
+      <td>1.65408</td>
+      <td>0.02675</td>
+      <td>42.0</td>
+      <td>50684.0</td>
+      <td>NaN</td>
+      <td>NaN</td>
+    </tr>
+  </tbody>
+</table>
+</div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="n">SPsir</span> <span class="o">=</span> <span class="n">SPLimpo</span><span class="p">[[</span> <span class="s2">&quot;totalCases&quot;</span><span class="p">,</span> <span class="s2">&quot;deaths&quot;</span><span class="p">,</span><span class="s2">&quot;recovered&quot;</span><span class="p">]]</span><span class="o">.</span><span class="n">to_numpy</span><span class="p">()</span>
+<span class="c1"># SPsir = SPdata[[ &quot;totalCases&quot;, &quot;deaths&quot;,&quot;recovered&quot;]].to_numpy()</span>
+
+<span class="n">SPsir</span><span class="p">[:,</span><span class="mi">0</span><span class="p">:]</span>
+<span class="n">SPI</span> <span class="o">=</span> <span class="n">SPsir</span><span class="p">[:,</span><span class="mi">0</span><span class="p">]</span>
+<span class="n">auxM</span> <span class="o">=</span> <span class="n">SPsir</span><span class="p">[:,</span><span class="mi">1</span><span class="p">]</span>
+<span class="n">SPM</span> <span class="o">=</span> <span class="n">auxM</span>
+<span class="n">auxR</span> <span class="o">=</span> <span class="n">SPsir</span><span class="p">[:,</span><span class="mi">2</span><span class="p">]</span>
+<span class="n">SPR</span> <span class="o">=</span> <span class="n">auxR</span>
+
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="Visualizando-a-evolução">
+<h2>Visualizando a evolução<a class="headerlink" href="#Visualizando-a-evolução" title="Permalink to this headline">¶</a></h2>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="kn">from</span> <span class="nn">bokeh.models</span>   <span class="kn">import</span> <span class="n">Legend</span><span class="p">,</span> <span class="n">ColumnDataSource</span><span class="p">,</span> <span class="n">RangeTool</span><span class="p">,</span> <span class="n">LinearAxis</span><span class="p">,</span> <span class="n">Range1d</span>
+<span class="kn">from</span> <span class="nn">bokeh.palettes</span> <span class="kn">import</span> <span class="n">brewer</span><span class="p">,</span> <span class="n">Inferno256</span>
+<span class="kn">from</span> <span class="nn">bokeh.plotting</span> <span class="kn">import</span> <span class="n">figure</span><span class="p">,</span> <span class="n">show</span>
+<span class="kn">from</span> <span class="nn">bokeh.layouts</span>  <span class="kn">import</span> <span class="n">column</span>
+<span class="kn">from</span> <span class="nn">bokeh.io</span>       <span class="kn">import</span> <span class="n">output_notebook</span>
+
+<span class="n">output_notebook</span><span class="p">()</span>
+
+<span class="c1"># Criando a figura</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Evolução do COVID&quot;</span><span class="p">,</span>
+    <span class="n">y_axis_type</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
+    <span class="n">plot_width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+    <span class="n">plot_height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span>
+
+<span class="c1"># Incluindo os dados de mortes</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPM</span><span class="p">)),</span> <span class="n">SPM</span><span class="p">,</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Mortes&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#de425b&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Incluindo os dados de infectados</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPI</span><span class="p">)),</span> <span class="n">SPI</span><span class="p">,</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Infectados&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffd885&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Incluindo os dados de recuperados</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPR</span><span class="p">)),</span> <span class="n">SPR</span><span class="p">,</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Removidos&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#99d594&quot;</span>
+<span class="p">)</span>
+
+
+<span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">band_fill_color</span> <span class="o">=</span> <span class="s2">&quot;olive&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">band_fill_alpha</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Indivíduos&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Dias&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">click_policy</span><span class="o">=</span><span class="s2">&quot;hide&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;bottom_right&quot;</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div class="bk-root">
+    <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
+    <span id="1001">Loading BokehJS ...</span>
+</div></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    var script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, {
+        iopub: {
+          output: function(msg) {
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+      return
+    }
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  var NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    var el = document.getElementById("1001");
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    const hashes = {"https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js": "JpP8FXbgAZLkfur7LiK3j9AGBhHNIvF742meBJrjO2ShJDhCG2I1uVvW+0DUtrmc", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.1.min.js": "xZlADit0Q04ISQEdKg2k3L4W9AwQBAuDs9nJL9fM/WwzL1tEU9VPNezOFX0nLEAz", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.0.1.min.js": "4BuPRZkdMKSnj3zoxiNrQ86XgNw0rYmBOxe7nshquXwwcauupgBF2DHLVG1WuZlV", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.0.1.min.js": "Dv1SQ87hmDqK6S5OhBf0bCuwAEvL5QYL0PuR/F1SPVhCS/r/abjkbpKDYL2zeM19"};
+
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      if (url in hashes) {
+        element.crossOrigin = "anonymous";
+        element.integrity = "sha384-" + hashes[url];
+      }
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };var element = document.getElementById("1001");
+  if (element == null) {
+    console.error("Bokeh: ERROR: autoload.js configured with elementid '1001' but no matching script tag was found. ")
+    return false;
+  }
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.0.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.0.1.min.js"];
+  var css_urls = [];
+
+
+  var inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    function(Bokeh) {
+
+
+    }
+  ];
+
+  function run_inline_js() {
+
+    if (root.Bokeh !== undefined || force === true) {
+
+    for (var i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+    if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      var cell = $(document.getElementById("1001")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));
+</script></div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div class="bk-root" id="1e92a5d6-152f-473e-a148-2e3665eb09cf" data-root-id="1002"></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+(function(root) {
+  function embed_document(root) {
+
+  var docs_json = {"398c1d10-0f17-41d4-9296-8679d7f32c37":{"roots":{"references":[{"attributes":{"below":[{"id":"1013"}],"center":[{"id":"1016"},{"id":"1020"},{"id":"1034"}],"left":[{"id":"1017"}],"plot_height":500,"plot_width":700,"renderers":[{"id":"1027"},{"id":"1039"},{"id":"1052"}],"title":{"id":"1003"},"toolbar":{"id":"1022"},"x_range":{"id":"1005"},"x_scale":{"id":"1009"},"y_range":{"id":"1007"},"y_scale":{"id":"1011"}},"id":"1002","subtype":"Figure","type":"Plot"},{"attributes":{"axis_label":"Dias","formatter":{"id":"1031"},"ticker":{"id":"1014"}},"id":"1013","type":"LinearAxis"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"1021"}]},"id":"1022","type":"Toolbar"},{"attributes":{},"id":"1005","type":"DataRange1d"},{"attributes":{"axis_label":"Indiv\u00edduos","formatter":{"id":"1033"},"ticker":{"id":"1018"}},"id":"1017","type":"LogAxis"},{"attributes":{},"id":"1014","type":"BasicTicker"},{"attributes":{"axis":{"id":"1017"},"band_fill_alpha":0.1,"band_fill_color":"olive","dimension":1,"grid_line_alpha":0,"ticker":null},"id":"1020","type":"Grid"},{"attributes":{"text":"Evolu\u00e7\u00e3o do COVID"},"id":"1003","type":"Title"},{"attributes":{"data_source":{"id":"1024"},"glyph":{"id":"1025"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1026"},"selection_glyph":null,"view":{"id":"1028"}},"id":"1027","type":"GlyphRenderer"},{"attributes":{"axis":{"id":"1013"},"grid_line_alpha":0,"ticker":null},"id":"1016","type":"Grid"},{"attributes":{},"id":"1031","type":"BasicTickFormatter"},{"attributes":{"click_policy":"hide","items":[{"id":"1035"},{"id":"1048"},{"id":"1063"}],"location":"bottom_right"},"id":"1034","type":"Legend"},{"attributes":{"num_minor_ticks":10},"id":"1018","type":"LogTicker"},{"attributes":{},"id":"1061","type":"Selection"},{"attributes":{"label":{"value":"Mortes"},"renderers":[{"id":"1027"}]},"id":"1035","type":"LegendItem"},{"attributes":{"source":{"id":"1024"}},"id":"1028","type":"CDSView"},{"attributes":{"callback":null},"id":"1021","type":"HoverTool"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#99d594","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1051","type":"Line"},{"attributes":{"data_source":{"id":"1036"},"glyph":{"id":"1037"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1038"},"selection_glyph":null,"view":{"id":"1040"}},"id":"1039","type":"GlyphRenderer"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAACAnkAAAAAAAJ6hQAAAAAAADKRAAAAAAABcp0AAAAAAACirQAAAAAAA5q5AAAAAAADZsEAAAAAAADeyQAAAAAAAwLZAAAAAAAATu0AAAAAAAKS/QAAAAAAA/sFAAAAAAABFxEAAAAAAAFDGQAAAAAAA88dAAAAAAICBy0AAAAAAAMHPQAAAAADAxNFAAAAAAEB400AAAAAAAIDUQAAAAAAA7tVAAAAAAABP10AAAAAAQCzZQAAAAABAVtxAAAAAAEBf3kAAAAAAoMvgQAAAAADgJuJAAAAAAKAj40AAAAAAIP3jQAAAAADgU+VAAAAAAOCq5kAAAAAAQI/oQAAAAAAgeOpAAAAAAGAO7UAAAAAAwN7uQAAAAABwcvBAAAAAAAD48UAAAAAAcHvzQAAAAABgRfVAAAAAAECb9kAAAAAAcNP3QA==","dtype":"float64","shape":[41]}},"selected":{"id":"1061"},"selection_policy":{"id":"1062"}},"id":"1036","type":"ColumnDataSource"},{"attributes":{"line_cap":"round","line_color":"#de425b","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1025","type":"Line"},{"attributes":{"source":{"id":"1049"}},"id":"1053","type":"CDSView"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAAAAQUAAAAAAAIBHQAAAAAAAgE1AAAAAAABAU0AAAAAAAEBXQAAAAAAAwFxAAAAAAAAgYUAAAAAAAMBkQAAAAAAAQGlAAAAAAACAbkAAAAAAAABzQAAAAAAA0HZAAAAAAADAe0AAAAAAABB/QAAAAAAA0IFAAAAAAACYhUAAAAAAANCJQAAAAAAA+I1AAAAAAADEkEAAAAAAANSRQAAAAAAAVJNAAAAAAAAwlUAAAAAAAFSYQAAAAAAAgJtAAAAAAAConkAAAAAAAPqgQAAAAAAAjqJAAAAAAAB2o0AAAAAAAEykQAAAAAAAqKVAAAAAAAD6pkAAAAAAACqqQAAAAAAAFK1AAAAAAADUr0AAAAAAAM2wQAAAAAAA/rFAAAAAAADms0AAAAAAAKG1QAAAAAAAXLdAAAAAAAAkuUAAAAAAAJW6QA==","dtype":"float64","shape":[41]}},"selected":{"id":"1046"},"selection_policy":{"id":"1047"}},"id":"1024","type":"ColumnDataSource"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#de425b","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1026","type":"Line"},{"attributes":{"data_source":{"id":"1049"},"glyph":{"id":"1050"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1051"},"selection_glyph":null,"view":{"id":"1053"}},"id":"1052","type":"GlyphRenderer"},{"attributes":{"line_cap":"round","line_color":"#99d594","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1050","type":"Line"},{"attributes":{},"id":"1011","type":"LogScale"},{"attributes":{"label":{"value":"Removidos"},"renderers":[{"id":"1052"}]},"id":"1063","type":"LegendItem"},{"attributes":{},"id":"1046","type":"Selection"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#ffd885","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1038","type":"Line"},{"attributes":{},"id":"1062","type":"UnionRenderers"},{"attributes":{"label":{"value":"Infectados"},"renderers":[{"id":"1039"}]},"id":"1048","type":"LegendItem"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAAAAIEAAAAAAAAA0QAAAAAAAADtAAAAAAAAARUAAAAAAAABFQAAAAAAAAExAAAAAAAAATEAAAAAAAIBQQAAAAAAAgFBAAAAAAACAU0AAAAAAAIBTQAAAAAAAgFNAAAAAAACAU0AAAAAAAABaQAAAAAAAMHZAAAAAAAD4gUAAAAAAAOCIQAAAAAAAaIpAAAAAAAA4j0AAAAAAAMCPQAAAAAAA4JBAAAAAAABCp0AAAAAAAKCoQAAAAAAAoLBAAAAAAABdsUAAAAAAAICzQAAAAAAA+LNAAAAAAADFtUAAAAAAAAu6QAAAAAAArrxAAAAAAAClwEAAAAAAgL/BQAAAAAAAQ8RAAAAAAACvxkAAAAAAgCXIQAAAAACAr8pAAAAAAICDzUAAAAAAgD/PQAAAAAAAmtFAAAAAAEDg0kAAAAAAAPnTQA==","dtype":"float64","shape":[41]}},"selected":{"id":"1073"},"selection_policy":{"id":"1074"}},"id":"1049","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1036"}},"id":"1040","type":"CDSView"},{"attributes":{},"id":"1073","type":"Selection"},{"attributes":{"ticker":null},"id":"1033","type":"LogTickFormatter"},{"attributes":{},"id":"1047","type":"UnionRenderers"},{"attributes":{"line_cap":"round","line_color":"#ffd885","line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1037","type":"Line"},{"attributes":{},"id":"1074","type":"UnionRenderers"},{"attributes":{},"id":"1007","type":"DataRange1d"},{"attributes":{},"id":"1009","type":"LinearScale"}],"root_ids":["1002"]},"title":"Bokeh Application","version":"2.0.1"}};
+  var render_items = [{"docid":"398c1d10-0f17-41d4-9296-8679d7f32c37","root_ids":["1002"],"roots":{"1002":"1e92a5d6-152f-473e-a148-2e3665eb09cf"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);
+</script></div>
+</div>
+</div>
+</div>
+<div class="section" id="O-problema">
+<h1>O problema<a class="headerlink" href="#O-problema" title="Permalink to this headline">¶</a></h1>
+<p>O conjunto de equações diferenciais que caracteriza o modelo é descrito abaixo. No modelo $:nbsphinx-math:<cite>beta `- :nbsphinx-math:</cite>text{representa a taxa de transmissão ou taxa efetiva de contato}` $ e <span class="math notranslate nohighlight">\(r - \text{a taxa de remoção ou recuperação.}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\begin{split}
+  \frac{dS(t)}{dt} &amp; = -\beta S(t) I(t) \\
+  \frac{dI(t)}{dt} &amp; = \beta S(t) I(t) - rI(t)  \\
+  \frac{dR(t)}{dt} &amp; = r I(t)
+  \end{split}\end{split}\]</div>
+<p>Gostaríamos de identificar quais parâmetros <span class="math notranslate nohighlight">\(\beta\)</span> e <span class="math notranslate nohighlight">\(r\)</span> resultam num melhor ajuste do modelo para os dados de <strong>S</strong>,<strong>I</strong> e <strong>R</strong></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="c1"># Tamanho da população - N</span>
+<span class="n">N</span> <span class="o">=</span> <span class="mf">220e6</span>
+
+<span class="c1"># Importando o modelo SIR</span>
+<span class="kn">from</span> <span class="nn">models</span> <span class="kn">import</span> <span class="o">*</span>
+
+<span class="n">sir_model</span> <span class="o">=</span> <span class="n">ss</span><span class="o">.</span><span class="n">SIR</span><span class="p">()</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div class="bk-root">
+    <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
+    <span id="1141">Loading BokehJS ...</span>
+</div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+
+(function(root) {
+  function now() {
+    return new Date();
+  }
+
+  var force = true;
+
+  if (typeof root._bokeh_onload_callbacks === "undefined" || force === true) {
+    root._bokeh_onload_callbacks = [];
+    root._bokeh_is_loading = undefined;
+  }
+
+  var JS_MIME_TYPE = 'application/javascript';
+  var HTML_MIME_TYPE = 'text/html';
+  var EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
+  var CLASS_NAME = 'output_bokeh rendered_html';
+
+  /**
+   * Render data to the DOM node
+   */
+  function render(props, node) {
+    var script = document.createElement("script");
+    node.appendChild(script);
+  }
+
+  /**
+   * Handle when an output is cleared or removed
+   */
+  function handleClearOutput(event, handle) {
+    var cell = handle.cell;
+
+    var id = cell.output_area._bokeh_element_id;
+    var server_id = cell.output_area._bokeh_server_id;
+    // Clean up Bokeh references
+    if (id != null && id in Bokeh.index) {
+      Bokeh.index[id].model.document.clear();
+      delete Bokeh.index[id];
+    }
+
+    if (server_id !== undefined) {
+      // Clean up Bokeh references
+      var cmd = "from bokeh.io.state import curstate; print(curstate().uuid_to_server['" + server_id + "'].get_sessions()[0].document.roots[0]._id)";
+      cell.notebook.kernel.execute(cmd, {
+        iopub: {
+          output: function(msg) {
+            var id = msg.content.text.trim();
+            if (id in Bokeh.index) {
+              Bokeh.index[id].model.document.clear();
+              delete Bokeh.index[id];
+            }
+          }
+        }
+      });
+      // Destroy server and session
+      var cmd = "import bokeh.io.notebook as ion; ion.destroy_server('" + server_id + "')";
+      cell.notebook.kernel.execute(cmd);
+    }
+  }
+
+  /**
+   * Handle when a new output is added
+   */
+  function handleAddOutput(event, handle) {
+    var output_area = handle.output_area;
+    var output = handle.output;
+
+    // limit handleAddOutput to display_data with EXEC_MIME_TYPE content only
+    if ((output.output_type != "display_data") || (!output.data.hasOwnProperty(EXEC_MIME_TYPE))) {
+      return
+    }
+
+    var toinsert = output_area.element.find("." + CLASS_NAME.split(' ')[0]);
+
+    if (output.metadata[EXEC_MIME_TYPE]["id"] !== undefined) {
+      toinsert[toinsert.length - 1].firstChild.textContent = output.data[JS_MIME_TYPE];
+      // store reference to embed id on output_area
+      output_area._bokeh_element_id = output.metadata[EXEC_MIME_TYPE]["id"];
+    }
+    if (output.metadata[EXEC_MIME_TYPE]["server_id"] !== undefined) {
+      var bk_div = document.createElement("div");
+      bk_div.innerHTML = output.data[HTML_MIME_TYPE];
+      var script_attrs = bk_div.children[0].attributes;
+      for (var i = 0; i < script_attrs.length; i++) {
+        toinsert[toinsert.length - 1].firstChild.setAttribute(script_attrs[i].name, script_attrs[i].value);
+        toinsert[toinsert.length - 1].firstChild.textContent = bk_div.children[0].textContent
+      }
+      // store reference to server id on output_area
+      output_area._bokeh_server_id = output.metadata[EXEC_MIME_TYPE]["server_id"];
+    }
+  }
+
+  function register_renderer(events, OutputArea) {
+
+    function append_mime(data, metadata, element) {
+      // create a DOM node to render to
+      var toinsert = this.create_output_subarea(
+        metadata,
+        CLASS_NAME,
+        EXEC_MIME_TYPE
+      );
+      this.keyboard_manager.register_events(toinsert);
+      // Render to node
+      var props = {data: data, metadata: metadata[EXEC_MIME_TYPE]};
+      render(props, toinsert[toinsert.length - 1]);
+      element.append(toinsert);
+      return toinsert
+    }
+
+    /* Handle when an output is cleared or removed */
+    events.on('clear_output.CodeCell', handleClearOutput);
+    events.on('delete.Cell', handleClearOutput);
+
+    /* Handle when a new output is added */
+    events.on('output_added.OutputArea', handleAddOutput);
+
+    /**
+     * Register the mime type and append_mime function with output_area
+     */
+    OutputArea.prototype.register_mime_type(EXEC_MIME_TYPE, append_mime, {
+      /* Is output safe? */
+      safe: true,
+      /* Index of renderer in `output_area.display_order` */
+      index: 0
+    });
+  }
+
+  // register the mime type if in Jupyter Notebook environment and previously unregistered
+  if (root.Jupyter !== undefined) {
+    var events = require('base/js/events');
+    var OutputArea = require('notebook/js/outputarea').OutputArea;
+
+    if (OutputArea.prototype.mime_types().indexOf(EXEC_MIME_TYPE) == -1) {
+      register_renderer(events, OutputArea);
+    }
+  }
+
+
+  if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
+    root._bokeh_timeout = Date.now() + 5000;
+    root._bokeh_failed_load = false;
+  }
+
+  var NB_LOAD_WARNING = {'data': {'text/html':
+     "<div style='background-color: #fdd'>\n"+
+     "<p>\n"+
+     "BokehJS does not appear to have successfully loaded. If loading BokehJS from CDN, this \n"+
+     "may be due to a slow or bad network connection. Possible fixes:\n"+
+     "</p>\n"+
+     "<ul>\n"+
+     "<li>re-rerun `output_notebook()` to attempt to load from CDN again, or</li>\n"+
+     "<li>use INLINE resources instead, as so:</li>\n"+
+     "</ul>\n"+
+     "<code>\n"+
+     "from bokeh.resources import INLINE\n"+
+     "output_notebook(resources=INLINE)\n"+
+     "</code>\n"+
+     "</div>"}};
+
+  function display_loaded() {
+    var el = document.getElementById("1141");
+    if (el != null) {
+      el.textContent = "BokehJS is loading...";
+    }
+    if (root.Bokeh !== undefined) {
+      if (el != null) {
+        el.textContent = "BokehJS " + root.Bokeh.version + " successfully loaded.";
+      }
+    } else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(display_loaded, 100)
+    }
+  }
+
+
+  function run_callbacks() {
+    try {
+      root._bokeh_onload_callbacks.forEach(function(callback) {
+        if (callback != null)
+          callback();
+      });
+    } finally {
+      delete root._bokeh_onload_callbacks
+    }
+    console.debug("Bokeh: all callbacks have finished");
+  }
+
+  function load_libs(css_urls, js_urls, callback) {
+    if (css_urls == null) css_urls = [];
+    if (js_urls == null) js_urls = [];
+
+    root._bokeh_onload_callbacks.push(callback);
+    if (root._bokeh_is_loading > 0) {
+      console.debug("Bokeh: BokehJS is being loaded, scheduling callback at", now());
+      return null;
+    }
+    if (js_urls == null || js_urls.length === 0) {
+      run_callbacks();
+      return null;
+    }
+    console.debug("Bokeh: BokehJS not loaded, scheduling load and callback at", now());
+    root._bokeh_is_loading = css_urls.length + js_urls.length;
+
+    function on_load() {
+      root._bokeh_is_loading--;
+      if (root._bokeh_is_loading === 0) {
+        console.debug("Bokeh: all BokehJS libraries/stylesheets loaded");
+        run_callbacks()
+      }
+    }
+
+    function on_error() {
+      console.error("failed to load " + url);
+    }
+
+    for (var i = 0; i < css_urls.length; i++) {
+      var url = css_urls[i];
+      const element = document.createElement("link");
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.rel = "stylesheet";
+      element.type = "text/css";
+      element.href = url;
+      console.debug("Bokeh: injecting link tag for BokehJS stylesheet: ", url);
+      document.body.appendChild(element);
+    }
+
+    const hashes = {"https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js": "JpP8FXbgAZLkfur7LiK3j9AGBhHNIvF742meBJrjO2ShJDhCG2I1uVvW+0DUtrmc", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.1.min.js": "xZlADit0Q04ISQEdKg2k3L4W9AwQBAuDs9nJL9fM/WwzL1tEU9VPNezOFX0nLEAz", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.0.1.min.js": "4BuPRZkdMKSnj3zoxiNrQ86XgNw0rYmBOxe7nshquXwwcauupgBF2DHLVG1WuZlV", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.0.1.min.js": "Dv1SQ87hmDqK6S5OhBf0bCuwAEvL5QYL0PuR/F1SPVhCS/r/abjkbpKDYL2zeM19"};
+
+    for (var i = 0; i < js_urls.length; i++) {
+      var url = js_urls[i];
+      var element = document.createElement('script');
+      element.onload = on_load;
+      element.onerror = on_error;
+      element.async = false;
+      element.src = url;
+      if (url in hashes) {
+        element.crossOrigin = "anonymous";
+        element.integrity = "sha384-" + hashes[url];
+      }
+      console.debug("Bokeh: injecting script tag for BokehJS library: ", url);
+      document.head.appendChild(element);
+    }
+  };var element = document.getElementById("1141");
+  if (element == null) {
+    console.error("Bokeh: ERROR: autoload.js configured with elementid '1141' but no matching script tag was found. ")
+    return false;
+  }
+
+  function inject_raw_css(css) {
+    const element = document.createElement("style");
+    element.appendChild(document.createTextNode(css));
+    document.body.appendChild(element);
+  }
+
+
+  var js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.0.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.0.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.0.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.0.1.min.js"];
+  var css_urls = [];
+
+
+  var inline_js = [
+    function(Bokeh) {
+      Bokeh.set_log_level("info");
+    },
+    function(Bokeh) {
+
+
+    }
+  ];
+
+  function run_inline_js() {
+
+    if (root.Bokeh !== undefined || force === true) {
+
+    for (var i = 0; i < inline_js.length; i++) {
+      inline_js[i].call(root, root.Bokeh);
+    }
+    if (force === true) {
+        display_loaded();
+      }} else if (Date.now() < root._bokeh_timeout) {
+      setTimeout(run_inline_js, 100);
+    } else if (!root._bokeh_failed_load) {
+      console.log("Bokeh: BokehJS failed to load within specified timeout.");
+      root._bokeh_failed_load = true;
+    } else if (force !== true) {
+      var cell = $(document.getElementById("1141")).parents('.cell').data().cell;
+      cell.output_area.append_execute_result(NB_LOAD_WARNING)
+    }
+
+  }
+
+  if (root._bokeh_is_loading === 0) {
+    console.debug("Bokeh: BokehJS loaded, going straight to plotting");
+    run_inline_js();
+  } else {
+    load_libs(css_urls, js_urls, function() {
+      console.debug("Bokeh: BokehJS plotting callback run at", now());
+      run_inline_js();
+    });
+  }
+}(window));
+</script></div>
+</div>
+</div>
+<div class="section" id="Estimando-os-parâmetros">
+<h1>Estimando os parâmetros<a class="headerlink" href="#Estimando-os-parâmetros" title="Permalink to this headline">¶</a></h1>
+<p>Para estimarmos os parâmetros do modelo <span class="math notranslate nohighlight">\(\mathbf{\beta}\)</span> e <span class="math notranslate nohighlight">\(\mathbf{r}\)</span>, vamos utilizar inicialmente o método de mínimos quadrados. Podemos então formular o problema a partir da Equação abaixo. Na Equação <span class="math notranslate nohighlight">\(y_m(k)\)</span> representa o dado real em cada amostra <span class="math notranslate nohighlight">\(k\)</span>; <span class="math notranslate nohighlight">\(y_s(\theta,k)\)</span> representa o <strong>valor estimado</strong> a partir da simulação do modelo para uma determinada amostra <span class="math notranslate nohighlight">\(k\)</span> e <span class="math notranslate nohighlight">\(\theta\)</span> representa o vetor ed parâmetros <span class="math notranslate nohighlight">\(\theta = [ \beta \; \; r]^T\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[min_{\theta}= \sum_{k=1}^{K}(y_m(k) - y_s(\theta,k))^2\]</div>
+<p>A equação formula a pergunta: quais os valores de <span class="math notranslate nohighlight">\(beta\)</span> e <span class="math notranslate nohighlight">\(r\)</span> que minizam o erro quadrático quando comparados com os dados reais.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">SPS</span> <span class="o">=</span> <span class="n">N</span> <span class="o">-</span> <span class="n">SPI</span> <span class="o">-</span> <span class="n">SPR</span>
+
+<span class="n">time</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="nb">len</span><span class="p">(</span><span class="n">SPI</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">SPI</span><span class="p">))</span>
+
+<span class="c1"># Estimando os parâmetros</span>
+<span class="n">sir_model</span><span class="o">.</span><span class="n">fit</span><span class="p">(</span><span class="n">SPS</span><span class="p">,</span> <span class="n">SPI</span><span class="p">,</span> <span class="n">SPR</span><span class="p">,</span> <span class="n">time</span><span class="p">,</span> <span class="n">beta_sens</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">,</span><span class="mi">1</span><span class="p">],</span> <span class="n">r_sens</span><span class="o">=</span><span class="p">[</span><span class="mi">100</span><span class="p">,</span><span class="mi">10</span><span class="p">])</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+         ├─ S(0) ─   219998040.0   I(0) ─   1952.0   R(0) ─   8.0
+         ├─ beta ─   4.545495041683099e-09   r ─   0.024390243902439025
+         ├─ beta bound ─   4.545495041683098e-12  ─  4.545495041683099e-09
+         ├─ r bound ─   0.00024390243902439024  ─  0.24390243902439024
+         ├─ equation weights ─   [0.0004435994066128953, 1, 1]
+         └─ Defined at:  5.379563434742203e-10  ─  0.019913448830013433
+
+</pre></div></div>
+</div>
+<div class="nbinput nblast docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="n">initial</span> <span class="o">=</span> <span class="p">[</span><span class="n">SPS</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SPI</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="n">SPR</span><span class="p">[</span><span class="mi">0</span><span class="p">]]</span>
+
+<span class="n">results</span> <span class="o">=</span> <span class="n">sir_model</span><span class="o">.</span><span class="n">predict</span><span class="p">(</span><span class="n">initial</span><span class="p">,</span> <span class="n">time</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre>
+
+<span></span><span class="c1"># Criando a figura</span>
+<span class="n">p</span> <span class="o">=</span> <span class="n">figure</span><span class="p">(</span>
+    <span class="n">tools</span><span class="o">=</span><span class="s2">&quot;hover&quot;</span><span class="p">,</span>
+    <span class="n">title</span><span class="o">=</span><span class="s2">&quot;Evolução do COVID&quot;</span><span class="p">,</span>
+    <span class="n">y_axis_type</span><span class="o">=</span><span class="s2">&quot;log&quot;</span><span class="p">,</span>
+    <span class="n">plot_width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>
+    <span class="n">plot_height</span><span class="o">=</span><span class="mi">500</span>
+<span class="p">)</span>
+
+<span class="c1"># Incluindo os dados de mortes</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPM</span><span class="p">)),</span> <span class="n">SPM</span><span class="p">,</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Mortes&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#de425b&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Incluindo os dados de infectados</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPI</span><span class="p">)),</span> <span class="n">SPI</span><span class="p">,</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Infectados&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#ffd885&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Incluindo os dados de recuperados</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPR</span><span class="p">)),</span> <span class="n">SPR</span><span class="p">,</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Removidos&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">3</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#99d594&quot;</span>
+<span class="p">)</span>
+
+
+<span class="n">p</span><span class="o">.</span><span class="n">grid</span><span class="o">.</span><span class="n">grid_line_alpha</span> <span class="o">=</span> <span class="mi">0</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">band_fill_color</span> <span class="o">=</span> <span class="s2">&quot;olive&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">ygrid</span><span class="o">.</span><span class="n">band_fill_alpha</span> <span class="o">=</span> <span class="mf">0.1</span>
+<span class="n">p</span><span class="o">.</span><span class="n">yaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Indivíduos&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">xaxis</span><span class="o">.</span><span class="n">axis_label</span> <span class="o">=</span> <span class="s2">&quot;Dias&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">click_policy</span><span class="o">=</span><span class="s2">&quot;hide&quot;</span>
+<span class="n">p</span><span class="o">.</span><span class="n">legend</span><span class="o">.</span><span class="n">location</span> <span class="o">=</span> <span class="s2">&quot;bottom_right&quot;</span>
+
+
+<span class="c1"># Incluindo os dados de infectados</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPI</span><span class="p">)),</span> <span class="n">results</span><span class="p">[</span><span class="mi">1</span><span class="p">],</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Infectados - Modelo&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">line_dash</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#f57f17&quot;</span>
+<span class="p">)</span>
+
+<span class="c1"># Incluindo os dados de recuperados</span>
+<span class="n">p</span><span class="o">.</span><span class="n">line</span><span class="p">(</span>
+    <span class="nb">range</span><span class="p">(</span><span class="nb">len</span><span class="p">(</span><span class="n">SPR</span><span class="p">)),</span> <span class="n">results</span><span class="p">[</span><span class="mi">2</span><span class="p">],</span>
+    <span class="n">legend_label</span><span class="o">=</span><span class="s2">&quot;Removidos - Modelo&quot;</span><span class="p">,</span>
+    <span class="n">line_dash</span><span class="o">=</span><span class="s2">&quot;dashed&quot;</span><span class="p">,</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">4</span><span class="p">,</span>
+    <span class="n">line_cap</span><span class="o">=</span><span class="s2">&quot;round&quot;</span><span class="p">,</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;#1b5e20&quot;</span>
+<span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">p</span><span class="p">)</span>
+
+</pre></div>
+</div>
+</div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area rendered_html docutils container">
+<div class="bk-root" id="3e7fb7ed-5a42-4d7a-9e00-86b3584b8981" data-root-id="1142"></div></div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="output_javascript"></div>
+<script type="text/javascript">
+var element = document.currentScript.previousSibling.previousSibling;
+(function(root) {
+  function embed_document(root) {
+
+  var docs_json = {"26c0c771-e44b-4ff0-a566-1b6751083a8d":{"roots":{"references":[{"attributes":{"below":[{"id":"1153"}],"center":[{"id":"1156"},{"id":"1160"},{"id":"1174"}],"left":[{"id":"1157"}],"plot_height":500,"plot_width":700,"renderers":[{"id":"1167"},{"id":"1179"},{"id":"1192"},{"id":"1207"},{"id":"1224"}],"title":{"id":"1143"},"toolbar":{"id":"1162"},"x_range":{"id":"1145"},"x_scale":{"id":"1149"},"y_range":{"id":"1147"},"y_scale":{"id":"1151"}},"id":"1142","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"1201","type":"Selection"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAACAnkAAAAAAAJ6hQAAAAAAADKRAAAAAAABcp0AAAAAAACirQAAAAAAA5q5AAAAAAADZsEAAAAAAADeyQAAAAAAAwLZAAAAAAAATu0AAAAAAAKS/QAAAAAAA/sFAAAAAAABFxEAAAAAAAFDGQAAAAAAA88dAAAAAAICBy0AAAAAAAMHPQAAAAADAxNFAAAAAAEB400AAAAAAAIDUQAAAAAAA7tVAAAAAAABP10AAAAAAQCzZQAAAAABAVtxAAAAAAEBf3kAAAAAAoMvgQAAAAADgJuJAAAAAAKAj40AAAAAAIP3jQAAAAADgU+VAAAAAAOCq5kAAAAAAQI/oQAAAAAAgeOpAAAAAAGAO7UAAAAAAwN7uQAAAAABwcvBAAAAAAAD48UAAAAAAcHvzQAAAAABgRfVAAAAAAECb9kAAAAAAcNP3QA==","dtype":"float64","shape":[41]}},"selected":{"id":"1201"},"selection_policy":{"id":"1202"}},"id":"1176","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1189"}},"id":"1193","type":"CDSView"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#f57f17","line_dash":[6],"line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1206","type":"Line"},{"attributes":{},"id":"1237","type":"Selection"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAAAAIEAAAAAAAAA0QAAAAAAAADtAAAAAAAAARUAAAAAAAABFQAAAAAAAAExAAAAAAAAATEAAAAAAAIBQQAAAAAAAgFBAAAAAAACAU0AAAAAAAIBTQAAAAAAAgFNAAAAAAACAU0AAAAAAAABaQAAAAAAAMHZAAAAAAAD4gUAAAAAAAOCIQAAAAAAAaIpAAAAAAAA4j0AAAAAAAMCPQAAAAAAA4JBAAAAAAABCp0AAAAAAAKCoQAAAAAAAoLBAAAAAAABdsUAAAAAAAICzQAAAAAAA+LNAAAAAAADFtUAAAAAAAAu6QAAAAAAArrxAAAAAAAClwEAAAAAAgL/BQAAAAAAAQ8RAAAAAAACvxkAAAAAAgCXIQAAAAACAr8pAAAAAAICDzUAAAAAAgD/PQAAAAAAAmtFAAAAAAEDg0kAAAAAAAPnTQA==","dtype":"float64","shape":[41]}},"selected":{"id":"1218"},"selection_policy":{"id":"1219"}},"id":"1189","type":"ColumnDataSource"},{"attributes":{"data_source":{"id":"1189"},"glyph":{"id":"1190"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1191"},"selection_glyph":null,"view":{"id":"1193"}},"id":"1192","type":"GlyphRenderer"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAACAnkB+X50+dd6gQJZmfkbqqKJAtAWX0gqkpEA6gKyLAdWmQNy7vYCFQalABPKRDOnvq0DX0d1RKueuQGF5xbuCF7FAo6snZgToskDA1GqO1em0QFvNHi0yIrdAOSMScuSWuUCUKn7ZU068QDmIwt2VT79A92gWNkBRwUCrG18n3yfDQJOl8t9yMMVAm0PSsUhwx0AxGejwPe3JQFTnBzrPrcxAiOeqUym5z0BJTz7unYvRQAmba/hmaNNAESsif8p31UB6s1IDJ7/XQBqqasRsRNpAo8JELi0O3UC+Nr311RHgQAf4UeB4xuFAbBPwsnCp40BYNzZLp7/lQImwEsSLDuhAJ43SiSCc6kDPAb3qCm/tQG99LCNSR/BA+WFBhoYB8kD0uYrdoOrzQM2YjwSZB/ZAKCCuQO1d+ECCxvNjsPP6QA==","dtype":"float64","shape":[41]}},"selected":{"id":"1237"},"selection_policy":{"id":"1238"}},"id":"1204","type":"ColumnDataSource"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#1b5e20","line_dash":[6],"line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1223","type":"Line"},{"attributes":{},"id":"1238","type":"UnionRenderers"},{"attributes":{"callback":null},"id":"1161","type":"HoverTool"},{"attributes":{"text":"Evolu\u00e7\u00e3o do COVID"},"id":"1143","type":"Title"},{"attributes":{"data_source":{"id":"1164"},"glyph":{"id":"1165"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1166"},"selection_glyph":null,"view":{"id":"1168"}},"id":"1167","type":"GlyphRenderer"},{"attributes":{"source":{"id":"1176"}},"id":"1180","type":"CDSView"},{"attributes":{"click_policy":"hide","items":[{"id":"1175"},{"id":"1188"},{"id":"1203"},{"id":"1220"},{"id":"1239"}],"location":"bottom_right"},"id":"1174","type":"Legend"},{"attributes":{"axis_label":"Indiv\u00edduos","formatter":{"id":"1173"},"ticker":{"id":"1158"}},"id":"1157","type":"LogAxis"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#99d594","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"1191","type":"Line"},{"attributes":{"source":{"id":"1204"}},"id":"1208","type":"CDSView"},{"attributes":{"data_source":{"id":"1176"},"glyph":{"id":"1177"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1178"},"selection_glyph":null,"view":{"id":"1180"}},"id":"1179","type":"GlyphRenderer"},{"attributes":{},"id":"1186","type":"Selection"},{"attributes":{},"id":"1171","type":"BasicTickFormatter"},{"attributes":{"ticker":null},"id":"1173","type":"LogTickFormatter"},{"attributes":{"label":{"value":"Mortes"},"renderers":[{"id":"1167"}]},"id":"1175","type":"LegendItem"},{"attributes":{},"id":"1264","type":"Selection"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAAAAQUAAAAAAAIBHQAAAAAAAgE1AAAAAAABAU0AAAAAAAEBXQAAAAAAAwFxAAAAAAAAgYUAAAAAAAMBkQAAAAAAAQGlAAAAAAACAbkAAAAAAAABzQAAAAAAA0HZAAAAAAADAe0AAAAAAABB/QAAAAAAA0IFAAAAAAACYhUAAAAAAANCJQAAAAAAA+I1AAAAAAADEkEAAAAAAANSRQAAAAAAAVJNAAAAAAAAwlUAAAAAAAFSYQAAAAAAAgJtAAAAAAAConkAAAAAAAPqgQAAAAAAAjqJAAAAAAAB2o0AAAAAAAEykQAAAAAAAqKVAAAAAAAD6pkAAAAAAACqqQAAAAAAAFK1AAAAAAADUr0AAAAAAAM2wQAAAAAAA/rFAAAAAAADms0AAAAAAAKG1QAAAAAAAXLdAAAAAAAAkuUAAAAAAAJW6QA==","dtype":"float64","shape":[41]}},"selected":{"id":"1186"},"selection_policy":{"id":"1187"}},"id":"1164","type":"ColumnDataSource"},{"attributes":{},"id":"1202","type":"UnionRenderers"},{"attributes":{"line_cap":"round","line_color":"#ffd885","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"1177","type":"Line"},{"attributes":{},"id":"1265","type":"UnionRenderers"},{"attributes":{"line_cap":"round","line_color":"#1b5e20","line_dash":[6],"line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1222","type":"Line"},{"attributes":{"label":{"value":"Infectados - Modelo"},"renderers":[{"id":"1207"}]},"id":"1220","type":"LegendItem"},{"attributes":{"source":{"id":"1164"}},"id":"1168","type":"CDSView"},{"attributes":{},"id":"1145","type":"DataRange1d"},{"attributes":{},"id":"1219","type":"UnionRenderers"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"1161"}]},"id":"1162","type":"Toolbar"},{"attributes":{},"id":"1149","type":"LinearScale"},{"attributes":{"line_cap":"round","line_color":"#99d594","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"1190","type":"Line"},{"attributes":{},"id":"1147","type":"DataRange1d"},{"attributes":{"data_source":{"id":"1204"},"glyph":{"id":"1205"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1206"},"selection_glyph":null,"view":{"id":"1208"}},"id":"1207","type":"GlyphRenderer"},{"attributes":{},"id":"1151","type":"LogScale"},{"attributes":{"source":{"id":"1221"}},"id":"1225","type":"CDSView"},{"attributes":{"label":{"value":"Removidos"},"renderers":[{"id":"1192"}]},"id":"1203","type":"LegendItem"},{"attributes":{"axis_label":"Dias","formatter":{"id":"1171"},"ticker":{"id":"1154"}},"id":"1153","type":"LinearAxis"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#ffd885","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"1178","type":"Line"},{"attributes":{"data":{"x":[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40],"y":{"__ndarray__":"AAAAAAAAIEAQwKXZCfZIQCkUYsDfElhAQopnvOZyYkD/FVVtoIppQCSwg2qOsXBAPDg3SGkIdUCZIacrMtV5QGkp1wNuJH9ABSHx9vqBgkAGu5OvjcGFQMehfAdoWYlAFuhXE+lSjUApU61GN9yQQLMuJu+3SpNAFnnFAE77lUAa8YtK/fSYQINT1jWIP5xAdYK3AITjn0A6kAyNN/WhQNoObfFkL6RAHvLWAxmmpkA6AUJkwF+pQNTyMzh2Y6xAMC/Gqxa5r0BnqaS2qbSxQGmctCflvrNAzGemKI8AtkCjIFGpiX+4QPxnrFdWQrtAbL01jSdQvkBXStWEedjAQMqq/FHDtsJAT1mels/HxECtDMjgABHHQAnvfN9LmMlA/Czp2UZkzECGXi3JOnzPQJFO3R0bdNFAmiuWHJFY00BHem6sbHDVQA==","dtype":"float64","shape":[41]}},"selected":{"id":"1264"},"selection_policy":{"id":"1265"}},"id":"1221","type":"ColumnDataSource"},{"attributes":{"num_minor_ticks":10},"id":"1158","type":"LogTicker"},{"attributes":{"data_source":{"id":"1221"},"glyph":{"id":"1222"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1223"},"selection_glyph":null,"view":{"id":"1225"}},"id":"1224","type":"GlyphRenderer"},{"attributes":{},"id":"1154","type":"BasicTicker"},{"attributes":{"line_cap":"round","line_color":"#de425b","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"1165","type":"Line"},{"attributes":{"label":{"value":"Removidos - Modelo"},"renderers":[{"id":"1224"}]},"id":"1239","type":"LegendItem"},{"attributes":{"line_alpha":0.1,"line_cap":"round","line_color":"#de425b","line_width":3,"x":{"field":"x"},"y":{"field":"y"}},"id":"1166","type":"Line"},{"attributes":{},"id":"1187","type":"UnionRenderers"},{"attributes":{},"id":"1218","type":"Selection"},{"attributes":{"axis":{"id":"1153"},"grid_line_alpha":0,"ticker":null},"id":"1156","type":"Grid"},{"attributes":{"label":{"value":"Infectados"},"renderers":[{"id":"1179"}]},"id":"1188","type":"LegendItem"},{"attributes":{"line_cap":"round","line_color":"#f57f17","line_dash":[6],"line_width":4,"x":{"field":"x"},"y":{"field":"y"}},"id":"1205","type":"Line"},{"attributes":{"axis":{"id":"1157"},"band_fill_alpha":0.1,"band_fill_color":"olive","dimension":1,"grid_line_alpha":0,"ticker":null},"id":"1160","type":"Grid"}],"root_ids":["1142"]},"title":"Bokeh Application","version":"2.0.1"}};
+  var render_items = [{"docid":"26c0c771-e44b-4ff0-a566-1b6751083a8d","root_ids":["1142"],"roots":{"1142":"3e7fb7ed-5a42-4d7a-9e00-86b3584b8981"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);
+</script></div>
+</div>
+</div>
+<div class="section" id="Referências">
+<h1>Referências<a class="headerlink" href="#Referências" title="Permalink to this headline">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference external" href="https://ddi.sutd.edu.sg">Predictive Monitoring of COVID-19</a></p></li>
+<li><p><a class="reference external" href="https://www.apple.com/covid19/mobility">Apple mobility data</a></p></li>
+<li><p><a class="reference external" href="https://painel.covid19br.org">Corona Virus - Brazil Data</a></p></li>
+<li><p><a class="reference external" href="https://towardsdatascience.com/infectious-disease-modelling-fit-your-model-to-coronavirus-data-2568e672dbc7">Fitting model to Corona Virus</a></p></li>
+</ul>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2020, Vanderlei Parro e Marcelo Lima
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
