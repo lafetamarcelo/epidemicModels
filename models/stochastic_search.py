@@ -79,7 +79,11 @@ class SIR:
     erroI = (w[1] * (result[1]-Data[1])**2)
     if len(result) == 3:
       erroR = (w[2] * (result[2]-Data[2])**2)
-    error = sum(erroI) + sum(erroR)
+    # Merging the error
+    try:
+      error = np.log10(sum(erroI) + sum(erroR))
+    except:
+      error = np.log10(sum(erroI))
     # print("SOLVED ONCE!!!!")
     # except:
     #   error = 10**14
@@ -171,7 +175,7 @@ class SIR:
       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
       :param dict **kwargs: The differential evolution arguments.
-      
+
     """
     # Computing the approximate values 
     # of the parameters to build the 
@@ -182,14 +186,20 @@ class SIR:
     x0 = [beta_approx, r_approx]
     lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
     upper = [beta_sens[1]*x0[0], r_sens[1]*x0[1]]
-    # Computing the initial conditions
-    # for the model simulation
-    y0 = [Sd[0], Id[0], Rd[0]]
+    # Create the train data for minimization
+    # and compute the initial conditions for 
+    # the model simulation
+    if Rd is None:
+      datatrain = (Sd, Id)
+      y0 = [Sd[0], Id[0]] 
+    else:
+      datatrain = (Sd, Id, Rd)
+      y0 = [Sd[0], Id[0], Rd[0]]  
     # Compute the error weight for each
     # differential equation resolution
     w = [max(Id)/max(Sd), 1, 1]
     if self.verbose:
-      print("\t ├─ S(0) ─  ", y0[0], "  I(0) ─  ", y0[1], "  R(0) ─  ", y0[2])
+      print("\t ├─ S(0) ─ I(0) ─ R(0) ─ ", y0)
       print("\t ├─ beta ─  ", x0[0], "  r ─  ", x0[1])
       print("\t ├─ beta bound ─  ", lower[0], " ─ ", upper[0])
       print("\t ├─ r bound ─  ", lower[1], " ─ ", upper[1])
@@ -199,10 +209,10 @@ class SIR:
         self.cost_function, 
         list(zip(lower, upper)),
         maxiter=30000,
-        popsize=35,
+        popsize=15,
         mutation=(1.5, 1.99),
-        strategy="best1bin",
-        args=((Sd, Id, Rd), y0, td, w)
+        strategy="best1exp",
+        args=(datatrain, y0, td, w)
       )
     # Simulando os dados
     c = summary.x
@@ -304,7 +314,7 @@ class SIR:
           popsize=15,
           mutation=(0.5, 1.2),
           strategy="best1exp",
-          args=(Sd_res, Id_res, y0, t_res, w)
+          args=((Sd_res, Id_res), y0, t_res, w)
         ).x
       # Simulando os dados
       [Sa, Ia] = self.simulate(y0, t_res, c)
