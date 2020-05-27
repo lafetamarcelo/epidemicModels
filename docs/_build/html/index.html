@@ -107,6 +107,7 @@
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-brasil-covid-dados-reais"><strong>SIR</strong> 🇧🇷 <strong>Brasil COVID Dados Reais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-covid-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>COVID - Parâmetros variantes</strong></a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code APIs</span></p>
 <ul>
@@ -213,7 +214,7 @@ por videos explicativos, notebooks em Python, e diversas visualizações, para a
 entendimento do conteúdo apresentado.</p>
 </div>
 <div class="section" id="alguns-resultados">
-<h1>Alguns resultados<a class="headerlink" href="#alguns-resultados" title="Permalink to this headline">¶</a></h1>
+<h1>Alguns resultados…<a class="headerlink" href="#alguns-resultados" title="Permalink to this headline">¶</a></h1>
 <p>Para dar um gosto do conteúdo aprensentado, uma análise foi feita com dados de epidemias
 do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos, é possível
 obter modelos capazes de fazer previsões dos surtos epidêmicos dos dados. Essas previsões,
@@ -231,15 +232,35 @@ juntamente com os dados, estão apresentadas na figura a seguir:</p>
    const iframe = document.getElementById("UKiFrame")
    if (screen.width < 600) {
       iframe.setAttribute("src", "UK_result.html")
-      iframe.setAttribute("height", 400)
-      iframe.setAttribute("width", 300)
+      iframe.setAttribute("height", 780)
+      iframe.setAttribute("width", 680)
    }
 </script><p>Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades
 durante os períodos de epidemias:</p>
 <a class="reference internal image-reference" href="_images/UK_models_corr.png"><img alt="_images/UK_models_corr.png" src="_images/UK_models_corr.png" style="width: 700px;" /></a>
-<div class="toctree-wrapper compound">
 </div>
-<div class="toctree-wrapper compound">
+<div class="section" id="modelos-covid-brasil-br">
+<h1>Modelos COVID Brasil 🇧🇷<a class="headerlink" href="#modelos-covid-brasil-br" title="Permalink to this headline">¶</a></h1>
+<p>Como exemplo, segue o trabalho atual com as previsões dos comportamentos da epidemia no
+Brasil, mais especificamente para o estado de São Paulo. Uma mescla entre os dados existentes
+e a previsão obtida pelo modelo SIR ajustado aos dados existentes:</p>
+<h3 style="text-align:center;">
+   <iframe
+      id="SPiFrame"
+      style="border:none;"
+      src="SP_result.html"
+      height="530"
+      width="680"
+   ></iframe>
+</h3>
+<script>
+   const iframe = document.getElementById("SPiFrame")
+   if (screen.width < 600) {
+      iframe.setAttribute("src", "SP_result.html")
+      iframe.setAttribute("height", 780)
+      iframe.setAttribute("width", 680)
+   }
+</script><div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="analytic.html"><strong>Modelo SIR</strong></a><ul>
@@ -302,6 +323,12 @@ durante os períodos de epidemias:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html#Estimando-os-parâmetros">Estimando os parâmetros</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html#Predições-utilizando-o-modelo">Predições utilizando o modelo</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html#Referências">Referências</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-covid-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>COVID - Parâmetros variantes</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR VB Model.html">Os Dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR VB Model.html#Visualizando-a-evolução">Visualizando a evolução</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR VB Model.html#Análise-de-um-modelo-com-\beta-variável-no-tempo">Análise de um modelo com <span class="math notranslate nohighlight">\(\beta\)</span> variável no tempo</a></li>
 </ul>
 </li>
 </ul>

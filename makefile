@@ -7,5 +7,5 @@ note:
 
 contents:
 	mkdir -p ./docs/_build/html/media_content/
-	cp ./html_builders/UK_results/*.html ./docs/_build/html/media_content/
+	cp ./html_builders/*/*.html ./docs/media_content/
 

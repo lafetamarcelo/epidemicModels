@@ -13,8 +13,8 @@ sua modelagem matemática até sua concepção computacional em Python. Sendo as
 por videos explicativos, notebooks em Python, e diversas visualizações, para ajudar com o 
 entendimento do conteúdo apresentado.
 
-Alguns resultados
-=================
+Alguns resultados...
+====================
 
 Para dar um gosto do conteúdo aprensentado, uma análise foi feita com dados de epidemias 
 do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos, é possível 
@@ -36,8 +36,8 @@ juntamente com os dados, estão apresentadas na figura a seguir:
       const iframe = document.getElementById("UKiFrame")
       if (screen.width < 600) {
          iframe.setAttribute("src", "UK_result.html")
-         iframe.setAttribute("height", 400)
-         iframe.setAttribute("width", 300)
+         iframe.setAttribute("height", 780)
+         iframe.setAttribute("width", 680)
       }
    </script>
 
@@ -48,9 +48,34 @@ durante os períodos de epidemias:
    :width: 700
 
 
-.. toctree::
-   :maxdepth: 2
-   :caption: Contents:
+Modelos COVID Brasil |:br:|
+============================
+
+Como exemplo, segue o trabalho atual com as previsões dos comportamentos da epidemia no 
+Brasil, mais especificamente para o estado de São Paulo. Uma mescla entre os dados existentes 
+e a previsão obtida pelo modelo SIR ajustado aos dados existentes:
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="SPiFrame"
+         style="border:none;"
+         src="SP_result.html"
+         height="530"
+         width="680"
+      ></iframe>
+   </h3>
+   <script>
+      const iframe = document.getElementById("SPiFrame")
+      if (screen.width < 600) {
+         iframe.setAttribute("src", "SP_result.html")
+         iframe.setAttribute("height", 780)
+         iframe.setAttribute("width", 680)
+      }
+   </script>
+
+
 
 
 .. toctree::

@@ -33,3 +33,12 @@
   :maxdepth: 2
 
   notebooks/COVID - SIR Model
+
+
+**SIR** |:br:| **COVID - Parâmetros variantes**
+==================================================
+
+.. toctree::
+  :maxdepth: 2
+
+  notebooks/COVID - SIR VB Model
