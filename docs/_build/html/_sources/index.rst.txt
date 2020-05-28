@@ -52,24 +52,24 @@ Modelos COVID Brasil |:br:|
 ============================
 
 Como exemplo, segue o trabalho atual com as previsões dos comportamentos da epidemia no 
-Brasil, mais especificamente para o estado de São Paulo. Uma mescla entre os dados existentes 
-e a previsão obtida pelo modelo SIR ajustado aos dados existentes:
+Brasil. Uma mescla entre os dados existentes e a previsão obtida pelo modelo SIR ajustado 
+aos dados existentes:
 
 .. raw:: html
 
    <h3 style="text-align:center;">
       <iframe 
-         id="SPiFrame"
+         id="BRiFrame"
          style="border:none;"
-         src="SP_result.html"
+         src="BR_result.html"
          height="530"
          width="680"
       ></iframe>
    </h3>
    <script>
-      const iframe = document.getElementById("SPiFrame")
+      const iframe = document.getElementById("BRiFrame")
       if (screen.width < 600) {
-         iframe.setAttribute("src", "SP_result.html")
+         iframe.setAttribute("src", "BR_result.html")
          iframe.setAttribute("height", 780)
          iframe.setAttribute("width", 680)
       }

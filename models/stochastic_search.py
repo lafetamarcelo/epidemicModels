@@ -40,8 +40,12 @@ class SIR:
 
 
   def __init__(self,
+      pop=2000000,
+      focus=["I","R"],
       verbose=True):
-    GLOBAL_ERROR_CONTROLLER = 10**14
+    self.N = pop
+    self.focus = focus
+    self.__iter_error = 10**14
     self.verbose = verbose
     self.iter_counter = 1
     self.data = {
@@ -73,20 +77,20 @@ class SIR:
       :return: The sum of the quadratic error, between simulated and real data.
       :rtype: float
     """
-    # try:
-    result = self.simulate(initial, t, p)
-    erroS = (w[0] * (result[0]-Data[0])**2)
-    erroI = (w[1] * (result[1]-Data[1])**2)
-    if len(result) == 3:
-      erroR = (w[2] * (result[2]-Data[2])**2)
-    # Merging the error
+    erro = {"S": [0], "I": [0], "R": [0]}
     try:
-      error = np.log10(sum(erroI) + sum(erroR))
+      result = self.simulate(initial, t, p)
+      erro["S"] = (w[0] * ( result[0] - Data[0] )**2)
+      erro["I"] = (w[1] * ( result[1] - Data[1] )**2)
+      if len(result) == 3:
+        erro["R"] = (w[2] * ( result[2] - Data[2] )**2)
+      # Merging the error
+      error = 0.0
+      for item in self.focus:
+        error += sum(erro[item])
+      self.__iter_error = error
     except:
-      error = np.log10(sum(erroI))
-    # print("SOLVED ONCE!!!!")
-    # except:
-    #   error = 10**14
+      error = self.__iter_error
     return error
 
 
@@ -105,13 +109,13 @@ class SIR:
     """
     if len(y) == 2:
       S, I = y
-      Sdot = -Beta * S * I
-      Idot = Beta * S * I  - r * I
+      Sdot = -Beta * S * I / self.N
+      Idot = Beta * S * I / self.N  - r * I
       return Sdot, Idot
     if len(y) == 3:
       S, I, R = y
-      Sdot = -Beta * S * I
-      Idot = Beta * S * I  - r * I
+      Sdot = -Beta * S * I / self.N
+      Idot = Beta * S * I / self.N  - r * I
       Rdot = r * I
       return Sdot, Idot, Rdot
 
@@ -159,17 +163,17 @@ class SIR:
 
   def fit(self, Sd, Id, Rd, td,
       resample=False,
-      beta_sens=[10000,1000],
-      r_sens=[10000,1000],
+      beta_sens=[100,100],
+      r_sens=[100,100],
       **kwargs):
     """
       The method responsible for estimating a set of beta and r 
       parameters for the provided data set. It assumes that in 
       the data there is only one epidemic period.
       
-      :param array Sd: Array with the suceptible data.
-      :param array Id: Array with the infected data.
-      :param array Rd: Array with the recovered data.
+      :param array Sd: Array with the suceptible data. \
+      :param array Id: Array with the infected data. \
+      :param array Rd: Array with the recovered data. \
       :param array td: The time respective to each set of samples. \
       :param array resample: The flag to set the resampling of the dataset. Default is :code:`False`. \
       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
@@ -180,8 +184,8 @@ class SIR:
     # Computing the approximate values 
     # of the parameters to build the 
     # parameter boundaries
-    beta_approx = 1 / Sd.max()
-    r_approx = 1 / int(td[-1])
+    beta_approx = 1 #/ Sd.max()
+    r_approx = 1 / 7 #int(td[-1])
     # Computing the parameter bounds   
     x0 = [beta_approx, r_approx]
     lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
@@ -208,10 +212,13 @@ class SIR:
     summary = differential_evolution(
         self.cost_function, 
         list(zip(lower, upper)),
-        maxiter=30000,
-        popsize=15,
+        maxiter=60000,
+        popsize=150,
         mutation=(1.5, 1.99),
         strategy="best1exp",
+        workers=-1,
+        updating='deferred',
+        tol=0.00001,
         args=(datatrain, y0, td, w)
       )
     # Simulando os dados
@@ -238,17 +245,17 @@ class SIR:
       dataset. It assumes that in the data there are several epidemic
       periods.
       
-      :param array Sd: Array with the suceptible data.
-      :param array Id: Array with the infected data.
-      :param array Bd: Array with the births data.
-      :param array td: The time respective to each set of samples.
-      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`. \
-      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`. \
-      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`. \
-      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`. \
-      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
-      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
-      :param int out_type: The output type, it can be :code:`1` or :code:`0`. Default is :code:`0`.
+      :param array Sd: Array with the suceptible data.\
+      :param array Id: Array with the infected data.\
+      :param array Bd: Array with the births data.\
+      :param array td: The time respective to each set of samples.\
+      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`.\
+      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`.\
+      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`.\
+      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`.\
+      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`.\
+      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`.\
+      :param int out_type: The output type, it can be :code:`1` or :code:`0`. Default is :code:`0`. 
       
       :return: If the :code:`out_type=0`, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If `out_type=1` it returns the self.data of the model, a summary with all model information.
       :rtype: tuple

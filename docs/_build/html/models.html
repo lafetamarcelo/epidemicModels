@@ -108,6 +108,7 @@
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-brasil-covid-dados-reais"><strong>SIR</strong> 🇧🇷 <strong>Brasil COVID Dados Reais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-covid-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>COVID - Parâmetros variantes</strong></a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code APIs</span></p>
 <ul class="current">
@@ -220,7 +221,7 @@
 <span id="stochastic-search-learning-models"></span><h2>Stochastic Search - Learning models<a class="headerlink" href="#module-models.stochastic_search" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="models.stochastic_search.SIR">
-<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">pop=2000000, focus=['I', 'R'], verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This model concentrate all the developed algorithms to 
 represent data driven SIR model. Using the Scipy default 
@@ -275,18 +276,13 @@ equations of the SIR Epidemic Model.</p>
 
 <dl class="method">
 <dt id="models.stochastic_search.SIR.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Rd, td, resample=False, beta_sens=[10000, 1000], r_sens=[10000, 1000], **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Rd, td, resample=False, beta_sens=[100, 100], r_sens=[100, 100], **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>The method responsible for estimating a set of beta and r 
 parameters for the provided data set. It assumes that in 
 the data there is only one epidemic period.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Sd</strong> (<em>array</em>) – Array with the suceptible data.</p></li>
-<li><p><strong>Id</strong> (<em>array</em>) – Array with the infected data.</p></li>
-<li><p><strong>Rd</strong> (<em>array</em>) – Array with the recovered data.</p></li>
-<li><p><strong>td</strong> (<em>array</em>) – The time respective to each set of samples.       :param array resample: The flag to set the resampling of the dataset. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.       :param dict <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: The differential evolution arguments.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>Sd</strong> (<em>array</em>) – Array with the suceptible data.       :param array Id: Array with the infected data.       :param array Rd: Array with the recovered data.       :param array td: The time respective to each set of samples.       :param array resample: The flag to set the resampling of the dataset. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.       :param dict <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: The differential evolution arguments.</p>
 </dd>
 </dl>
 </dd></dl>
@@ -300,13 +296,7 @@ dataset. It assumes that in the data there are several epidemic
 periods.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>Sd</strong> (<em>array</em>) – Array with the suceptible data.</p></li>
-<li><p><strong>Id</strong> (<em>array</em>) – Array with the infected data.</p></li>
-<li><p><strong>Bd</strong> (<em>array</em>) – Array with the births data.</p></li>
-<li><p><strong>td</strong> (<em>array</em>) – The time respective to each set of samples.</p></li>
-<li><p><strong>threshold_prop</strong> (<em>float</em>) – The standard deviation proportion used as threshold for windowing. Default is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.       :param int cases_before: The number of back samples to check for the initial window point. Default is <code class="code docutils literal notranslate"><span class="pre">10</span></code>.       :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.       :param int filt_window: The window size used on the filtering technique, only if <code class="code docutils literal notranslate"><span class="pre">filt_estimate=True</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">55</span></code>.       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.       :param int out_type: The output type, it can be <code class="code docutils literal notranslate"><span class="pre">1</span></code> or <code class="code docutils literal notranslate"><span class="pre">0</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>Sd</strong> (<em>array</em>) – Array with the suceptible data.      :param array Id: Array with the infected data.      :param array Bd: Array with the births data.      :param array td: The time respective to each set of samples.      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.      :param int cases_before: The number of back samples to check for the initial window point. Default is <code class="code docutils literal notranslate"><span class="pre">10</span></code>.      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.      :param int filt_window: The window size used on the filtering technique, only if <code class="code docutils literal notranslate"><span class="pre">filt_estimate=True</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">55</span></code>.      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.      :param int out_type: The output type, it can be <code class="code docutils literal notranslate"><span class="pre">1</span></code> or <code class="code docutils literal notranslate"><span class="pre">0</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">0</span></code>.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>If the <code class="code docutils literal notranslate"><span class="pre">out_type=0</span></code>, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If <cite>out_type=1</cite> it returns the self.data of the model, a summary with all model information.</p>
