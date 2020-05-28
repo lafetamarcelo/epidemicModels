@@ -171,9 +171,9 @@ class SIR:
       parameters for the provided data set. It assumes that in 
       the data there is only one epidemic period.
       
-      :param array Sd: Array with the suceptible data. \
-      :param array Id: Array with the infected data. \
-      :param array Rd: Array with the recovered data. \
+      :param array Sd: Array with the suceptible data. 
+      :param array Id: Array with the infected data. 
+      :param array Rd: Array with the recovered data. 
       :param array td: The time respective to each set of samples. \
       :param array resample: The flag to set the resampling of the dataset. Default is :code:`False`. \
       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
@@ -245,16 +245,16 @@ class SIR:
       dataset. It assumes that in the data there are several epidemic
       periods.
       
-      :param array Sd: Array with the suceptible data.\
-      :param array Id: Array with the infected data.\
-      :param array Bd: Array with the births data.\
-      :param array td: The time respective to each set of samples.\
-      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`.\
-      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`.\
-      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`.\
-      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`.\
-      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`.\
-      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`.\
+      :param array Sd: Array with the suceptible data.
+      :param array Id: Array with the infected data.
+      :param array Bd: Array with the births data.
+      :param array td: The time respective to each set of samples.
+      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`. \
+      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`. \
+      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`. \
+      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`. \
+      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
+      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
       :param int out_type: The output type, it can be :code:`1` or :code:`0`. Default is :code:`0`. 
       
       :return: If the :code:`out_type=0`, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If `out_type=1` it returns the self.data of the model, a summary with all model information.
