@@ -48,6 +48,8 @@ class SIR:
     self.__iter_error = 10**14
     self.verbose = verbose
     self.iter_counter = 1
+    self.ponder = False
+    self.pipeline = {}
     self.data = {
       "data": {
         "original": [],
@@ -77,17 +79,30 @@ class SIR:
       :return: The sum of the quadratic error, between simulated and real data.
       :rtype: float
     """
-    erro = {"S": [0], "I": [0], "R": [0]}
+    # Build the error dictionary for each element
+    erro = {"S": [1.0], "I": [1.0], "R": [1.0]}
+    ponder = {"S": 1.0, "I": 1.0, "R": 1.0}
+    # Compute the indexes of the used samples
+    w_ponder = [1, 1, 1]
+    if self.ponder:
+      dR = np.diff(Data[2])
+      nz_ind = np.where(dR != 0)
+      w_ponder[2] = len(Data[1]) / len(Data[2][nz_ind])
     try:
+      # Simulate the differential equation system
       result = self.simulate(initial, t, p)
-      erro["S"] = (w[0] * ( result[0] - Data[0] )**2)
-      erro["I"] = (w[1] * ( result[1] - Data[1] )**2)
+      # Compute the error for all samples
+      erro["S"] = (w_ponder[0] * w[0] * ( result[0] - Data[0] )**2)
+      erro["I"] = (w_ponder[1] * w[1] * ( result[1] - Data[1] )**2)
       if len(result) == 3:
-        erro["R"] = (w[2] * ( result[2] - Data[2] )**2)
+        if self.ponder:
+          erro["R"] = (w_ponder[2] * w[2] * ( result[2][nz_ind] - Data[2][nz_ind] )**2)
+        else:
+          erro["R"] = (w_ponder[2] * w[2] * ( result[2] - Data[2] )**2)
       # Merging the error
       error = 0.0
       for item in self.focus:
-        error += sum(erro[item])
+        error += np.log10(sum(erro[item]))
       self.__iter_error = error
     except:
       error = self.__iter_error
@@ -165,6 +180,7 @@ class SIR:
       resample=False,
       beta_sens=[100,100],
       r_sens=[100,100],
+      sample_ponder=None,
       **kwargs):
     """
       The method responsible for estimating a set of beta and r 
@@ -178,14 +194,43 @@ class SIR:
       :param array resample: The flag to set the resampling of the dataset. Default is :code:`False`. \
       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
+      :param bool sample_ponder: The flag to set the pondering of the non informative recovered data. \
       :param dict **kwargs: The differential evolution arguments.
 
     """
+    # Save on local variables provided data
+    S, I, R, t = Sd, Id, Rd, td
+    # Check for sample pondering
+    self.ponder = sample_ponder is not None
+    # Resample the data if flagged
+    if resample:
+      safe_reduce = 20
+      # Resample the Infected data
+      Id_mirrored = np.concatenate((Id, Id[::-1]))
+      Id_expanded = scs.resample_poly(Id_mirrored,len(Id_mirrored)*24,len(Id_mirrored),window=('kaiser', 5.0))
+      Id_resampled = Id_expanded[:int(len(Id_expanded)/2)-safe_reduce]
+      # Resample the recovered data
+      Rd_mirrored = np.concatenate((Rd, Rd[::-1]))
+      Rd_expanded = scs.resample_poly(Rd_mirrored,len(Rd_mirrored)*24,len(Rd_mirrored),window=('kaiser', 5.0))
+      Rd_resampled = Rd_expanded[:int(len(Rd_expanded)/2)-safe_reduce]
+      # Create the resampled time vector
+      td_resampled = np.linspace(0, len(Id), int(len(Rd_expanded)/2))[:-safe_reduce]
+      # Update the used variables
+      I, R, t = Id_resampled, Rd_resampled, td_resampled
+      S = self.N - I - R
+      # Create the pipeline log
+      self.pipeline["resample"] = {
+        "before": {"I": Id, "R": Rd, "t": td},
+        "after" : {"I": I, "R": R, "t": t},
+      }
+      if self.verbose:
+        print("\t ├─ Resample from sizes ─ ", len(Sd), len(Id), len(Rd), len(td))
+        print("\t └─ Resample to sizes ─   ", len(S), len(I), len(R), len(t))
     # Computing the approximate values 
     # of the parameters to build the 
     # parameter boundaries
-    beta_approx = 1 #/ Sd.max()
-    r_approx = 1 / 7 #int(td[-1])
+    beta_approx = 1 # / Sd.max()
+    r_approx = 1 / 7 # int(td[-1])
     # Computing the parameter bounds   
     x0 = [beta_approx, r_approx]
     lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
@@ -194,14 +239,14 @@ class SIR:
     # and compute the initial conditions for 
     # the model simulation
     if Rd is None:
-      datatrain = (Sd, Id)
-      y0 = [Sd[0], Id[0]] 
+      datatrain = (S, I)
+      y0 = [S[0], I[0]] 
     else:
-      datatrain = (Sd, Id, Rd)
-      y0 = [Sd[0], Id[0], Rd[0]]  
+      datatrain = (S, I, R)
+      y0 = [S[0], I[0], R[0]]  
     # Compute the error weight for each
     # differential equation resolution
-    w = [max(Id)/max(Sd), 1, 1]
+    w = [max(I)/max(S), 1, 1]
     if self.verbose:
       print("\t ├─ S(0) ─ I(0) ─ R(0) ─ ", y0)
       print("\t ├─ beta ─  ", x0[0], "  r ─  ", x0[1])
@@ -213,17 +258,17 @@ class SIR:
         self.cost_function, 
         list(zip(lower, upper)),
         maxiter=60000,
-        popsize=150,
+        popsize=35,
         mutation=(1.5, 1.99),
         strategy="best1exp",
         workers=-1,
         updating='deferred',
         tol=0.00001,
-        args=(datatrain, y0, td, w)
+        args=(datatrain, y0, t, w)
       )
     # Simulando os dados
     c = summary.x
-    results = self.simulate(y0, td, c)
+    results = self.simulate(y0, t, c)
     # Printing summary
     if self.verbose:
       print("\t └─ Defined at: ", c[0], " ─ ", c[1], "\n")
