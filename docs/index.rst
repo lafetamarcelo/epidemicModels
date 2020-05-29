@@ -6,7 +6,7 @@
 Welcome to IMT Epidemic Models's documentation!
 ===============================================
 
-|docs| |last commit| |most used lang| |join discord|
+|docs| |last commit| |most used lang| |join discord| 
 
 Este projeto tem o objetivo de divulgar como desenvolver modelos para epidemias, desde 
 sua modelagem matemática até sua concepção computacional em Python. Sendo assim composto 
