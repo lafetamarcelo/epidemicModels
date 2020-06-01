@@ -6,6 +6,7 @@ julian>=0.14
 pandas>=1.0
 matplotlib>=3.2
 scipy
+PyAstronomy
 ruamel.yaml
 ipywidgets
 ipython
