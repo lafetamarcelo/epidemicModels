@@ -5,7 +5,7 @@ import numpy as np
 import scipy.signal as scs
 
 from PyAstronomy import pyasl
-from scipy.optimize import differential_evolution, leastsq
+from scipy.optimize import differential_evolution, dual_annealing, shgo, leastsq, NonlinearConstraint
 from scipy import integrate, interpolate
 
 from bokeh.models   import ColumnDataSource, RangeTool, LinearAxis, Range1d
@@ -13,6 +13,9 @@ from bokeh.palettes import brewer, Inferno10
 from bokeh.plotting import figure, show
 from bokeh.layouts  import column
 from bokeh.io       import output_notebook, export_png
+
+from . import differential_models as dm
+from . import cost_functions as cm
 
 output_notebook()
 
@@ -42,14 +45,36 @@ class SIR:
   def __init__(self,
       pop=2000000,
       focus=["I","R"],
+      algorithm="differential_evolution",
       verbose=True):
+    # Main constants
     self.N = pop
     self.focus = focus
-    self.__iter_error = 10**14
+    self._iter_error = [10**14]
+    self.__mc_props = [0.5, 0.75, 0.9, 1.5]
+    self.__search_alg = algorithm
     self.verbose = verbose
+    # Algorithm focus variables
+    if 'M' in self.focus:
+      self.__class__.differential_model = dm.SIRD
+      self.__class__.cost_function = cm.cost_SIRD
+    elif 'E' in self.focus:
+      self.__class__.differential_model = dm.SEIR
+      self.__class__.cost_function = cm.cost_SEIR
+    else:
+      self.__class__.differential_model = dm.SIR
+      self.__class__.cost_function = cm.cost_SIR
+    # Accumulating variables
+    self.acc_error = dict()
+    for m in ["S", "E", "I", "R"]:
+      self.acc_error[m] = list()
     self.iter_counter = 1
+    self.dataset = dict()
     self.ponder = False
     self.pipeline = {}
+    self.mc = {
+      "results": {}
+    }
     self.data = {
       "data": {
         "original": [],
@@ -63,8 +88,12 @@ class SIR:
       },
       "time": []
     }
+
+  def show_intern(self):
+    print("Error: ", self.__iter_error)
+    print("Props: ", self.__mc_props)
   
-  def cost_function(self, p, Data, initial, t, w):
+  def sec_function(self, p, Data, initial, t, w):
     """
       The function to compute the error to guide the learning
       algorithm. It computes the quadratic error.
@@ -79,61 +108,49 @@ class SIR:
       :return: The sum of the quadratic error, between simulated and real data.
       :rtype: float
     """
+    data_test, final_error = Data, 0
     # Build the error dictionary for each element
-    erro = {"S": [1.0], "I": [1.0], "R": [1.0]}
-    ponder = {"S": 1.0, "I": 1.0, "R": 1.0}
-    # Compute the indexes of the used samples
-    w_ponder = [1, 1, 1]
-    if self.ponder:
-      dR = np.diff(Data[2])
-      nz_ind = np.where(dR != 0)
-      w_ponder[2] = len(Data[1]) / len(Data[2][nz_ind])
+    erro = {"S": 0.0, "I": 0.0, "R": 0.0}
+    w_ponder = {"S": w[0], "I": w[1], "R": w[2]}  
+    
+    # Simulate the differential equation system
     try:
-      # Simulate the differential equation system
       result = self.simulate(initial, t, p)
-      # Compute the error for all samples
-      erro["S"] = (w_ponder[0] * w[0] * ( result[0] - Data[0] )**2)
-      erro["I"] = (w_ponder[1] * w[1] * ( result[1] - Data[1] )**2)
-      if len(result) == 3:
-        if self.ponder:
-          erro["R"] = (w_ponder[2] * w[2] * ( result[2][nz_ind] - Data[2][nz_ind] )**2)
-        else:
-          erro["R"] = (w_ponder[2] * w[2] * ( result[2] - Data[2] )**2)
-      # Merging the error
-      error = 0.0
-      for item in self.focus:
-        error += np.log10(sum(erro[item]))
-      self.__iter_error = error
+      # print("Simulated...")
+      # Compute the indexes of the used samples
+      for key in erro.keys():
+        # print("Computing the error...", key)
+        # print("Len of result...", len(result))
+        if key == "S" and len(result) > 0:
+          # Manipulate the Susceptible for pondering
+          # of the exposed population
+          if self.__exposed_flag:
+            data_test[0] = p[2] * self.N - data_test[1] - data_test[2]
+          erro["S"] = (result[0] - data_test[0])**2
+          erro["S"] = w_ponder["S"] * np.sqrt(np.mean(erro["S"]))
+          self.acc_error["S"].append(erro["S"])
+        elif key == "I" and len(result) > 1:
+          erro["I"] = (result[1] - data_test[1])**2
+          erro["I"] = w_ponder["I"] * np.sqrt(np.mean(erro["I"]))
+          self.acc_error["I"].append(erro["I"])
+        elif key == "R" and len(result) > 2:
+          # Solve the pondering plobem 
+          # in the recuperated data
+          if self.ponder:
+            dR = np.diff(Data[2])
+            nz_ind = np.where(dR != 0)
+            w_ponder["R"] *= len(Data[1]) / len(Data[2][nz_ind])
+            erro["R"] = (result[2][nz_ind] - data_test[2][nz_ind])**2
+          else:
+            erro["R"] = (result[2] - data_test[2])**2
+          erro["R"] = w_ponder["R"] * np.sqrt(np.mean(erro["R"]))
+          self.acc_error["R"].append(erro["R"])
+      for key in self.focus:
+        final_error += erro[key]
+      self.__iter_error.append(final_error)
+      return self.__iter_error[-1]
     except:
-      error = self.__iter_error
-    return error
-
-
-  def differential_model(self, y, t, Beta, r):
-    """
-      The function that computes the diferential set of 
-      equations of the SIR Epidemic Model.
-      
-      :param tuple y: Tuple with the suceptible and infected data.
-      :param array t: The time respective to each y set of samples.
-      :param float Beta: The Beta parameter.
-      :param float r: The r parameter.
-      
-      :return: The derivative of the suceptible and infected data.
-      :rtype: tuple
-    """
-    if len(y) == 2:
-      S, I = y
-      Sdot = -Beta * S * I / self.N
-      Idot = Beta * S * I / self.N  - r * I
-      return Sdot, Idot
-    if len(y) == 3:
-      S, I, R = y
-      Sdot = -Beta * S * I / self.N
-      Idot = Beta * S * I / self.N  - r * I
-      Rdot = r * I
-      return Sdot, Idot, Rdot
-
+      return self.__iter_error[-1]
 
   def simulate(self, initial, time, theta):
     """
@@ -148,13 +165,14 @@ class SIR:
       :return: The values of the suceptible and infected, at time, respectivelly.
       :rtype: tuple
     """
+    ode_args = (theta[0], theta[1])
+    if "E" in self.focus:
+      ode_args = (*ode_args, theta[2])
+    
     result = integrate.odeint(
       self.differential_model, 
       initial, time, 
-      args=(
-        theta[0], 
-        theta[1]
-      )
+      args=ode_args
     ).T
     return result
 
@@ -176,11 +194,15 @@ class SIR:
       print("Error! No parameter estimated!")
 
 
-  def fit(self, Sd, Id, Rd, td,
-      resample=False,
-      beta_sens=[100,100],
-      r_sens=[100,100],
+  def fit(self, dataset, t,
+      search_pop=True,
+      Ro_bounds=None,
+      pop_sens=[1e-3,1e-4],
+      beta_sens=[100,10],
+      r_sens=[100,10],
+      sigma_sens=[1e-4,1e2],
       sample_ponder=None,
+      initial_weight=1,
       **kwargs):
     """
       The method responsible for estimating a set of beta and r 
@@ -198,77 +220,97 @@ class SIR:
       :param dict **kwargs: The differential evolution arguments.
 
     """
-    # Save on local variables provided data
-    S, I, R, t = Sd, Id, Rd, td
+    # Create the data values
+    S, I, R, D = None, None, None, None
+    if "S" in dataset:
+      S = dataset["S"]
+    if "R" in dataset:
+      R = dataset["R"]
+    if "D" in dataset:
+      D = dataset["D"]
+    I = dataset["I"]
     # Check for sample pondering
-    self.ponder = sample_ponder is not None
-    # Resample the data if flagged
-    if resample:
-      safe_reduce = 20
-      # Resample the Infected data
-      Id_mirrored = np.concatenate((Id, Id[::-1]))
-      Id_expanded = scs.resample_poly(Id_mirrored,len(Id_mirrored)*24,len(Id_mirrored),window=('kaiser', 5.0))
-      Id_resampled = Id_expanded[:int(len(Id_expanded)/2)-safe_reduce]
-      # Resample the recovered data
-      Rd_mirrored = np.concatenate((Rd, Rd[::-1]))
-      Rd_expanded = scs.resample_poly(Rd_mirrored,len(Rd_mirrored)*24,len(Rd_mirrored),window=('kaiser', 5.0))
-      Rd_resampled = Rd_expanded[:int(len(Rd_expanded)/2)-safe_reduce]
-      # Create the resampled time vector
-      td_resampled = np.linspace(0, len(Id), int(len(Rd_expanded)/2))[:-safe_reduce]
-      # Update the used variables
-      I, R, t = Id_resampled, Rd_resampled, td_resampled
-      S = self.N - I - R
-      # Create the pipeline log
-      self.pipeline["resample"] = {
-        "before": {"I": Id, "R": Rd, "t": td},
-        "after" : {"I": I, "R": R, "t": t},
-      }
-      if self.verbose:
-        print("\t ├─ Resample from sizes ─ ", len(Sd), len(Id), len(Rd), len(td))
-        print("\t └─ Resample to sizes ─   ", len(S), len(I), len(R), len(t))
+    self.ponder = sample_ponder != None
+    self.__exposed_flag = sigma_sens != None
+    self._search_pop = search_pop
     # Computing the approximate values 
     # of the parameters to build the 
     # parameter boundaries
-    beta_approx = 1 # / Sd.max()
-    r_approx = 1 / 7 # int(td[-1])
+    beta_approx = 1 
+    r_approx = 1 / 7 
     # Computing the parameter bounds   
     x0 = [beta_approx, r_approx]
     lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
     upper = [beta_sens[1]*x0[0], r_sens[1]*x0[1]]
+    # Checking the constraints
+    constraints = ()
+    if Ro_bounds != None:
+      nlc = NonlinearConstraint(constr_f, Ro_bounds[0], Ro_bounds[1])
+      constraints = (nlc)
     # Create the train data for minimization
     # and compute the initial conditions for 
-    # the model simulation
-    if Rd is None:
-      datatrain = (S, I)
-      y0 = [S[0], I[0]] 
-    else:
-      datatrain = (S, I, R)
-      y0 = [S[0], I[0], R[0]]  
-    # Compute the error weight for each
-    # differential equation resolution
-    w = [max(I)/max(S), 1, 1]
+    # the model simulation and the weights 
+    # for pondering each time series
+    w = [max(I)/max(S), initial_weight]
+    datatrain = [S, I]
+    y0 = [S[0], I[0]] 
+    if "R" in self.focus:
+      datatrain.append(R)
+      y0.append(R[0])
+      w.append(max(I)/max(R))
+    if "E" in self.focus:
+      lower.append(sigma_sens[0])
+      upper.append(sigma_sens[1])
+      y0.insert(1, 1.0)
+    # Provide a summary of the model soo
+    # far, and show the optimazation setup
     if self.verbose:
       print("\t ├─ S(0) ─ I(0) ─ R(0) ─ ", y0)
       print("\t ├─ beta ─  ", x0[0], "  r ─  ", x0[1])
       print("\t ├─ beta bound ─  ", lower[0], " ─ ", upper[0])
       print("\t ├─ r bound ─  ", lower[1], " ─ ", upper[1])
+      if self.__exposed_flag:
+        print("\t ├─ sigma bound ─  ", lower[2], " ─ ", upper[2])
       print("\t ├─ equation weights ─  ", w)
-    # Minimaze the cost function
-    summary = differential_evolution(
-        self.cost_function, 
-        list(zip(lower, upper)),
-        maxiter=60000,
-        popsize=35,
-        mutation=(1.5, 1.99),
-        strategy="best1exp",
-        workers=-1,
-        updating='deferred',
-        tol=0.00001,
-        args=(datatrain, y0, t, w)
-      )
+      print("\t ├─ Running on ─ ", self.__search_alg, "SciPy Search Algorithm")
+    # Population proportion boundaries
+    if self._search_pop:
+      lower.append(pop_sens[0])
+      upper.append(pop_sens[1])
+    # Run the searching algorithm to 
+    # minimize the cost function
+    if self.__search_alg == "differential_evolution":
+      summary = differential_evolution(
+          self.cost_function, 
+          list(zip(lower, upper)),
+          maxiter=6000,
+          popsize=35,
+          mutation=(0.5, 1.2),
+          strategy="best1exp",
+          tol=0.00001,
+          args=(datatrain, y0, t, w),
+          constraints=constraints
+          # updating='deferred',
+          # workers=-1
+        )
+    elif self.__search_alg == "dual_annealing":
+      summary = dual_annealing(
+          self.cost_function, 
+          list(zip(lower, upper)),
+          maxiter=10000,
+          args=(datatrain, y0, t, w)
+        )
+    elif self.__search_alg == "shgo":
+      summary = shgo(
+          self.cost_function,
+          list(zip(lower, upper)),
+          n=500, iters=10,
+          sampling_method="sobol",
+          args=(datatrain, y0, t, w)
+        )
     # Simulando os dados
     c = summary.x
-    results = self.simulate(y0, t, c)
+    #results = self.simulate(y0, t, c[:2])
     # Printing summary
     if self.verbose:
       print("\t └─ Defined at: ", c[0], " ─ ", c[1], "\n")
@@ -280,8 +322,8 @@ class SIR:
       cases_before=10,
       filt_estimate=False,
       filt_window=55,
-      beta_sens=[100,100],
-      r_sens=[100,1000],
+      beta_sens=[100,10],
+      r_sens=[100,10],
       out_type=0,
       **kwargs):
     """
@@ -321,9 +363,11 @@ class SIR:
       print("Windows starting at: ", start)
       print("Windows ending at:   ", end)
       print("Window start cases:  ", [Id[s] for s in start])
-    # Computing the reference for the
-    # parameters bounds 
-    beta_approx = 1 / Sd.max()
+    # Computing the approximate values 
+    # of the parameters to build the 
+    # parameter boundaries
+    beta_approx = 1 
+    r_approx = 1 / 10
     # For each epidemy window
     for s, e in zip(start, end):
       if self.verbose:
@@ -336,7 +380,7 @@ class SIR:
       year_ref = t[0] # Year reference
       t = (t - year_ref) * 365 # Time in days
       # Initial conditions
-      y0 = S[0], I[0]
+      y0 = int(S[0]), int(I[0])
       # Parameter weights
       w = [max(I)/max(S), 1]
       # Resampling the data
@@ -346,9 +390,6 @@ class SIR:
       if filt_estimate:
         Sd_res = pyasl.smooth(Sd_res, filt_window, 'hamming')
         Id_res = pyasl.smooth(Id_res, filt_window, 'hamming')
-      # Computing the reference for
-      # the parameter bounds
-      r_approx = 1 / int(t[-1])
       # Computing the parameter bounds   
       x0 = [beta_approx, r_approx]
       lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
@@ -362,10 +403,13 @@ class SIR:
       c = differential_evolution(
           self.cost_function, 
           list(zip(lower, upper)),
-          maxiter=4000, 
-          popsize=15,
-          mutation=(0.5, 1.2),
+          maxiter=60000,
+          popsize=35,
+          mutation=(1.5, 1.99),
           strategy="best1exp",
+          workers=-1,
+          updating='deferred',
+          tol=0.00001,
           args=((Sd_res, Id_res), y0, t_res, w)
         ).x
       # Simulando os dados
@@ -390,6 +434,148 @@ class SIR:
         self.data["time"] 
       )
     return self.data
+
+
+  def monteCarlo_multiple(self, Sd, Id, Bd, td, 
+      threshold_prop=1,
+      cases_before=10,
+      minimum_days=60,
+      steps_indays=10,
+      filt_estimate=False,
+      filt_window=55,
+      beta_sens=[1000,10],
+      r_sens=[1000,10],
+      out_type=0,
+      **kwargs):
+    """
+      The method responsible for estimating a set of beta and r 
+      parameters for each epidemy period existent in the provided
+      dataset. It assumes that in the data there are several epidemic
+      periods.
+      
+      :param array Sd: Array with the suceptible data.
+      :param array Id: Array with the infected data.
+      :param array Bd: Array with the births data.
+      :param array td: The time respective to each set of samples.
+      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`. \
+      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`. \
+      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`. \
+      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`. \
+      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
+      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
+      :param int out_type: The output type, it can be :code:`1` or :code:`0`. Default is :code:`0`. 
+      
+      :return: If the :code:`out_type=0`, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If `out_type=1` it returns the self.data of the model, a summary with all model information.
+      :rtype: tuple
+    
+    """
+    self.data["full"] = {
+      "I": Id, "S": Sd, 
+      "B": Bd, "t": td }
+    # Find the epidemy start and end points
+    start, end = findEpidemyBreaks(Id, threshold_prop, cases_before)
+    # Check the window sizes
+    if len(start) < 2:
+      print("The windows are too small!")
+    if len(start) != len(end):
+      end = end[:-1]
+    # Check the window sizes - 2
+    if self.verbose:
+      print("├─ Windows starting at: ", start)
+      print("├─ Windows ending at:   ", end)
+      print("├─ Window start cases:  ", [Id[s] for s in start])
+      print("│")
+    # Computing the approximate values 
+    # of the parameters to build the 
+    # parameter boundaries
+    beta_approx = 1 
+    r_approx = 1 / 7 
+    # For each epidemy window
+    for s, e in zip(start, end):
+      if self.verbose:
+        print("├──┬ ✣✣✣ New window ➙ ", self.iter_counter, " ✣✣✣")
+        self.iter_counter += 1
+      # Reading the SIR window variables
+      B, S = Bd[s:e], Sd[s:e]
+      I, t = Id[s:e], td[s:e]
+      # Computing variables references 
+      year_ref = t[0] # Year reference
+      t = (t - year_ref) * 365 # Time in days
+      # Initial conditions
+      y0 = int(S[0]), int(I[0])
+      # Parameter weights
+      w = [max(I)/max(S), 1]
+      # Resampling the data
+      Sd_res, t_res = scs.resample(S, int(t[-1]), t=t)
+      Id_res, t_res = scs.resample(I, int(t[-1]), t=t)
+      # Filtering the values
+      if filt_estimate:
+        Sd_res = pyasl.smooth(Sd_res, filt_window, 'hamming')
+        Id_res = pyasl.smooth(Id_res, filt_window, 'hamming')
+      # Computing the parameter bounds   
+      x0 = [beta_approx, r_approx]
+      lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
+      upper = [beta_sens[1]*x0[0], r_sens[1]*x0[1]]
+      if self.verbose:
+        print("│  ├─ S(0) ─  ", y0[0], "  I(0) ─  ", y0[1])
+        print("│  ├─ beta ─  ", x0[0], "  r ─  ", x0[1])
+        print("│  ├─ beta bound ─  ", lower[0], " ─ ", upper[0])
+        print("│  ├─ r bound ─  ", lower[1], " ─ ", upper[1])
+        print("│  │")
+        print("│  ├─┬─ ⨭ Initializing Monte Carlo ⨮")
+        self.__prop_ind = 0
+      # Create the simulation steps
+      initial_indexes = range(minimum_days, int(t[-1]), steps_indays)
+      # Estimate for each sample set
+      mc_window_data = dict(pars=list(), time=list(), bounds=[s,e])
+      for bound in initial_indexes:
+        # Get only a fraction of the data
+        S_, I_, t_ = Sd_res[:bound], Id_res[:bound], t_res[:bound]
+        # Minimize the cost funciton for 
+        # the selected window
+        c = differential_evolution(
+          self.cost_function, 
+          list(zip(lower, upper)),
+          maxiter=60000, 
+          popsize=15,
+          mutation=(0.5, 1.5),
+          strategy="best1exp",
+          workers=-1,
+          updating='deferred',
+          tol=0.00001,
+          args=((S_, I_), y0, t_, w)
+        ).x # <- Get only the parameters
+        # Print some information
+        sim_prop = initial_indexes.index(bound) / len(initial_indexes)
+        if self.verbose and (sim_prop > self.__mc_props[self.__prop_ind]):
+          print("│  │ ├─ Progress at : {}%".format(int(100*sim_prop)))
+          self.__prop_ind += 1
+        # Save monte carlo estimated data
+        mc_window_data["pars"].append(c)
+        mc_window_data["time"].append(t_[-1]*365 + year_ref)
+      if self.verbose and (sim_prop > 0.5):
+        print("│  │ └─ Finished! ✓")
+      # Save the window data
+      self.mc["results"][str(self.iter_counter-1)] = mc_window_data
+      # Simulando os dados
+      [Sa, Ia] = self.simulate(y0, t_res, c)
+      # Save the year data
+      self.data["data"]["original"].append(
+        { "I": I, "B": B, "S": S, "t": t/365 + year_ref })
+      self.data["data"]["resampled"].append(
+        {"I": Id_res, "S": Sd_res, "t": t_res/365 + year_ref})
+      self.data["data"]["simulated"].append(
+        {"I": Ia, "S": Sa, "t": t_res/365 + year_ref})
+      self.data["pars"]["beta"].append( c[0] )
+      self.data["pars"]["r"].append( c[1] )
+      self.data["time"].append( year_ref )
+      # Printing summary
+      if self.verbose:
+        print("│  └─ ✣✣✣ ➙ ", self.iter_counter-1, " ✣✣✣\n│")
+    if self.verbose:
+      print("│")
+      print("└─ Done! ✓")
+    return self.mc
 
   def result_summary(self,
       out_plot=False,
@@ -548,3 +734,11 @@ def findEpidemyBreaks(cases,
         in_epidemy = False
         end_points.append(k)
   return start_points, end_points
+
+
+
+def constr_f(x_par):
+  if len(x_par) == 3:
+    return x_par[0] * x_par[2] / x_par[1]
+  else:
+    return x_par[0] / x_par[1]
