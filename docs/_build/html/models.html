@@ -105,16 +105,23 @@
 <p class="caption"><span class="caption-text">Baseados em Dados</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-brasil-covid-dados-reais"><strong>SIR</strong> 🇧🇷 <strong>Brasil COVID Dados Reais</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-covid-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>COVID - Parâmetros variantes</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-sec-xx"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido SEC XX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-modelos-espaciais"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido Modelos Espaciais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>Parâmetros variantes</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">COVID</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="covid.html"><strong>SIR</strong> 🇧🇷 <strong>Brasil - Dados Reais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-it-italia-dados-reais"><strong>SIR</strong> 🇮🇹 <strong>Itália - Dados Reais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-de-alemanha-dados-reais"><strong>SIR</strong> 🇩🇪 <strong>Alemanha - Dados Reais</strong></a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code APIs</span></p>
 <ul class="current">
 <li class="toctree-l1 current"><a class="reference internal" href="modules.html">epidemicModels</a><ul class="current">
 <li class="toctree-l2 current"><a class="current reference internal" href="#">models package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="#module-models.stochastic_search">Stochastic Search - Learning models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-models.cost_functions">Cost Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#module-models.differential_models">Differential Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="#module-models">Module contents</a></li>
 </ul>
 </li>
@@ -125,6 +132,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="author/vanderlei.html">Vanderlei Cunha Parro </a></li>
 <li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
+<li class="toctree-l1"><a class="reference internal" href="author/felipe.html">Felipe Brandão Ippolito </a></li>
 </ul>
 
             
@@ -221,29 +229,23 @@
 <span id="stochastic-search-learning-models"></span><h2>Stochastic Search - Learning models<a class="headerlink" href="#module-models.stochastic_search" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="models.stochastic_search.SIR">
-<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">pop=2000000, focus=['I', 'R'], verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">pop=2000000, focus=['I', 'R'], algorithm='differential_evolution', verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This model concentrate all the developed algorithms to 
 represent data driven SIR model. Using the Scipy default 
 model structure.</p>
 <dl class="method">
-<dt id="models.stochastic_search.SIR.cost_function">
-<code class="sig-name descname">cost_function</code><span class="sig-paren">(</span><em class="sig-param">p</em>, <em class="sig-param">Data</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.cost_function" title="Permalink to this definition">¶</a></dt>
-<dd><p>The function to compute the error to guide the learning
-algorithm. It computes the quadratic error.</p>
+<dt id="models.stochastic_search.SIR.cost_wrapper">
+<code class="sig-name descname">cost_wrapper</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.cost_wrapper" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method responsible for wrapping the cost function. 
+This allows differential evolution algorithm to run with parallel processing.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>p</strong> (<em>tuple</em>) – Tuple with Beta and r parameters, respectivelly.</p></li>
-<li><p><strong>S</strong> (<em>array</em>) – The suceptible data values.</p></li>
-<li><p><strong>I</strong> (<em>array</em>) – The infected data values.</p></li>
-<li><p><strong>initial</strong> (<em>array</em>) – The initial values of suceptible and infected, respectivelly.</p></li>
-<li><p><strong>t</strong> (<em>array</em>) – The time respective to each sample.</p></li>
-<li><p><strong>w</strong> (<em>array</em>) – The weight respective to the suceptible and infected errors.</p></li>
-</ul>
+<dd class="field-odd"><p><strong>*args</strong> (<em>tuple</em>) – <p>cost function parameters</p>
+</p>
 </dd>
 <dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The sum of the quadratic error, between simulated and real data.</p>
+<dd class="field-even"><p>the cost function outputs</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>float</p>
@@ -252,41 +254,24 @@ algorithm. It computes the quadratic error.</p>
 </dd></dl>
 
 <dl class="method">
-<dt id="models.stochastic_search.SIR.differential_model">
-<code class="sig-name descname">differential_model</code><span class="sig-paren">(</span><em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">Beta</em>, <em class="sig-param">r</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.differential_model" title="Permalink to this definition">¶</a></dt>
-<dd><p>The function that computes the diferential set of 
-equations of the SIR Epidemic Model.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><ul class="simple">
-<li><p><strong>y</strong> (<em>tuple</em>) – Tuple with the suceptible and infected data.</p></li>
-<li><p><strong>t</strong> (<em>array</em>) – The time respective to each y set of samples.</p></li>
-<li><p><strong>Beta</strong> (<em>float</em>) – The Beta parameter.</p></li>
-<li><p><strong>r</strong> (<em>float</em>) – The r parameter.</p></li>
-</ul>
-</dd>
-<dt class="field-even">Returns</dt>
-<dd class="field-even"><p>The derivative of the suceptible and infected data.</p>
-</dd>
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p>tuple</p>
-</dd>
-</dl>
-</dd></dl>
-
-<dl class="method">
 <dt id="models.stochastic_search.SIR.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Rd, td, resample=False, beta_sens=[100, 100], r_sens=[100, 100], **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">dataset, t, search_pop=True, Ro_bounds=None, pop_sens=[0.001, 0.0001], beta_sens=[100, 10], r_sens=[100, 10], sigma_sens=None, sample_ponder=None, initial_weight=1, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>The method responsible for estimating a set of beta and r 
 parameters for the provided data set. It assumes that in 
 the data there is only one epidemic period.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
 <dd class="field-odd"><ul class="simple">
-<li><p><strong>Sd</strong> (<em>array</em>) – Array with the suceptible data.</p></li>
-<li><p><strong>Id</strong> (<em>array</em>) – Array with the infected data.</p></li>
-<li><p><strong>Rd</strong> (<em>array</em>) – Array with the recovered data.</p></li>
-<li><p><strong>td</strong> (<em>array</em>) – The time respective to each set of samples.       :param array resample: The flag to set the resampling of the dataset. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.       :param dict <a href="#id1"><span class="problematic" id="id2">**</span></a>kwargs: The differential evolution arguments.</p></li>
+<li><p><strong>dataset</strong> (<em>array</em>) – list with the respective arrays of Suceptible, Infected, Recovered and Deaths.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each set of samples.</p></li>
+<li><p><strong>search_pop</strong> (<em>bool</em>) – Flag to set the exposed population search, for better Suceptible extimation values. Default is <code class="code docutils literal notranslate"><span class="pre">True</span></code>.</p></li>
+<li><p><strong>Ro_bounds</strong> (<em>list</em>) – The bounds to build the constraints for <code class="code docutils literal notranslate"><span class="pre">Ro</span> <span class="pre">=</span> <span class="pre">Beta</span> <span class="pre">/</span> <span class="pre">r</span></code>. With minimun and maximun values, respectivelly.</p></li>
+<li><p><strong>pop_sens</strong> (<em>list</em>) – The sensibility (boudaries) for the proportion of <code class="code docutils literal notranslate"><span class="pre">N</span></code> to be found by the pop parameters.</p></li>
+<li><p><strong>beta_sens</strong> (<em>list</em>) – The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.</p></li>
+<li><p><strong>r_sens</strong> (<em>list</em>) – The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.</p></li>
+<li><p><strong>sample_ponder</strong> (<em>bool</em>) – The flag to set the pondering of the non informative recovered data.</p></li>
+<li><p><strong>**kwargs</strong> (<em>dict</em>) – <p>The optimization search algorithms options.</p>
+</p></li>
 </ul>
 </dd>
 </dl>
@@ -294,7 +279,7 @@ the data there is only one epidemic period.</p>
 
 <dl class="method">
 <dt id="models.stochastic_search.SIR.fit_multiple">
-<code class="sig-name descname">fit_multiple</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Bd, td, threshold_prop=1, cases_before=10, filt_estimate=False, filt_window=55, beta_sens=[100, 100], r_sens=[100, 1000], out_type=0, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit_multiple" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit_multiple</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Bd, td, threshold_prop=1, cases_before=10, filt_estimate=False, filt_window=55, beta_sens=[100, 10], r_sens=[100, 10], out_type=0, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit_multiple" title="Permalink to this definition">¶</a></dt>
 <dd><p>The method responsible for estimating a set of beta and r 
 parameters for each epidemy period existent in the provided
 dataset. It assumes that in the data there are several epidemic
@@ -306,7 +291,45 @@ periods.</p>
 <li><p><strong>Id</strong> (<em>array</em>) – Array with the infected data.</p></li>
 <li><p><strong>Bd</strong> (<em>array</em>) – Array with the births data.</p></li>
 <li><p><strong>td</strong> (<em>array</em>) – The time respective to each set of samples.</p></li>
-<li><p><strong>threshold_prop</strong> (<em>float</em>) – The standard deviation proportion used as threshold for windowing. Default is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.       :param int cases_before: The number of back samples to check for the initial window point. Default is <code class="code docutils literal notranslate"><span class="pre">10</span></code>.       :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.       :param int filt_window: The window size used on the filtering technique, only if <code class="code docutils literal notranslate"><span class="pre">filt_estimate=True</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">55</span></code>.       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.       :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.       :param int out_type: The output type, it can be <code class="code docutils literal notranslate"><span class="pre">1</span></code> or <code class="code docutils literal notranslate"><span class="pre">0</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+<li><p><strong>threshold_prop</strong> (<em>float</em>) – The standard deviation proportion used as threshold for windowing. Default is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p><strong>cases_before</strong> (<em>int</em>) – The number of back samples to check for the initial window point. Default is <code class="code docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+<li><p><strong>filt_estimate</strong> (<em>bool</em>) – Flag to use filtered data to estimate the model parameters. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>filt_window</strong> (<em>int</em>) – The window size used on the filtering technique, only if <code class="code docutils literal notranslate"><span class="pre">filt_estimate=True</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">55</span></code>.</p></li>
+<li><p><strong>beta_sens</strong> (<em>list</em>) – The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.</p></li>
+<li><p><strong>r_sens</strong> (<em>list</em>) – The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.</p></li>
+<li><p><strong>out_type</strong> (<em>int</em>) – The output type, it can be <code class="code docutils literal notranslate"><span class="pre">1</span></code> or <code class="code docutils literal notranslate"><span class="pre">0</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>If the <code class="code docutils literal notranslate"><span class="pre">out_type=0</span></code>, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If <cite>out_type=1</cite> it returns the self.data of the model, a summary with all model information.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="models.stochastic_search.SIR.monteCarlo_multiple">
+<code class="sig-name descname">monteCarlo_multiple</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Bd, td, threshold_prop=1, cases_before=10, minimum_days=60, steps_indays=10, filt_estimate=False, filt_window=55, beta_sens=[1000, 10], r_sens=[1000, 10], out_type=0, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.monteCarlo_multiple" title="Permalink to this definition">¶</a></dt>
+<dd><p>The method responsible for estimating a set of beta and r 
+parameters for each epidemy period existent in the provided
+dataset. It assumes that in the data there are several epidemic
+periods.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>Sd</strong> (<em>array</em>) – Array with the suceptible data.</p></li>
+<li><p><strong>Id</strong> (<em>array</em>) – Array with the infected data.</p></li>
+<li><p><strong>Bd</strong> (<em>array</em>) – Array with the births data.</p></li>
+<li><p><strong>td</strong> (<em>array</em>) – The time respective to each set of samples.</p></li>
+<li><p><strong>threshold_prop</strong> (<em>float</em>) – The standard deviation proportion used as threshold for windowing. Default is <code class="code docutils literal notranslate"><span class="pre">1.0</span></code>.</p></li>
+<li><p><strong>cases_before</strong> (<em>int</em>) – The number of back samples to check for the initial window point. Default is <code class="code docutils literal notranslate"><span class="pre">10</span></code>.</p></li>
+<li><p><strong>filt_estimate</strong> (<em>bool</em>) – Flag to use filtered data to estimate the model parameters. Default is <code class="code docutils literal notranslate"><span class="pre">False</span></code>.</p></li>
+<li><p><strong>filt_window</strong> (<em>int</em>) – The window size used on the filtering technique, only if <code class="code docutils literal notranslate"><span class="pre">filt_estimate=True</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">55</span></code>.</p></li>
+<li><p><strong>beta_sens</strong> (<em>list</em>) – The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,100]</span></code>.</p></li>
+<li><p><strong>r_sens</strong> (<em>list</em>) – The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is <code class="code docutils literal notranslate"><span class="pre">[100,1000]</span></code>.</p></li>
+<li><p><strong>out_type</strong> (<em>int</em>) – The output type, it can be <code class="code docutils literal notranslate"><span class="pre">1</span></code> or <code class="code docutils literal notranslate"><span class="pre">0</span></code>. Default is <code class="code docutils literal notranslate"><span class="pre">0</span></code>.</p></li>
 </ul>
 </dd>
 <dt class="field-even">Returns</dt>
@@ -365,6 +388,11 @@ the estimate process of the SIR model.</p>
 </dd></dl>
 
 <dl class="method">
+<dt id="models.stochastic_search.SIR.show_intern">
+<code class="sig-name descname">show_intern</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.show_intern" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
 <dt id="models.stochastic_search.SIR.simulate">
 <code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">initial</em>, <em class="sig-param">time</em>, <em class="sig-param">theta</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function that simulate the differential SIR
@@ -390,6 +418,23 @@ differential equations.</p>
 </dd></dl>
 
 <dl class="function">
+<dt id="models.stochastic_search.constr_f">
+<code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">constr_f</code><span class="sig-paren">(</span><em class="sig-param">x_par</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.constr_f" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function to compute the non linear contraint of the Ro parameter.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>x_par</strong> (<em>list</em>) – list of parameters, beta, r and pop.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>the Ro value.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
 <dt id="models.stochastic_search.findEpidemyBreaks">
 <code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">findEpidemyBreaks</code><span class="sig-paren">(</span><em class="sig-param">cases</em>, <em class="sig-param">threshold_prop=1.0</em>, <em class="sig-param">cases_before=10</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.findEpidemyBreaks" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function responsible for determining the initial 
@@ -404,6 +449,132 @@ and final points of the epidemies windows.</p>
 </dd>
 <dt class="field-even">Returns</dt>
 <dd class="field-even"><p>With the list of window’s starting points and window’s final points, respectively.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-models.cost_functions">
+<span id="cost-functions"></span><h2>Cost Functions<a class="headerlink" href="#module-models.cost_functions" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="models.cost_functions.cost_SEIR">
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_SEIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">dataset</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_SEIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function to compute the error to guide the learning
+algorithm. It computes the quadratic error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>pars</strong> (<em>tuple</em>) – Tuple with Beta and r parameters, respectivelly.</p></li>
+<li><p><strong>dataset</strong> (<em>list</em>) – The dataset with the respective S, I and R arrays.</p></li>
+<li><p><strong>initial</strong> (<em>array</em>) – The initial values of suceptible and infected, respectivelly.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each sample.</p></li>
+<li><p><strong>w</strong> (<em>array</em>) – The weight respective to the suceptible and infected errors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The sum of the quadratic error, between simulated and real data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="models.cost_functions.cost_SIR">
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_SIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">dataset</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_SIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function to compute the error to guide the learning
+algorithm. It computes the quadratic error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>tuple</em>) – Tuple with Beta and r parameters, respectivelly.</p></li>
+<li><p><strong>S</strong> (<em>array</em>) – The suceptible data values.</p></li>
+<li><p><strong>I</strong> (<em>array</em>) – The infected data values.</p></li>
+<li><p><strong>initial</strong> (<em>array</em>) – The initial values of suceptible and infected, respectivelly.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each sample.</p></li>
+<li><p><strong>w</strong> (<em>array</em>) – The weight respective to the suceptible and infected errors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The sum of the quadratic error, between simulated and real data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+<div class="section" id="module-models.differential_models">
+<span id="differential-models"></span><h2>Differential Models<a class="headerlink" href="#module-models.differential_models" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="models.differential_models.SEIR">
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SEIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">Beta</em>, <em class="sig-param">r</em>, <em class="sig-param">sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SEIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function that computes the diferential set of 
+equations of the SEIR Epidemic Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>tuple</em>) – Tuple with the suceptible and infected data.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each y set of samples.</p></li>
+<li><p><strong>Beta</strong> (<em>float</em>) – The Beta parameter.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The r parameter.</p></li>
+<li><p><strong>sigma</strong> (<em>float</em>) – The sigma parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The derivative of the suceptible and infected data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="models.differential_models.SIR">
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">Beta</em>, <em class="sig-param">r</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function that computes the diferential set of 
+equations of the SIR Epidemic Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>tuple</em>) – Tuple with the suceptible and infected data.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each y set of samples.</p></li>
+<li><p><strong>Beta</strong> (<em>float</em>) – The Beta parameter.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The r parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The derivative of the suceptible and infected data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>tuple</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="models.differential_models.SIRD">
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SIRD</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">Beta</em>, <em class="sig-param">r</em>, <em class="sig-param">mi</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SIRD" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function that computes the diferential set of 
+equations of the SIRD Epidemic Model.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>y</strong> (<em>tuple</em>) – Tuple with the suceptible and infected data.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each y set of samples.</p></li>
+<li><p><strong>Beta</strong> (<em>float</em>) – The Beta parameter.</p></li>
+<li><p><strong>r</strong> (<em>float</em>) – The r parameter.</p></li>
+<li><p><strong>mi</strong> (<em>float</em>) – The mi parameter.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The derivative of the suceptible and infected data.</p>
 </dd>
 <dt class="field-odd">Return type</dt>
 <dd class="field-odd"><p>tuple</p>

@@ -104,10 +104,15 @@
 <p class="caption"><span class="caption-text">Baseados em Dados</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-brasil-covid-dados-reais"><strong>SIR</strong> 🇧🇷 <strong>Brasil COVID Dados Reais</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-covid-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>COVID - Parâmetros variantes</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-sec-xx"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido SEC XX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-modelos-espaciais"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido Modelos Espaciais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>Parâmetros variantes</strong></a></li>
+</ul>
+<p class="caption"><span class="caption-text">COVID</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="covid.html"><strong>SIR</strong> 🇧🇷 <strong>Brasil - Dados Reais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-it-italia-dados-reais"><strong>SIR</strong> 🇮🇹 <strong>Itália - Dados Reais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-de-alemanha-dados-reais"><strong>SIR</strong> 🇩🇪 <strong>Alemanha - Dados Reais</strong></a></li>
 </ul>
 <p class="caption"><span class="caption-text">Code APIs</span></p>
 <ul>
@@ -117,6 +122,7 @@
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="author/vanderlei.html">Vanderlei Cunha Parro </a></li>
 <li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
+<li class="toctree-l1"><a class="reference internal" href="author/felipe.html">Felipe Brandão Ippolito </a></li>
 </ul>
 
             
@@ -213,8 +219,8 @@ sua modelagem matemática até sua concepção computacional em Python. Sendo as
 por videos explicativos, notebooks em Python, e diversas visualizações, para ajudar com o
 entendimento do conteúdo apresentado.</p>
 </div>
-<div class="section" id="alguns-resultados">
-<h1>Alguns resultados…<a class="headerlink" href="#alguns-resultados" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="alguns-resultados-do-seculo-xx">
+<h1>Alguns resultados do século XX…<a class="headerlink" href="#alguns-resultados-do-seculo-xx" title="Permalink to this headline">¶</a></h1>
 <p>Para dar um gosto do conteúdo aprensentado, uma análise foi feita com dados de epidemias
 do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos, é possível
 obter modelos capazes de fazer previsões dos surtos epidêmicos dos dados. Essas previsões,
@@ -239,6 +245,46 @@ juntamente com os dados, estão apresentadas na figura a seguir:</p>
 durante os períodos de epidemias:</p>
 <a class="reference internal image-reference" href="_images/UK_models_corr.png"><img alt="_images/UK_models_corr.png" src="_images/UK_models_corr.png" style="width: 700px;" /></a>
 </div>
+<div class="section" id="previsoes-dos-picos-epidemicos-do-covid">
+<h1>Previsões dos picos epidêmicos do COVID<a class="headerlink" href="#previsoes-dos-picos-epidemicos-do-covid" title="Permalink to this headline">¶</a></h1>
+<p>A medida que a cada dia novos dados foram inseridos no banco banco de dados, de países em que
+a epidemia já está mais avançada do que no Brasil. Nós utilizamos nosso modelo, para tentar
+estimar o dia dos picos de infectados; o momento em que temos a inflexão da epidemia. Para
+países como Itália 🇮🇹, conseguimos resultados como:</p>
+<h3 style="text-align:center;">
+   <iframe
+      id="ITinfiFrame"
+      style="border:none;"
+      src="IT_infectados_COVID.html"
+      height="530"
+      width="680"
+   ></iframe>
+</h3>
+<script>
+   const iframe = document.getElementById("ITinfiFrame")
+   if (screen.width < 600) {
+      iframe.setAttribute("src", "IT_infectados_COVID.html")
+      iframe.setAttribute("height", 780)
+      iframe.setAttribute("width", 680)
+   }
+</script><p>E com os dados reais:</p>
+<h3 style="text-align:center;">
+   <iframe
+      id="ITalliFrame"
+      style="border:none;"
+      src="IT_COVID.html"
+      height="530"
+      width="680"
+   ></iframe>
+</h3>
+<script>
+   const iframe = document.getElementById("ITalliFrame")
+   if (screen.width < 600) {
+      iframe.setAttribute("src", "IT_COVID.html")
+      iframe.setAttribute("height", 780)
+      iframe.setAttribute("width", 680)
+   }
+</script></div>
 <div class="section" id="modelos-covid-brasil-br">
 <h1>Modelos COVID Brasil 🇧🇷<a class="headerlink" href="#modelos-covid-brasil-br" title="Permalink to this headline">¶</a></h1>
 <p>Como exemplo, segue o trabalho atual com as previsões dos comportamentos da epidemia no
@@ -298,7 +344,7 @@ aos dados existentes:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Data Driven.html#Referências">Referências</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-data"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Data</strong></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-sec-xx"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido SEC XX</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html">Dados Reais</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html#Selecionando-um-ano-específico-para-análise">Selecionando um ano específico para análise</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html#Os-dados">Os dados</a></li>
@@ -310,25 +356,40 @@ aos dados existentes:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html#Análise-anual">Análise anual</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-united-kingdom-map-models"><strong>SIR</strong> 🇬🇧 <strong>United Kingdom Map Models</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html">Os dados</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html#Determinando-os-parâmetros---SIR">Determinando os parâmetros - SIR</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html#Obtendo-informações-de-Lat-e-Long">Obtendo informações de Lat e Long</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR - Real Data - United Kingdom - Map Analisys.html#Correlação-dos-modelos">Correlação dos modelos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-modelos-espaciais"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido Modelos Espaciais</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom Map Analisys.html">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom Map Analisys.html#Determinando-os-parâmetros---SIR">Determinando os parâmetros - SIR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom Map Analisys.html#Obtendo-informações-de-Lat-e-Long">Obtendo informações de Lat e Long</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom Map Analisys.html#Correlação-dos-modelos">Correlação dos modelos</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-brasil-covid-dados-reais"><strong>SIR</strong> 🇧🇷 <strong>Brasil COVID Dados Reais</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html">Os dados</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html#O-problema">O problema</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html#Estimando-os-parâmetros">Estimando os parâmetros</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html#Predições-utilizando-o-modelo">Predições utilizando o modelo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR Model.html#Referências">Referências</a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>Parâmetros variantes</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - Time Varying Parameters.html">Os Dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - Time Varying Parameters.html#Visualizando-a-evolução">Visualizando a evolução</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - Time Varying Parameters.html#Análise-de-um-modelo-com-\beta-variável-no-tempo">Análise de um modelo com <span class="math notranslate nohighlight">\(\beta\)</span> variável no tempo</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-covid-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>COVID - Parâmetros variantes</strong></a><ul>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR VB Model.html">Os Dados</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR VB Model.html#Visualizando-a-evolução">Visualizando a evolução</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/COVID - SIR VB Model.html#Análise-de-um-modelo-com-\beta-variável-no-tempo">Análise de um modelo com <span class="math notranslate nohighlight">\(\beta\)</span> variável no tempo</a></li>
+</ul>
+</div>
+<div class="toctree-wrapper compound">
+<p class="caption"><span class="caption-text">COVID</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="covid.html"><strong>SIR</strong> 🇧🇷 <strong>Brasil - Dados Reais</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Brazil.html">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Brazil.html#O-problema">O problema</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Brazil.html#Estimando-os-parâmetros">Estimando os parâmetros</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Brazil.html#Predições-utilizando-o-modelo">Predições utilizando o modelo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Brazil.html#Referências">Referências</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-it-italia-dados-reais"><strong>SIR</strong> 🇮🇹 <strong>Itália - Dados Reais</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-de-alemanha-dados-reais"><strong>SIR</strong> 🇩🇪 <strong>Alemanha - Dados Reais</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
 </ul>
 </li>
 </ul>
@@ -339,6 +400,8 @@ aos dados existentes:</p>
 <li class="toctree-l1"><a class="reference internal" href="modules.html">epidemicModels</a><ul>
 <li class="toctree-l2"><a class="reference internal" href="models.html">models package</a><ul>
 <li class="toctree-l3"><a class="reference internal" href="models.html#module-models.stochastic_search">Stochastic Search - Learning models</a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#module-models.cost_functions">Cost Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="models.html#module-models.differential_models">Differential Models</a></li>
 <li class="toctree-l3"><a class="reference internal" href="models.html#module-models">Module contents</a></li>
 </ul>
 </li>
@@ -351,6 +414,7 @@ aos dados existentes:</p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="author/vanderlei.html">Vanderlei Cunha Parro </a></li>
 <li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
+<li class="toctree-l1"><a class="reference internal" href="author/felipe.html">Felipe Brandão Ippolito </a></li>
 </ul>
 </div>
 <h3 style="text-align:center;">

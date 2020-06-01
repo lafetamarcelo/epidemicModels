@@ -8,8 +8,8 @@
   notebooks/SIR Data Driven
 
 
-**SIR** |:gb:| **United Kingdom Data**
-======================================
+**SIR** |:gb:| **Reino Unido SEC XX**
+=====================================
 
 .. toctree::
   :maxdepth: 2
@@ -17,28 +17,21 @@
   notebooks/SIR Real Data - United Kingdom
   
 
-**SIR** |:gb:| **United Kingdom Map Models**
-============================================
+**SIR** |:gb:| **Reino Unido Modelos Espaciais**
+================================================
 
 .. toctree::
   :maxdepth: 2
 
-  notebooks/SIR - Real Data - United Kingdom - Map Analisys
-  
-
-**SIR** |:br:| **Brasil COVID Dados Reais**
-=============================================
-
-.. toctree::
-  :maxdepth: 2
-
-  notebooks/COVID - SIR Model
+  notebooks/SIR Real Data - United Kingdom Map Analisys
 
 
-**SIR** |:br:| **COVID - Parâmetros variantes**
-==================================================
+**SIR** |:br:| **Parâmetros variantes**
+===============================================
 
 .. toctree::
   :maxdepth: 2
 
-  notebooks/COVID - SIR VB Model
+  notebooks/SIR Real Data - Time Varying Parameters
+
+

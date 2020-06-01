@@ -10,6 +10,24 @@ Stochastic Search - Learning models
    :show-inheritance:
 
 
+Cost Functions
+--------------
+
+.. automodule:: models.cost_functions
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
+Differential Models
+-------------------
+
+.. automodule:: models.differential_models
+   :members:
+   :undoc-members:
+   :show-inheritance:
+
+
 Module contents
 ---------------
 

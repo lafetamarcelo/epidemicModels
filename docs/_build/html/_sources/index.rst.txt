@@ -6,15 +6,15 @@
 Welcome to IMT Epidemic Models's documentation!
 ===============================================
 
-|docs| |last commit| |most used lang| |join discord|
+|docs| |last commit| |most used lang| |join discord| 
 
 Este projeto tem o objetivo de divulgar como desenvolver modelos para epidemias, desde 
 sua modelagem matemática até sua concepção computacional em Python. Sendo assim composto 
 por videos explicativos, notebooks em Python, e diversas visualizações, para ajudar com o 
 entendimento do conteúdo apresentado.
 
-Alguns resultados...
-====================
+Alguns resultados do século XX...
+=================================
 
 Para dar um gosto do conteúdo aprensentado, uma análise foi feita com dados de epidemias 
 do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos, é possível 
@@ -48,6 +48,60 @@ durante os períodos de epidemias:
    :width: 700
 
 
+
+Previsões dos picos epidêmicos do COVID
+========================================
+
+A medida que a cada dia novos dados foram inseridos no banco banco de dados, de países em que 
+a epidemia já está mais avançada do que no Brasil. Nós utilizamos nosso modelo, para tentar 
+estimar o dia dos picos de infectados; o momento em que temos a inflexão da epidemia. Para 
+países como Itália |:it:|, conseguimos resultados como:
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ITinfiFrame"
+         style="border:none;"
+         src="IT_infectados_COVID.html"
+         height="530"
+         width="680"
+      ></iframe>
+   </h3>
+   <script>
+      const iframe = document.getElementById("ITinfiFrame")
+      if (screen.width < 600) {
+         iframe.setAttribute("src", "IT_infectados_COVID.html")
+         iframe.setAttribute("height", 780)
+         iframe.setAttribute("width", 680)
+      }
+   </script>
+
+
+E com os dados reais:
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ITalliFrame"
+         style="border:none;"
+         src="IT_COVID.html"
+         height="530"
+         width="680"
+      ></iframe>
+   </h3>
+   <script>
+      const iframe = document.getElementById("ITalliFrame")
+      if (screen.width < 600) {
+         iframe.setAttribute("src", "IT_COVID.html")
+         iframe.setAttribute("height", 780)
+         iframe.setAttribute("width", 680)
+      }
+   </script>
+
+
+
 Modelos COVID Brasil |:br:|
 ============================
 
@@ -78,11 +132,13 @@ aos dados existentes:
 
 
 
+
 .. toctree::
    :maxdepth: 2
    :caption: Modelos Analíticos
 
    analytic
+
 
 .. toctree::
    :maxdepth: 2
@@ -90,17 +146,27 @@ aos dados existentes:
 
    stochastic
 
+
 .. toctree::
    :maxdepth: 2
    :caption: Baseados em Dados
 
    data_driven
 
+
+.. toctree::
+   :maxdepth: 2
+   :caption: COVID
+
+   covid
+
+
 .. toctree::
    :maxdepth: 3
    :caption: Code APIs
 
    modules
+
 
 .. toctree::
    :maxdepth: 1

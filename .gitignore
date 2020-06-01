@@ -4,3 +4,4 @@ PG_IMT/
 *.pickle
 SIRpd
 estimation_summaries
+*.p

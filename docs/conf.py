@@ -80,5 +80,7 @@ html_static_path = ['_static']
 html_extra_path = [
   "./media_content/UK_result.html",
   "./media_content/SP_result.html",
-  "./media_content/BR_result.html"
+  "./media_content/BR_result.html",
+  "./media_content/IT_infectados_COVID.html",
+  "./media_content/IT_COVID.html"
 ]

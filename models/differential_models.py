@@ -4,10 +4,12 @@ def SIR(self, y, t, Beta, r, *args):
   """
     The function that computes the diferential set of 
     equations of the SIR Epidemic Model.
+
     :param tuple y: Tuple with the suceptible and infected data.
     :param array t: The time respective to each y set of samples.
     :param float Beta: The Beta parameter.
     :param float r: The r parameter.
+
     :return: The derivative of the suceptible and infected data.
     :rtype: tuple
   """
@@ -27,6 +29,17 @@ def SIR(self, y, t, Beta, r, *args):
 
 def SEIR(self, y, t, Beta, r, sigma):
   """
+    The function that computes the diferential set of 
+    equations of the SEIR Epidemic Model.
+    
+    :param tuple y: Tuple with the suceptible and infected data.
+    :param array t: The time respective to each y set of samples.
+    :param float Beta: The Beta parameter.
+    :param float r: The r parameter.
+    :param float sigma: The sigma parameter.
+    
+    :return: The derivative of the suceptible and infected data.
+    :rtype: tuple
   """
 
   S, E, I, R = y
@@ -42,11 +55,13 @@ def SIRD(self, y, t, Beta, r, mi):
   """
   The function that computes the diferential set of 
   equations of the SIRD Epidemic Model.
+
   :param tuple y: Tuple with the suceptible and infected data.
   :param array t: The time respective to each y set of samples.
   :param float Beta: The Beta parameter.
   :param float r: The r parameter.
   :param float mi: The mi parameter.
+
   :return: The derivative of the suceptible and infected data.
   :rtype: tuple
   """

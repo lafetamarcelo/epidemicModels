@@ -89,68 +89,23 @@ class SIR:
       "time": []
     }
 
+
   def show_intern(self):
     print("Error: ", self.__iter_error)
     print("Props: ", self.__mc_props)
-  
-  def sec_function(self, p, Data, initial, t, w):
+
+  def cost_wrapper(self, *args):
     """
-      The function to compute the error to guide the learning
-      algorithm. It computes the quadratic error.
+      The method responsible for wrapping the cost function. 
+      This allows differential evolution algorithm to run with parallel processing.
       
-      :param tuple p: Tuple with Beta and r parameters, respectivelly.
-      :param array S: The suceptible data values.
-      :param array I: The infected data values.
-      :param array initial: The initial values of suceptible and infected, respectivelly.
-      :param array t: The time respective to each sample.
-      :param array w: The weight respective to the suceptible and infected errors.
+      :param tuple *args: cost function parameters
       
-      :return: The sum of the quadratic error, between simulated and real data.
+      :return: the cost function outputs
       :rtype: float
     """
-    data_test, final_error = Data, 0
-    # Build the error dictionary for each element
-    erro = {"S": 0.0, "I": 0.0, "R": 0.0}
-    w_ponder = {"S": w[0], "I": w[1], "R": w[2]}  
-    
-    # Simulate the differential equation system
-    try:
-      result = self.simulate(initial, t, p)
-      # print("Simulated...")
-      # Compute the indexes of the used samples
-      for key in erro.keys():
-        # print("Computing the error...", key)
-        # print("Len of result...", len(result))
-        if key == "S" and len(result) > 0:
-          # Manipulate the Susceptible for pondering
-          # of the exposed population
-          if self.__exposed_flag:
-            data_test[0] = p[2] * self.N - data_test[1] - data_test[2]
-          erro["S"] = (result[0] - data_test[0])**2
-          erro["S"] = w_ponder["S"] * np.sqrt(np.mean(erro["S"]))
-          self.acc_error["S"].append(erro["S"])
-        elif key == "I" and len(result) > 1:
-          erro["I"] = (result[1] - data_test[1])**2
-          erro["I"] = w_ponder["I"] * np.sqrt(np.mean(erro["I"]))
-          self.acc_error["I"].append(erro["I"])
-        elif key == "R" and len(result) > 2:
-          # Solve the pondering plobem 
-          # in the recuperated data
-          if self.ponder:
-            dR = np.diff(Data[2])
-            nz_ind = np.where(dR != 0)
-            w_ponder["R"] *= len(Data[1]) / len(Data[2][nz_ind])
-            erro["R"] = (result[2][nz_ind] - data_test[2][nz_ind])**2
-          else:
-            erro["R"] = (result[2] - data_test[2])**2
-          erro["R"] = w_ponder["R"] * np.sqrt(np.mean(erro["R"]))
-          self.acc_error["R"].append(erro["R"])
-      for key in self.focus:
-        final_error += erro[key]
-      self.__iter_error.append(final_error)
-      return self.__iter_error[-1]
-    except:
-      return self.__iter_error[-1]
+    response = self.cost_function(*args)
+    return response
 
   def simulate(self, initial, time, theta):
     """
@@ -176,6 +131,7 @@ class SIR:
     ).T
     return result
 
+
   def predict(self, initial, t):
     """
       The function that uses the estimated parameters of the SIR model
@@ -189,6 +145,9 @@ class SIR:
       :rtype: tuple
     """
     if hasattr(self, 'parameters'):
+      if self._search_pop:
+        initial = list(initial)
+        initial[0] = initial[0] * self.parameters[-1]
       return self.simulate(initial, t, self.parameters)
     else:
       print("Error! No parameter estimated!")
@@ -200,7 +159,7 @@ class SIR:
       pop_sens=[1e-3,1e-4],
       beta_sens=[100,10],
       r_sens=[100,10],
-      sigma_sens=[1e-4,1e2],
+      sigma_sens=None,
       sample_ponder=None,
       initial_weight=1,
       **kwargs):
@@ -209,16 +168,15 @@ class SIR:
       parameters for the provided data set. It assumes that in 
       the data there is only one epidemic period.
       
-      :param array Sd: Array with the suceptible data. 
-      :param array Id: Array with the infected data. 
-      :param array Rd: Array with the recovered data. 
-      :param array td: The time respective to each set of samples. \
-      :param array resample: The flag to set the resampling of the dataset. Default is :code:`False`. \
-      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
-      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
-      :param bool sample_ponder: The flag to set the pondering of the non informative recovered data. \
-      :param dict **kwargs: The differential evolution arguments.
-
+      :param array dataset: list with the respective arrays of Suceptible, Infected, Recovered and Deaths.
+      :param array t: The time respective to each set of samples.
+      :param bool search_pop: Flag to set the exposed population search, for better Suceptible extimation values. Default is :code:`True`.
+      :param list Ro_bounds: The bounds to build the constraints for :code:`Ro = Beta / r`. With minimun and maximun values, respectivelly.
+      :param list pop_sens: The sensibility (boudaries) for the proportion of :code:`N` to be found by the pop parameters.
+      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`.
+      :param list r_sens: The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`.
+      :param bool sample_ponder: The flag to set the pondering of the non informative recovered data.
+      :param dict **kwargs: The optimization search algorithms options.
     """
     # Create the data values
     S, I, R, D = None, None, None, None
@@ -281,7 +239,7 @@ class SIR:
     # minimize the cost function
     if self.__search_alg == "differential_evolution":
       summary = differential_evolution(
-          self.cost_function, 
+          self.cost_wrapper, 
           list(zip(lower, upper)),
           maxiter=6000,
           popsize=35,
@@ -289,20 +247,20 @@ class SIR:
           strategy="best1exp",
           tol=0.00001,
           args=(datatrain, y0, t, w),
-          constraints=constraints
-          # updating='deferred',
-          # workers=-1
+          constraints=constraints,
+          updating='deferred',
+          workers=-1
         )
     elif self.__search_alg == "dual_annealing":
       summary = dual_annealing(
-          self.cost_function, 
+          self.cost_wrapper, 
           list(zip(lower, upper)),
           maxiter=10000,
           args=(datatrain, y0, t, w)
         )
     elif self.__search_alg == "shgo":
       summary = shgo(
-          self.cost_function,
+          self.cost_wrapper,
           list(zip(lower, upper)),
           n=500, iters=10,
           sampling_method="sobol",
@@ -336,17 +294,16 @@ class SIR:
       :param array Id: Array with the infected data.
       :param array Bd: Array with the births data.
       :param array td: The time respective to each set of samples.
-      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`. \
-      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`. \
-      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`. \
-      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`. \
-      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
-      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
-      :param int out_type: The output type, it can be :code:`1` or :code:`0`. Default is :code:`0`. 
+      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`.
+      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`.
+      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`.
+      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`.
+      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`.
+      :param list r_sens: The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`.
+      :param int out_type: The output type, it can be :code:`1` or :code:`0`. Default is :code:`0`.
       
       :return: If the :code:`out_type=0`, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If `out_type=1` it returns the self.data of the model, a summary with all model information.
       :rtype: tuple
-    
     """
     self.data["full"] = {
       "I": Id, "S": Sd, 
@@ -457,17 +414,16 @@ class SIR:
       :param array Id: Array with the infected data.
       :param array Bd: Array with the births data.
       :param array td: The time respective to each set of samples.
-      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`. \
-      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`. \
-      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`. \
-      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`. \
-      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`. \
-      :param list r_sens : The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`. \
+      :param float threshold_prop: The standard deviation proportion used as threshold for windowing. Default is :code:`1.0`.
+      :param int cases_before: The number of back samples to check for the initial window point. Default is :code:`10`.
+      :param bool filt_estimate: Flag to use filtered data to estimate the model parameters. Default is :code:`False`.
+      :param int filt_window: The window size used on the filtering technique, only if :code:`filt_estimate=True`. Default is :code:`55`.
+      :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`.
+      :param list r_sens: The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`.
       :param int out_type: The output type, it can be :code:`1` or :code:`0`. Default is :code:`0`. 
       
       :return: If the :code:`out_type=0`, it returns a tuple with the estimated beta and r, estimated, with the year of each respective window. If `out_type=1` it returns the self.data of the model, a summary with all model information.
       :rtype: tuple
-    
     """
     self.data["full"] = {
       "I": Id, "S": Sd, 
@@ -738,6 +694,14 @@ def findEpidemyBreaks(cases,
 
 
 def constr_f(x_par):
+  """
+    The function to compute the non linear contraint of the Ro parameter.
+    
+    :param list x_par: list of parameters, beta, r and pop.
+  
+    :return: the Ro value.
+    :rtype: float
+  """
   if len(x_par) == 3:
     return x_par[0] * x_par[2] / x_par[1]
   else:
