@@ -31,6 +31,7 @@
         <script src="_static/copybutton.js"></script>
         <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
         <script src="_static/twemoji.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -111,6 +112,7 @@
 <p class="caption"><span class="caption-text">COVID</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="covid.html"><strong>SIR</strong> 🇧🇷 <strong>Brasil - Dados Reais</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-cn-china-dados-reais"><strong>SIR</strong> 🇨🇳 <strong>China - Dados Reais</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="covid.html#sir-it-italia-dados-reais"><strong>SIR</strong> 🇮🇹 <strong>Itália - Dados Reais</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="covid.html#sir-de-alemanha-dados-reais"><strong>SIR</strong> 🇩🇪 <strong>Alemanha - Dados Reais</strong></a></li>
 </ul>
@@ -247,27 +249,40 @@ durante os períodos de epidemias:</p>
 </div>
 <div class="section" id="previsoes-dos-picos-epidemicos-do-covid">
 <h1>Previsões dos picos epidêmicos do COVID<a class="headerlink" href="#previsoes-dos-picos-epidemicos-do-covid" title="Permalink to this headline">¶</a></h1>
-<p>A medida que a cada dia novos dados foram inseridos no banco banco de dados, de países em que
-a epidemia já está mais avançada do que no Brasil. Nós utilizamos nosso modelo, para tentar
-estimar o dia dos picos de infectados; o momento em que temos a inflexão da epidemia. Para
-países como Itália 🇮🇹, conseguimos resultados como:</p>
+<p>Nesta análise apresentamos o efeito da quantidade de dados na performance do modelo desenvolvido
+analisando a capacidade de prever o dia em que acontecerá o pico da quantidade de infectados da
+epidemia do COVID. Para isso estamos utilizando dados de países que já tiveram seu pico de contágio,
+e atualmente estão no período de amortecimento da quantidade de infectados. Alguns dos países analisados
+foram a China 🇨🇳, Itália 🇮🇹 e Alemanha 🇩🇪, que possibilitaram as análises abaixo.
+Nestas figuras é mostrado o erro do modelo ao tentar prever o dia de pico, para cada dia decorrente
+da epidemia:</p>
 <h3 style="text-align:center;">
    <iframe
-      id="ITinfiFrame"
+      id="ChinaInfiFrame"
       style="border:none;"
-      src="IT_infectados_COVID.html"
+      src="peak_estimate_CN.html"
       height="530"
       width="680"
    ></iframe>
-</h3>
-<script>
-   const iframe = document.getElementById("ITinfiFrame")
-   if (screen.width < 600) {
-      iframe.setAttribute("src", "IT_infectados_COVID.html")
-      iframe.setAttribute("height", 780)
-      iframe.setAttribute("width", 680)
-   }
-</script><p>E com os dados reais:</p>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="ItalyInfiFrame"
+      style="border:none;"
+      src="peak_estimate_IT.html"
+      height="530"
+      width="680"
+   ></iframe>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="GermanyInfiFrame"
+      style="border:none;"
+      src="peak_estimate_DE.html"
+      height="530"
+      width="680"
+   ></iframe>
+</h3><p>Uma comparação entre os dados reais e os modelos obtidos a cada dia
+que se passou da epidemia, está sendo apresentado a seguir para os
+dados da Itália 🇮🇹:</p>
 <h3 style="text-align:center;">
    <iframe
       id="ITalliFrame"
@@ -382,15 +397,31 @@ aos dados existentes:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Brazil.html#Referências">Referências</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="covid.html#sir-cn-china-dados-reais"><strong>SIR</strong> 🇨🇳 <strong>China - Dados Reais</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="covid.html#sir-it-italia-dados-reais"><strong>SIR</strong> 🇮🇹 <strong>Itália - Dados Reais</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html">Os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="covid.html#sir-de-alemanha-dados-reais"><strong>SIR</strong> 🇩🇪 <strong>Alemanha - Dados Reais</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html">Os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </li>
 </ul>
@@ -454,7 +485,7 @@ aos dados existentes:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Vanderlei Parro e Marcelo Lima
+        &copy; Copyright 2020, Vanderlei Parro, Marcelo Lima e Felipe Ippolito
 
     </p>
   </div>

@@ -52,33 +52,54 @@ durante os períodos de epidemias:
 Previsões dos picos epidêmicos do COVID
 ========================================
 
-A medida que a cada dia novos dados foram inseridos no banco banco de dados, de países em que 
-a epidemia já está mais avançada do que no Brasil. Nós utilizamos nosso modelo, para tentar 
-estimar o dia dos picos de infectados; o momento em que temos a inflexão da epidemia. Para 
-países como Itália |:it:|, conseguimos resultados como:
+Nesta análise apresentamos o efeito da quantidade de dados na performance do modelo desenvolvido 
+analisando a capacidade de prever o dia em que acontecerá o pico da quantidade de infectados da 
+epidemia do COVID. Para isso estamos utilizando dados de países que já tiveram seu pico de contágio,
+e atualmente estão no período de amortecimento da quantidade de infectados. Alguns dos países analisados 
+foram a China |:cn:|, Itália |:it:| e Alemanha |:de:|, que possibilitaram as análises abaixo. 
+Nestas figuras é mostrado o erro do modelo ao tentar prever o dia de pico, para cada dia decorrente 
+da epidemia:
 
 .. raw:: html
 
    <h3 style="text-align:center;">
       <iframe 
-         id="ITinfiFrame"
+         id="ChinaInfiFrame"
          style="border:none;"
-         src="IT_infectados_COVID.html"
+         src="peak_estimate_CN.html"
          height="530"
          width="680"
       ></iframe>
    </h3>
-   <script>
-      const iframe = document.getElementById("ITinfiFrame")
-      if (screen.width < 600) {
-         iframe.setAttribute("src", "IT_infectados_COVID.html")
-         iframe.setAttribute("height", 780)
-         iframe.setAttribute("width", 680)
-      }
-   </script>
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ItalyInfiFrame"
+         style="border:none;"
+         src="peak_estimate_IT.html"
+         height="530"
+         width="680"
+      ></iframe>
+   </h3>
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="GermanyInfiFrame"
+         style="border:none;"
+         src="peak_estimate_DE.html"
+         height="530"
+         width="680"
+      ></iframe>
+   </h3>
 
 
-E com os dados reais:
+Uma comparação entre os dados reais e os modelos obtidos a cada dia 
+que se passou da epidemia, está sendo apresentado a seguir para os 
+dados da Itália |:it:|:
 
 .. raw:: html
 

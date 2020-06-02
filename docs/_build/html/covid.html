@@ -31,6 +31,7 @@
         <script src="_static/copybutton.js"></script>
         <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
         <script src="_static/twemoji.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -119,15 +120,31 @@
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Brazil.html#Referências">Referências</a></li>
 </ul>
 </li>
+<li class="toctree-l1"><a class="reference internal" href="#sir-cn-china-dados-reais"><strong>SIR</strong> 🇨🇳 <strong>China - Dados Reais</strong></a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html">Os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
+</ul>
+</li>
 <li class="toctree-l1"><a class="reference internal" href="#sir-it-italia-dados-reais"><strong>SIR</strong> 🇮🇹 <strong>Itália - Dados Reais</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html">Os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="#sir-de-alemanha-dados-reais"><strong>SIR</strong> 🇩🇪 <strong>Alemanha - Dados Reais</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html">Os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </li>
 </ul>
@@ -244,6 +261,23 @@
 </ul>
 </div>
 </div>
+<div class="section" id="sir-cn-china-dados-reais">
+<h1><strong>SIR</strong> 🇨🇳 <strong>China - Dados Reais</strong><a class="headerlink" href="#sir-cn-china-dados-reais" title="Permalink to this headline">¶</a></h1>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html">Os dados</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Organizando-os-dados">Organizando os dados</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-os-dados">Visualizando os dados</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
+</ul>
+</div>
+</div>
 <div class="section" id="sir-it-italia-dados-reais">
 <h1><strong>SIR</strong> 🇮🇹 <strong>Itália - Dados Reais</strong><a class="headerlink" href="#sir-it-italia-dados-reais" title="Permalink to this headline">¶</a></h1>
 <div class="toctree-wrapper compound">
@@ -255,6 +289,9 @@
 </li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </div>
 </div>
@@ -268,6 +305,10 @@
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l1"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </div>
 </div>
@@ -292,7 +333,7 @@
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Vanderlei Parro e Marcelo Lima
+        &copy; Copyright 2020, Vanderlei Parro, Marcelo Lima e Felipe Ippolito
 
     </p>
   </div>

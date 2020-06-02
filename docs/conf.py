@@ -17,11 +17,14 @@ sys.path.insert(0, os.path.abspath('..'))
 import sphinx_rtd_theme
 import sphinxemoji
 
+def setup(app):
+  app.add_javascript('https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js')
+
 # -- Project information -----------------------------------------------------
 
 project = 'IMT Epidemic Models'
-copyright = '2020, Vanderlei Parro e Marcelo Lima'
-author = 'Vanderlei Parro e Marcelo Lima'
+copyright = '2020, Vanderlei Parro, Marcelo Lima e Felipe Ippolito'
+author = 'Vanderlei Parro, Marcelo Lima e Felipe Ippolito'
 
 # The full version, including alpha/beta/rc tags
 release = 'v0.1'
@@ -82,5 +85,8 @@ html_extra_path = [
   "./media_content/SP_result.html",
   "./media_content/BR_result.html",
   "./media_content/IT_infectados_COVID.html",
-  "./media_content/IT_COVID.html"
+  "./media_content/IT_COVID.html",
+  "./media_content/peak_estimate_IT.html",
+  "./media_content/peak_estimate_DE.html",
+  "./media_content/peak_estimate_CN.html"
 ]

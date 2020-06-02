@@ -8,6 +8,14 @@
   notebooks/SIR Real Data - COVID - Brazil
 
 
+**SIR** |:cn:| **China - Dados Reais**
+=======================================
+
+.. toctree::
+  :maxdepth: 2
+
+  notebooks/SIR Real Data - COVID - China Model Analyser
+
 
 **SIR** |:it:| **Itália - Dados Reais**
 =======================================
