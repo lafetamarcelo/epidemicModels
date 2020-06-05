@@ -5,3 +5,4 @@ PG_IMT/
 SIRpd
 estimation_summaries
 *.p
+*.csv

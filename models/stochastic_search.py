@@ -5,8 +5,10 @@ import numpy as np
 import scipy.signal as scs
 
 from PyAstronomy import pyasl
-from scipy.optimize import differential_evolution, dual_annealing, shgo, leastsq, NonlinearConstraint
 from scipy import integrate, interpolate
+
+from scipy.optimize import differential_evolution, dual_annealing
+from scipy.optimize import shgo, leastsq, NonlinearConstraint
 
 from bokeh.models   import ColumnDataSource, RangeTool, LinearAxis, Range1d
 from bokeh.palettes import brewer, Inferno10
@@ -16,6 +18,7 @@ from bokeh.io       import output_notebook, export_png
 
 from . import differential_models as dm
 from . import cost_functions as cm
+from . import regressors as rm
 
 output_notebook()
 
@@ -46,6 +49,8 @@ class SIR:
       pop=2000000,
       focus=["I","R"],
       algorithm="differential_evolution",
+      simulation="discrete",
+      stochastic_search=False,
       verbose=True):
     # Main constants
     self.N = pop
@@ -55,6 +60,7 @@ class SIR:
     self.__search_alg = algorithm
     self.verbose = verbose
     # Algorithm focus variables
+    self.__ssearch = stochastic_search
     if 'M' in self.focus:
       self.__class__.differential_model = dm.SIRD
       self.__class__.cost_function = cm.cost_SIRD
@@ -124,6 +130,10 @@ class SIR:
     if "E" in self.focus:
       ode_args = (*ode_args, theta[2])
     
+    #if self.verbose:
+    #  print("Simulation parameters: ", ode_args)
+    #  print("Initial values used: ", initial)
+
     result = integrate.odeint(
       self.differential_model, 
       initial, time, 
@@ -156,6 +166,7 @@ class SIR:
   def fit(self, dataset, t,
       search_pop=True,
       Ro_bounds=None,
+      Ro_sens=[0.8, 20],
       pop_sens=[1e-3,1e-4],
       beta_sens=[100,10],
       r_sens=[100,10],
@@ -209,13 +220,13 @@ class SIR:
     # and compute the initial conditions for 
     # the model simulation and the weights 
     # for pondering each time series
-    w = [max(I)/max(S), initial_weight]
+    w = [1/np.mean(S), 1/np.mean(I)]
     datatrain = [S, I]
     y0 = [S[0], I[0]] 
     if "R" in self.focus:
       datatrain.append(R)
       y0.append(R[0])
-      w.append(max(I)/max(R))
+      w.append(1/np.mean(R))
     if "E" in self.focus:
       lower.append(sigma_sens[0])
       upper.append(sigma_sens[1])
@@ -241,15 +252,16 @@ class SIR:
       summary = differential_evolution(
           self.cost_wrapper, 
           list(zip(lower, upper)),
-          maxiter=6000,
+          maxiter=10000,
           popsize=35,
           mutation=(0.5, 1.2),
           strategy="best1exp",
-          tol=0.00001,
+          tol=0.0000001,
           args=(datatrain, y0, t, w),
           constraints=constraints,
           updating='deferred',
-          workers=-1
+          workers=-1,
+          # disp=True
         )
     elif self.__search_alg == "dual_annealing":
       summary = dual_annealing(
@@ -267,13 +279,10 @@ class SIR:
           args=(datatrain, y0, t, w)
         )
     # Simulando os dados
-    c = summary.x
-    #results = self.simulate(y0, t, c[:2])
+    self.parameters = summary.x
     # Printing summary
     if self.verbose:
-      print("\t └─ Defined at: ", c[0], " ─ ", c[1], "\n")
-    # Save the model parameters
-    self.parameters = c
+      print("\t └─ Defined at: ", self.parameters[0], " ─ ", self.parameters[1], "\n")
 
   def fit_multiple(self, Sd, Id, Bd, td, 
       threshold_prop=1,
