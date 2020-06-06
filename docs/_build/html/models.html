@@ -31,6 +31,7 @@
         <script src="_static/copybutton.js"></script>
         <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js"></script>
         <script src="_static/twemoji.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
@@ -105,7 +106,7 @@
 <p class="caption"><span class="caption-text">Baseados em Dados</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-sec-xx"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido SEC XX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-1944-1964"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido 1944-1964</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-modelos-espaciais"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido Modelos Espaciais</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>Parâmetros variantes</strong></a></li>
 </ul>
@@ -230,7 +231,7 @@
 <span id="stochastic-search-learning-models"></span><h2>Stochastic Search - Learning models<a class="headerlink" href="#module-models.stochastic_search" title="Permalink to this headline">¶</a></h2>
 <dl class="class">
 <dt id="models.stochastic_search.SIR">
-<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">pop=2000000, focus=['I', 'R'], algorithm='differential_evolution', verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">pop=2000000, focus=['I', 'R'], algorithm='differential_evolution', simulation='discrete', stochastic_search=False, forced_search_pop=False, verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This model concentrate all the developed algorithms to 
 represent data driven SIR model. Using the Scipy default 
@@ -509,6 +510,36 @@ algorithm. It computes the quadratic error.</p>
 </dl>
 </dd></dl>
 
+<dl class="function">
+<dt id="models.cost_functions.cost_dSIR">
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_dSIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">dataset</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_dSIR" title="Permalink to this definition">¶</a></dt>
+<dd><p>The function to compute the error to guide the learning
+algorithm. It computes the quadratic error.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>p</strong> (<em>tuple</em>) – Tuple with Beta and r parameters, respectivelly.</p></li>
+<li><p><strong>S</strong> (<em>array</em>) – The suceptible data values.</p></li>
+<li><p><strong>I</strong> (<em>array</em>) – The infected data values.</p></li>
+<li><p><strong>initial</strong> (<em>array</em>) – The initial values of suceptible and infected, respectivelly.</p></li>
+<li><p><strong>t</strong> (<em>array</em>) – The time respective to each sample.</p></li>
+<li><p><strong>w</strong> (<em>array</em>) – The weight respective to the suceptible and infected errors.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The sum of the quadratic error, between simulated and real data.</p>
+</dd>
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p>float</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="models.cost_functions.cost_discSIR">
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_discSIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">data</em>, <em class="sig-param">time</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_discSIR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
 </div>
 <div class="section" id="module-models.differential_models">
 <span id="differential-models"></span><h2>Differential Models<a class="headerlink" href="#module-models.differential_models" title="Permalink to this headline">¶</a></h2>
@@ -582,6 +613,11 @@ equations of the SIRD Epidemic Model.</p>
 </dd>
 </dl>
 </dd></dl>
+
+<dl class="function">
+<dt id="models.differential_models.discSIR">
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">discSIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">initial</em>, <em class="sig-param">time</em>, <em class="sig-param">pars</em>, <em class="sig-param">dt=1.0</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.discSIR" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
 
 </div>
 <div class="section" id="module-models">

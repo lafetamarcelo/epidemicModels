@@ -16,10 +16,10 @@ entendimento do conteúdo apresentado.
 Alguns resultados do século XX...
 =================================
 
-Para dar um gosto do conteúdo aprensentado, uma análise foi feita com dados de epidemias 
+Para dar um gosto do conteúdo aprensentado, foi desenvolvida uma análise com dados 
 do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos, é possível 
-obter modelos capazes de fazer previsões dos surtos epidêmicos dos dados. Essas previsões,
-juntamente com os dados, estão apresentadas na figura a seguir: 
+obter previsões do comportamento dos dados. Essas previsões, juntamente com os dados reias, 
+estão apresentadas na figura a seguir: 
 
 .. raw:: html
 
@@ -42,15 +42,278 @@ juntamente com os dados, estão apresentadas na figura a seguir:
    </script>
 
 Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades 
-durante os períodos de epidemias:
+durante os períodos de epidemias do Reino Unido:
 
 .. image:: images/res/UK_models_corr.png
-   :width: 700
+   :align: center
+   :width: 500
+
+
+Previsões do COVID
+==================
+
+Nesta análise utilizamos o modelo desenvolvido para tentar prever os comportamentos do 
+COVID. Para isso, primeiramente utilizamos dados de países que já apresentam um comportamento 
+característico da estrutura SIR, e já estão em seu final. Desta forma podemos validar o modelo 
+com relação a sua capacidade de prever eventos futuros, mesmo que somente poucos dias de dados 
+sejam utilizados. Desta forma algumas análises específicas, e de maior impacto, são apresentadas 
+nessa primeira página:
+
+* Determinação do número básico de reprodução :math:`R_0` no decorrer da epidemia
+* Previsão da quantidade de infectados notificados no sistema público
+* Previsão do momento de pico da epidemia
+
+No caso, essas análises foram feitas para Itália |:it:|, China |:cn:| e Alemanha |:de:|, países 
+que já estão em seu período de diminuição do nível de infectados. Para dar um gosto sobre a 
+capacidade de previsão do algoritmo de aprendizado desenvolvido, nas visualizações a seguir 
+nós mostramos a previsão feita pelo algoritmo para cada país a medida que os tempo da epidemia 
+foi passando e mais dados foram utilizados para a aprendizagem:
+
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ItalyPredfiFrame"
+         style="border:none;"
+         src="slider_IT.html"
+         height="480"
+         width="520"
+      ></iframe>
+   </h3>
+
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ChinaPredfiFrame"
+         style="border:none;"
+         src="slider_CN.html"
+         height="480"
+         width="520"
+      ></iframe>
+   </h3>
+
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="GermanyPredfiFrame"
+         style="border:none;"
+         src="slider_DE.html"
+         height="480"
+         width="520"
+      ></iframe>
+   </h3>
+
+
+
+Nosso modelo aprende com algoritmos de otimização os parâmetros da estrutura SIR, juntamente 
+com a proporção da população que está sendo registrada pelo sistema de saúde. No caso, ele 
+aprende três parâmetros fundamentais do modelo: :math:`\beta` (contatos por dia), :math:`r` 
+(em que :math:`1/r` é o tempo médio de recuperação da doença), e o :math:`S(0)` (quantidade 
+inicial de suscetíveis), para que a epidemia tenha o comportamento que os dados mostram. No 
+caso os valores ajustados para cada país foram:
+
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <blockquote>
+      <div><table class="docutils align-default">
+      <colgroup>
+      <col style="text-align:center;width: 39%" />
+      <col style="text-align:center;width: 34%" />
+      <col style="text-align:center;width: 27%" />
+      </colgroup>
+      <thead>
+      <tr class="row-odd"><th class="head"><p>País</p></th>
+      <th class="head"><p><span class="math notranslate nohighlight">\(\beta\)</span></p></th>
+      <th class="head"><p><span class="math notranslate nohighlight">\(r\)</span></p></th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr class="row-even"><td><p>Itália 🇮🇹</p></td>
+      <td><p>0.2038</p></td>
+      <td><p>0.0233</p></td>
+      </tr>
+      <tr class="row-odd"><td><p>China 🇨🇳</p></td>
+      <td><p>0.3133</p></td>
+      <td><p>0.0445</p></td>
+      </tr>
+      <tr class="row-even"><td><p>Alemanha 🇩🇪</p></td>
+      <td><p>0.2195</p></td>
+      <td><p>0.0576</p></td>
+      </tr>
+      </tbody>
+      </table>
+      </div></blockquote>
+   </h3>
+
+
+**Caso você mesmo queira se divertir e tentar ajustar os parâmetros, é possível, clicando no botão abaixo!**
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <a href="SIR-sliders.html">
+         <!DOCTYPE html>
+            <html>
+               <head>
+                  <style>
+                     .button {
+                     border: none;
+                     color: white;
+                     padding: 16px 32px;
+                     text-align: center;
+                     text-decoration: none;
+                     display: inline-block;
+                     font-size: 16px;
+                     margin: 4px 2px;
+                     transition-duration: 0.4s;
+                     cursor: pointer;
+                     }
+
+                     .button1 {
+                     background-color: white;
+                     color: black;
+                     border: 2px solid #4CAF50;
+                     }
+
+                     .button1:hover {
+                     background-color: #4CAF50;
+                     color: white;
+                     }
+                  </style>
+               </head>
+               <body>
+                  <button class="button button1">Tente você mesmo!</button>
+               </body>
+         </html> 
+      </a>
+   </h3>
+
+
+.. raw:: html
+
+   <br><br><br><br><br><br><br>
+
+
+
+Determinação do :math:`R_0`
+---------------------------
+
+Note que o parâmetro :math:`R_0`, é determinado a partir dos dois outros característicos do 
+modelo SIR, :math:`R_0 = \beta / r`. Aqui utilizamos um modelo SIR que pondera a quantidade 
+de suscetíveis, uma vez que nem toda a população pode ser considerada suscetível, visto que 
+nem todas as pessoas infectadas, e recuperadas são notificadas ao sistema público. E nem toda 
+a população é alcançavel ao vírus, devido a políticas públicas, isolamentos ... 
+
+.. note::
+   Desta forma note, que o modelo desenvolvido somente modela as pessoas notificadas pelo sistema
+   de saúde, sendo assim, representativo de uma parte da verdade situação do país.
+
+Dito isso, é possível definir os valores encontrados pelo algoritmo de aprendizagem para o 
+parâmetro :math:`R_0` a medida que os dias da pandemia passaram:
+
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ItalyRofiFrame"
+         style="border:none;"
+         src="Ro_estimate_IT.html"
+         height="460"
+         width="750"
+      ></iframe>
+   </h3>
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ItalyRofiFrame"
+         style="border:none;"
+         src="Ro_estimate_CN.html"
+         height="460"
+         width="750"
+      ></iframe>
+   </h3>
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="GermanyRofiFrame"
+         style="border:none;"
+         src="Ro_estimate_DE.html"
+         height="460"
+         width="750"
+      ></iframe>
+   </h3>
+
+
+
+Previsões do consumo do sistema público
+---------------------------------------
+
+Um dos parâmetros que nosso algoritmo aprende durante seu processo de treinamento, é um parâmetro 
+que pondera a quantidade da população de suscetíveis inicial (simplesmente uma técnica para 
+melhorar o condicionamento númerico do algoritmo). Porém, com esse parâmetro tende sempre a 
+estimar o valor de :math:`S(0)` igual ao valor de :math:`R(\infty)`. Note que sempre é verdade  
+:math:`S(0) \geq R(\infty)`. Como os dados medidos são somente das pessoas notificadas e acompanhadas 
+pelo sistema de saúde, podemos concluir que o valor de :math:`R(\infty)` é a quantidade de pessoas 
+que foram contamindas, e frequentaram o sistema de saúde para o diagnóstico, e por isso estão na 
+base de dados. Nosso algoritmo prevê a quantidade de :math:`S(0) = R(\infty)`, desta forma para cada 
+novo dia de dados temos uma nova previsão de qual será a quantidade de pessoas que consumirão o sistema 
+de saúde. Nos gráficos a seguir conseguimos mostrar o erro percentual entre o real valor de :math:`R(\infty)`
+e o valor estimado por nosso modelo a cada dia da epidemia:
+
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ItalyPSfiFrame"
+         style="border:none;"
+         src="Public_usage_IT.html"
+         height="460"
+         width="750"
+      ></iframe>
+   </h3>
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="ChinaPSfiFrame"
+         style="border:none;"
+         src="Public_usage_CN.html"
+         height="460"
+         width="750"
+      ></iframe>
+   </h3>
+
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         id="GermanyPSfiFrame"
+         style="border:none;"
+         src="Public_usage_DE.html"
+         height="460"
+         width="750"
+      ></iframe>
+   </h3>
+
 
 
 
 Previsões dos picos epidêmicos do COVID
-========================================
+---------------------------------------
 
 Nesta análise apresentamos o efeito da quantidade de dados na performance do modelo desenvolvido 
 analisando a capacidade de prever o dia em que acontecerá o pico da quantidade de infectados da 
@@ -97,58 +360,15 @@ da epidemia:
    </h3>
 
 
-Uma comparação entre os dados reais e os modelos obtidos a cada dia 
-que se passou da epidemia, está sendo apresentado a seguir para os 
-dados da Itália |:it:|:
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="ITalliFrame"
-         style="border:none;"
-         src="IT_COVID.html"
-         height="530"
-         width="680"
-      ></iframe>
-   </h3>
-   <script>
-      const iframe = document.getElementById("ITalliFrame")
-      if (screen.width < 600) {
-         iframe.setAttribute("src", "IT_COVID.html")
-         iframe.setAttribute("height", 780)
-         iframe.setAttribute("width", 680)
-      }
-   </script>
-
 
 
 Modelos COVID Brasil |:br:|
 ============================
 
-Como exemplo, segue o trabalho atual com as previsões dos comportamentos da epidemia no 
-Brasil. Uma mescla entre os dados existentes e a previsão obtida pelo modelo SIR ajustado 
-aos dados existentes:
 
-.. raw:: html
+.. admonition:: And, by the way...
 
-   <h3 style="text-align:center;">
-      <iframe 
-         id="BRiFrame"
-         style="border:none;"
-         src="BR_result.html"
-         height="530"
-         width="680"
-      ></iframe>
-   </h3>
-   <script>
-      const iframe = document.getElementById("BRiFrame")
-      if (screen.width < 600) {
-         iframe.setAttribute("src", "BR_result.html")
-         iframe.setAttribute("height", 780)
-         iframe.setAttribute("width", 680)
-      }
-   </script>
+   Em construção...
 
 
 

@@ -88,5 +88,15 @@ html_extra_path = [
   "./media_content/IT_COVID.html",
   "./media_content/peak_estimate_IT.html",
   "./media_content/peak_estimate_DE.html",
-  "./media_content/peak_estimate_CN.html"
+  "./media_content/peak_estimate_CN.html",
+  "./media_content/Public_usage_IT.html",
+  "./media_content/Public_usage_DE.html",
+  "./media_content/Public_usage_CN.html",
+  "./media_content/Ro_estimate_IT.html",
+  "./media_content/Ro_estimate_DE.html",
+  "./media_content/Ro_estimate_CN.html",
+  "./media_content/slider_IT.html",
+  "./media_content/slider_DE.html",
+  "./media_content/slider_CN.html",
+  "./media_content/SIR-sliders.html"
 ]

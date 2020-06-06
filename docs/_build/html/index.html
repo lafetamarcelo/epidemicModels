@@ -105,7 +105,7 @@
 <p class="caption"><span class="caption-text">Baseados em Dados</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html"><strong>SIR Dados Artificiais</strong></a></li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-sec-xx"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido SEC XX</strong></a></li>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-1944-1964"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido 1944-1964</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-modelos-espaciais"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido Modelos Espaciais</strong></a></li>
 <li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-br-parametros-variantes"><strong>SIR</strong> 🇧🇷 <strong>Parâmetros variantes</strong></a></li>
 </ul>
@@ -223,10 +223,10 @@ entendimento do conteúdo apresentado.</p>
 </div>
 <div class="section" id="alguns-resultados-do-seculo-xx">
 <h1>Alguns resultados do século XX…<a class="headerlink" href="#alguns-resultados-do-seculo-xx" title="Permalink to this headline">¶</a></h1>
-<p>Para dar um gosto do conteúdo aprensentado, uma análise foi feita com dados de epidemias
+<p>Para dar um gosto do conteúdo aprensentado, foi desenvolvida uma análise com dados
 do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos, é possível
-obter modelos capazes de fazer previsões dos surtos epidêmicos dos dados. Essas previsões,
-juntamente com os dados, estão apresentadas na figura a seguir:</p>
+obter previsões do comportamento dos dados. Essas previsões, juntamente com os dados reias,
+estão apresentadas na figura a seguir:</p>
 <h3 style="text-align:center;">
    <iframe
       id="UKiFrame"
@@ -244,11 +244,203 @@ juntamente com os dados, estão apresentadas na figura a seguir:</p>
       iframe.setAttribute("width", 680)
    }
 </script><p>Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades
-durante os períodos de epidemias:</p>
-<a class="reference internal image-reference" href="_images/UK_models_corr.png"><img alt="_images/UK_models_corr.png" src="_images/UK_models_corr.png" style="width: 700px;" /></a>
+durante os períodos de epidemias do Reino Unido:</p>
+<a class="reference internal image-reference" href="_images/UK_models_corr.png"><img alt="_images/UK_models_corr.png" class="align-center" src="_images/UK_models_corr.png" style="width: 500px;" /></a>
 </div>
+<div class="section" id="previsoes-do-covid">
+<h1>Previsões do COVID<a class="headerlink" href="#previsoes-do-covid" title="Permalink to this headline">¶</a></h1>
+<p>Nesta análise utilizamos o modelo desenvolvido para tentar prever os comportamentos do
+COVID. Para isso, primeiramente utilizamos dados de países que já apresentam um comportamento
+característico da estrutura SIR, e já estão em seu final. Desta forma podemos validar o modelo
+com relação a sua capacidade de prever eventos futuros, mesmo que somente poucos dias de dados
+sejam utilizados. Desta forma algumas análises específicas, e de maior impacto, são apresentadas
+nessa primeira página:</p>
+<ul class="simple">
+<li><p>Determinação do número básico de reprodução <span class="math notranslate nohighlight">\(R_0\)</span> no decorrer da epidemia</p></li>
+<li><p>Previsão da quantidade de infectados notificados no sistema público</p></li>
+<li><p>Previsão do momento de pico da epidemia</p></li>
+</ul>
+<p>No caso, essas análises foram feitas para Itália 🇮🇹, China 🇨🇳 e Alemanha 🇩🇪, países
+que já estão em seu período de diminuição do nível de infectados. Para dar um gosto sobre a
+capacidade de previsão do algoritmo de aprendizado desenvolvido, nas visualizações a seguir
+nós mostramos a previsão feita pelo algoritmo para cada país a medida que os tempo da epidemia
+foi passando e mais dados foram utilizados para a aprendizagem:</p>
+<h3 style="text-align:center;">
+   <iframe
+      id="ItalyPredfiFrame"
+      style="border:none;"
+      src="slider_IT.html"
+      height="480"
+      width="520"
+   ></iframe>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="ChinaPredfiFrame"
+      style="border:none;"
+      src="slider_CN.html"
+      height="480"
+      width="520"
+   ></iframe>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="GermanyPredfiFrame"
+      style="border:none;"
+      src="slider_DE.html"
+      height="480"
+      width="520"
+   ></iframe>
+</h3><p>Nosso modelo aprende com algoritmos de otimização os parâmetros da estrutura SIR, juntamente
+com a proporção da população que está sendo registrada pelo sistema de saúde. No caso, ele
+aprende três parâmetros fundamentais do modelo: <span class="math notranslate nohighlight">\(\beta\)</span> (contatos por dia), <span class="math notranslate nohighlight">\(r\)</span>
+(em que <span class="math notranslate nohighlight">\(1/r\)</span> é o tempo médio de recuperação da doença), e o <span class="math notranslate nohighlight">\(S(0)\)</span> (quantidade
+inicial de suscetíveis), para que a epidemia tenha o comportamento que os dados mostram. No
+caso os valores ajustados para cada país foram:</p>
+<h3 style="text-align:center;">
+   <blockquote>
+   <div><table class="docutils align-default">
+   <colgroup>
+   <col style="text-align:center;width: 39%" />
+   <col style="text-align:center;width: 34%" />
+   <col style="text-align:center;width: 27%" />
+   </colgroup>
+   <thead>
+   <tr class="row-odd"><th class="head"><p>País</p></th>
+   <th class="head"><p><span class="math notranslate nohighlight">\(\beta\)</span></p></th>
+   <th class="head"><p><span class="math notranslate nohighlight">\(r\)</span></p></th>
+   </tr>
+   </thead>
+   <tbody>
+   <tr class="row-even"><td><p>Itália 🇮🇹</p></td>
+   <td><p>0.2038</p></td>
+   <td><p>0.0233</p></td>
+   </tr>
+   <tr class="row-odd"><td><p>China 🇨🇳</p></td>
+   <td><p>0.3133</p></td>
+   <td><p>0.0445</p></td>
+   </tr>
+   <tr class="row-even"><td><p>Alemanha 🇩🇪</p></td>
+   <td><p>0.2195</p></td>
+   <td><p>0.0576</p></td>
+   </tr>
+   </tbody>
+   </table>
+   </div></blockquote>
+</h3><p><strong>Caso você mesmo queira se divertir e tentar ajustar os parâmetros, é possível, clicando no botão abaixo!</strong></p>
+<h3 style="text-align:center;">
+   <a href="SIR-sliders.html">
+      <!DOCTYPE html>
+         <html>
+            <head>
+               <style>
+                  .button {
+                  border: none;
+                  color: white;
+                  padding: 16px 32px;
+                  text-align: center;
+                  text-decoration: none;
+                  display: inline-block;
+                  font-size: 16px;
+                  margin: 4px 2px;
+                  transition-duration: 0.4s;
+                  cursor: pointer;
+                  }
+
+                  .button1 {
+                  background-color: white;
+                  color: black;
+                  border: 2px solid #4CAF50;
+                  }
+
+                  .button1:hover {
+                  background-color: #4CAF50;
+                  color: white;
+                  }
+               </style>
+            </head>
+            <body>
+               <button class="button button1">Tente você mesmo!</button>
+            </body>
+      </html>
+   </a>
+</h3><br><br><br><br><br><br><br><div class="section" id="determinacao-do-r-0">
+<h2>Determinação do <span class="math notranslate nohighlight">\(R_0\)</span><a class="headerlink" href="#determinacao-do-r-0" title="Permalink to this headline">¶</a></h2>
+<p>Note que o parâmetro <span class="math notranslate nohighlight">\(R_0\)</span>, é determinado a partir dos dois outros característicos do
+modelo SIR, <span class="math notranslate nohighlight">\(R_0 = \beta / r\)</span>. Aqui utilizamos um modelo SIR que pondera a quantidade
+de suscetíveis, uma vez que nem toda a população pode ser considerada suscetível, visto que
+nem todas as pessoas infectadas, e recuperadas são notificadas ao sistema público. E nem toda
+a população é alcançavel ao vírus, devido a políticas públicas, isolamentos …</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>Desta forma note, que o modelo desenvolvido somente modela as pessoas notificadas pelo sistema
+de saúde, sendo assim, representativo de uma parte da verdade situação do país.</p>
+</div>
+<p>Dito isso, é possível definir os valores encontrados pelo algoritmo de aprendizagem para o
+parâmetro <span class="math notranslate nohighlight">\(R_0\)</span> a medida que os dias da pandemia passaram:</p>
+<h3 style="text-align:center;">
+   <iframe
+      id="ItalyRofiFrame"
+      style="border:none;"
+      src="Ro_estimate_IT.html"
+      height="460"
+      width="750"
+   ></iframe>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="ItalyRofiFrame"
+      style="border:none;"
+      src="Ro_estimate_CN.html"
+      height="460"
+      width="750"
+   ></iframe>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="GermanyRofiFrame"
+      style="border:none;"
+      src="Ro_estimate_DE.html"
+      height="460"
+      width="750"
+   ></iframe>
+</h3></div>
+<div class="section" id="previsoes-do-consumo-do-sistema-publico">
+<h2>Previsões do consumo do sistema público<a class="headerlink" href="#previsoes-do-consumo-do-sistema-publico" title="Permalink to this headline">¶</a></h2>
+<p>Um dos parâmetros que nosso algoritmo aprende durante seu processo de treinamento, é um parâmetro
+que pondera a quantidade da população de suscetíveis inicial (simplesmente uma técnica para
+melhorar o condicionamento númerico do algoritmo). Porém, com esse parâmetro tende sempre a
+estimar o valor de <span class="math notranslate nohighlight">\(S(0)\)</span> igual ao valor de <span class="math notranslate nohighlight">\(R(\infty)\)</span>. Note que sempre é verdade
+<span class="math notranslate nohighlight">\(S(0) \geq R(\infty)\)</span>. Como os dados medidos são somente das pessoas notificadas e acompanhadas
+pelo sistema de saúde, podemos concluir que o valor de <span class="math notranslate nohighlight">\(R(\infty)\)</span> é a quantidade de pessoas
+que foram contamindas, e frequentaram o sistema de saúde para o diagnóstico, e por isso estão na
+base de dados. Nosso algoritmo prevê a quantidade de <span class="math notranslate nohighlight">\(S(0) = R(\infty)\)</span>, desta forma para cada
+novo dia de dados temos uma nova previsão de qual será a quantidade de pessoas que consumirão o sistema
+de saúde. Nos gráficos a seguir conseguimos mostrar o erro percentual entre o real valor de <span class="math notranslate nohighlight">\(R(\infty)\)</span>
+e o valor estimado por nosso modelo a cada dia da epidemia:</p>
+<h3 style="text-align:center;">
+   <iframe
+      id="ItalyPSfiFrame"
+      style="border:none;"
+      src="Public_usage_IT.html"
+      height="460"
+      width="750"
+   ></iframe>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="ChinaPSfiFrame"
+      style="border:none;"
+      src="Public_usage_CN.html"
+      height="460"
+      width="750"
+   ></iframe>
+</h3><h3 style="text-align:center;">
+   <iframe
+      id="GermanyPSfiFrame"
+      style="border:none;"
+      src="Public_usage_DE.html"
+      height="460"
+      width="750"
+   ></iframe>
+</h3></div>
 <div class="section" id="previsoes-dos-picos-epidemicos-do-covid">
-<h1>Previsões dos picos epidêmicos do COVID<a class="headerlink" href="#previsoes-dos-picos-epidemicos-do-covid" title="Permalink to this headline">¶</a></h1>
+<h2>Previsões dos picos epidêmicos do COVID<a class="headerlink" href="#previsoes-dos-picos-epidemicos-do-covid" title="Permalink to this headline">¶</a></h2>
 <p>Nesta análise apresentamos o efeito da quantidade de dados na performance do modelo desenvolvido
 analisando a capacidade de prever o dia em que acontecerá o pico da quantidade de infectados da
 epidemia do COVID. Para isso estamos utilizando dados de países que já tiveram seu pico de contágio,
@@ -280,48 +472,15 @@ da epidemia:</p>
       height="530"
       width="680"
    ></iframe>
-</h3><p>Uma comparação entre os dados reais e os modelos obtidos a cada dia
-que se passou da epidemia, está sendo apresentado a seguir para os
-dados da Itália 🇮🇹:</p>
-<h3 style="text-align:center;">
-   <iframe
-      id="ITalliFrame"
-      style="border:none;"
-      src="IT_COVID.html"
-      height="530"
-      width="680"
-   ></iframe>
-</h3>
-<script>
-   const iframe = document.getElementById("ITalliFrame")
-   if (screen.width < 600) {
-      iframe.setAttribute("src", "IT_COVID.html")
-      iframe.setAttribute("height", 780)
-      iframe.setAttribute("width", 680)
-   }
-</script></div>
+</h3></div>
+</div>
 <div class="section" id="modelos-covid-brasil-br">
 <h1>Modelos COVID Brasil 🇧🇷<a class="headerlink" href="#modelos-covid-brasil-br" title="Permalink to this headline">¶</a></h1>
-<p>Como exemplo, segue o trabalho atual com as previsões dos comportamentos da epidemia no
-Brasil. Uma mescla entre os dados existentes e a previsão obtida pelo modelo SIR ajustado
-aos dados existentes:</p>
-<h3 style="text-align:center;">
-   <iframe
-      id="BRiFrame"
-      style="border:none;"
-      src="BR_result.html"
-      height="530"
-      width="680"
-   ></iframe>
-</h3>
-<script>
-   const iframe = document.getElementById("BRiFrame")
-   if (screen.width < 600) {
-      iframe.setAttribute("src", "BR_result.html")
-      iframe.setAttribute("height", 780)
-      iframe.setAttribute("width", 680)
-   }
-</script><div class="toctree-wrapper compound">
+<div class="admonition-and-by-the-way admonition">
+<p class="admonition-title">And, by the way…</p>
+<p>Em construção…</p>
+</div>
+<div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Modelos Analíticos</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="analytic.html"><strong>Modelo SIR</strong></a><ul>
@@ -359,7 +518,7 @@ aos dados existentes:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Data Driven.html#Referências">Referências</a></li>
 </ul>
 </li>
-<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-sec-xx"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido SEC XX</strong></a><ul>
+<li class="toctree-l1"><a class="reference internal" href="data_driven.html#sir-gb-reino-unido-1944-1964"><strong>SIR</strong> 🇬🇧 <strong>Reino Unido 1944-1964</strong></a><ul>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html">Dados Reais</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html#Selecionando-um-ano-específico-para-análise">Selecionando um ano específico para análise</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - United Kingdom.html#Os-dados">Os dados</a></li>
@@ -401,8 +560,10 @@ aos dados existentes:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html">Os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Análise-do-uso-do-sistema-de-saúde">Análise do uso do sistema de saúde</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-as-previsões-de-I(t)">Visualizando as previsões de <span class="math notranslate nohighlight">\(I(t)\)</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Análise-de-variação-do-R_0">Análise de variação do <span class="math notranslate nohighlight">\(R_0\)</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - China Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </li>
@@ -410,8 +571,10 @@ aos dados existentes:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html">Os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Análise-do-uso-do-sistema-de-saúde">Análise do uso do sistema de saúde</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-as-previsões-de-I(t)">Visualizando as previsões de <span class="math notranslate nohighlight">\(I(t)\)</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Análise-de-variação-do-R_0">Análise de variação do <span class="math notranslate nohighlight">\(R_0\)</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Italy Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </li>
@@ -419,8 +582,10 @@ aos dados existentes:</p>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html">Os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Estimando-utilizando-todos-os-dados">Estimando utilizando todos os dados</a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Monte-Carlo">Monte Carlo</a></li>
-<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-as-previsões">Visualizando as previsões</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Análise-do-uso-do-sistema-de-saúde">Análise do uso do sistema de saúde</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-as-previsões-de-I(t)">Visualizando as previsões de <span class="math notranslate nohighlight">\(I(t)\)</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Visualizando-os-ajustes-dos-grupos">Visualizando os ajustes dos grupos</a></li>
+<li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Análise-de-variação-do-R_0">Análise de variação do <span class="math notranslate nohighlight">\(R_0\)</span></a></li>
 <li class="toctree-l2"><a class="reference internal" href="notebooks/SIR Real Data - COVID - Germany Model Analyser.html#Análise-de-confiança">Análise de confiança</a></li>
 </ul>
 </li>

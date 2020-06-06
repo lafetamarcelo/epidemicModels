@@ -51,6 +51,7 @@ class SIR:
       algorithm="differential_evolution",
       simulation="discrete",
       stochastic_search=False,
+      forced_search_pop=False,
       verbose=True):
     # Main constants
     self.N = pop
@@ -58,6 +59,7 @@ class SIR:
     self._iter_error = [10**14]
     self.__mc_props = [0.5, 0.75, 0.9, 1.5]
     self.__search_alg = algorithm
+    self._search_pop = forced_search_pop
     self.verbose = verbose
     # Algorithm focus variables
     self.__ssearch = stochastic_search
@@ -166,7 +168,6 @@ class SIR:
   def fit(self, dataset, t,
       search_pop=True,
       Ro_bounds=None,
-      Ro_sens=[0.8, 20],
       pop_sens=[1e-3,1e-4],
       beta_sens=[100,10],
       r_sens=[100,10],
@@ -207,7 +208,7 @@ class SIR:
     # parameter boundaries
     beta_approx = 1 
     r_approx = 1 / 7 
-    # Computing the parameter bounds   
+    # Computing the parameter bounds
     x0 = [beta_approx, r_approx]
     lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
     upper = [beta_sens[1]*x0[0], r_sens[1]*x0[1]]
@@ -256,7 +257,7 @@ class SIR:
           popsize=35,
           mutation=(0.5, 1.2),
           strategy="best1exp",
-          tol=0.0000001,
+          tol=1e-6,
           args=(datatrain, y0, t, w),
           constraints=constraints,
           updating='deferred',

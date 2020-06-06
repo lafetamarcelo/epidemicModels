@@ -24,15 +24,17 @@ def cost_SIR(self, pars, dataset, initial, t, w):
   S, I, R = dataset[0], dataset[1], dataset[2]
 
   erro = dict(S=1.0, I=1.0, R=1.0)
+
   if self._search_pop:
-    model_init[0] *= pars[-1]
     model_pars = pars[:-1]
     S = pars[-1] * self.N - R - I
+    model_init[0] *= pars[-1]
+    
   try:
     # Simulate the differential equation system
     result = self.simulate(model_init, t, model_pars)
     # Compute the error for all samples
-    #erro["S"] = w[0] * ( result[0] - S )**2
+    erro["S"] = w[0] * ( result[0] - S )**2
     erro["I"] = w[1] * ( result[1] - I )**2
     erro["R"] = w[2] * ( result[2] - R )**2
     # Merging the error
