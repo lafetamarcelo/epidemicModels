@@ -5,7 +5,7 @@
   <a href="https://discord.gg/EenaYE5" alt="Discord">
     <img src="https://img.shields.io/discord/713442259210600448?label=join%20discord" /></a>
   <a href="https://nseecorot.slack.com/archives/C013Q9068NB" alt="Slack">
-    <img src="https://img.shields.io/badge/join%20slack-%23nsee-brightgreen.svg " /></a>
+    <img src="https://img.shields.io/badge/join%20slack-%23nsee-brightgreen.svg" /></a>
   <a alt="Language used">
     <img src="https://img.shields.io/github/languages/top/lafetamarcelo/epidemicModels" /></a>
   <a href="https://github.com/lafetamarcelo/epidemicModels/" alt="Activity">
