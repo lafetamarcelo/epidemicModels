@@ -6,3 +6,6 @@ SIRpd
 estimation_summaries
 *.p
 *.csv
+.DS_Store
+.pytest_cache/
+.vscode/
