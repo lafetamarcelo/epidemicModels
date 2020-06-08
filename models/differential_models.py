@@ -1,32 +1,6 @@
+
+
 import numpy as np
-
-
-def discSIR(self, initial, time, pars, dt=1.0, *args):
-  """
-  """
-
-  if (initial[0] == 0) or (initial[1] == 0):
-    print("The provided data is not exciting enough:", initial)
-
-  beta, r = pars[0], pars[1]
-  S, I, R = [initial[0]], [initial[1]], [initial[2]]
-
-  for k, t in enumerate(time[1:]):
-    S_ = -dt*(beta*S[-1]*I[-1])          + S[-1]
-    I_ = dt*(beta*S[-1]*I[-1] + r*I[-1]) + I[-1]
-    R_ = dt*(r*I[-1])                           + R[-1]
-    S.append(S_)
-    I.append(I_)
-    R.append(R_)
-  
-  result = dict()
-  result["S"] = np.array(S)
-  result["I"] = np.array(I)
-  result["R"] = np.array(R)
-
-  return result
-
-  
 
 
 def SIR(self, y, t, Beta, r, *args):

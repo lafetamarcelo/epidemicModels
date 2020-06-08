@@ -136,27 +136,3 @@ def cost_SEIR(self, pars, dataset, initial, t, w):
     print("Except da merda")
     erro_acc = self._iter_error[-1]
   return erro_acc
-
-
-
-def cost_discSIR(self, pars, data, time):
-  """
-  """
-
-  erro = dict(S=1.0, I=1.0, R=1.0)
-
-  initial = [data["S"][0], data["I"][0], data["R"][0]]
-
-  s_m = np.mean(data["S"])
-  i_m = np.mean(data["I"])
-  r_m = np.mean(data["R"])
-
-  #w = dict(S=i_m/s_m, I=i_m/i_m, R=i_m/r_m)
-  w = dict(S=1/s_m, I=1/i_m, R=1/r_m)
-
-  sim_res = self.simulate(initial, time, pars)
-
-  erro_accum = 0.0
-  for item in self.focus:
-    erro_accum += w[item] * np.mean( (sim_res[item] - data[item])**2 )
-  return erro_accum

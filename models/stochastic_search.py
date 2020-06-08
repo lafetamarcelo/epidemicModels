@@ -56,13 +56,15 @@ class SIR:
     # Main constants
     self.N = pop
     self.focus = focus
-    self._iter_error = [10**14]
+    self.verbose = verbose
+    # Local variables
     self.__mc_props = [0.5, 0.75, 0.9, 1.5]
     self.__search_alg = algorithm
-    self._search_pop = forced_search_pop
-    self.verbose = verbose
-    # Algorithm focus variables
     self.__ssearch = stochastic_search
+    # Semi Local variables
+    self._iter_error = [10**14]
+    self._search_pop = forced_search_pop
+    # Algorithm focus variables
     if 'M' in self.focus:
       self.__class__.differential_model = dm.SIRD
       self.__class__.cost_function = cm.cost_SIRD
@@ -72,6 +74,7 @@ class SIR:
     else:
       self.__class__.differential_model = dm.SIR
       self.__class__.cost_function = cm.cost_SIR
+    
     # Accumulating variables
     self.acc_error = dict()
     for m in ["S", "E", "I", "R"]:
@@ -96,11 +99,6 @@ class SIR:
       },
       "time": []
     }
-
-
-  def show_intern(self):
-    print("Error: ", self.__iter_error)
-    print("Props: ", self.__mc_props)
 
   def cost_wrapper(self, *args):
     """
@@ -128,17 +126,14 @@ class SIR:
       :return: The values of the suceptible and infected, at time, respectivelly.
       :rtype: tuple
     """
+    # Create the ODE parameters
     ode_args = (theta[0], theta[1])
     if "E" in self.focus:
       ode_args = (*ode_args, theta[2])
     
-    #if self.verbose:
-    #  print("Simulation parameters: ", ode_args)
-    #  print("Initial values used: ", initial)
-
     result = integrate.odeint(
       self.differential_model, 
-      initial, time, 
+      initial, time,
       args=ode_args
     ).T
     return result
@@ -157,8 +152,10 @@ class SIR:
       :rtype: tuple
     """
     if hasattr(self, 'parameters'):
+      # Ponder the initial condition
+      # if search pop is on...
       if self._search_pop:
-        initial = list(initial)
+        initial = list(initial) # If touple => list
         initial[0] = initial[0] * self.parameters[-1]
       return self.simulate(initial, t, self.parameters)
     else:
@@ -173,7 +170,7 @@ class SIR:
       r_sens=[100,10],
       sigma_sens=None,
       sample_ponder=None,
-      initial_weight=1,
+      optim_verbose=False,
       **kwargs):
     """
       The method responsible for estimating a set of beta and r 
@@ -188,9 +185,13 @@ class SIR:
       :param list beta_sens: The beta parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,100]`.
       :param list r_sens: The r parameter sensibility minimun and maximun boundaries, respectivelly. Default is :code:`[100,1000]`.
       :param bool sample_ponder: The flag to set the pondering of the non informative recovered data.
+      :param bool optim_verbose: If :code:`True`, after fitting will show the optimization summary.
       :param dict **kwargs: The optimization search algorithms options.
     """
-    # Create the data values
+    # Create the data values including
+    # the Susceptible, Infected, 
+    # Recovered and Death data into 
+    # their respective variables
     S, I, R, D = None, None, None, None
     if "S" in dataset:
       S = dataset["S"]
@@ -199,7 +200,9 @@ class SIR:
     if "D" in dataset:
       D = dataset["D"]
     I = dataset["I"]
-    # Check for sample pondering
+    # Check for the several possible 
+    # pondering variables and create
+    # the flags to ensure pondering
     self.ponder = sample_ponder != None
     self.__exposed_flag = sigma_sens != None
     self._search_pop = search_pop
@@ -212,7 +215,9 @@ class SIR:
     x0 = [beta_approx, r_approx]
     lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
     upper = [beta_sens[1]*x0[0], r_sens[1]*x0[1]]
-    # Checking the constraints
+    # Create the nonlinear constraints for 
+    # the basic parameters. Now only the 
+    # Ro parameter contraint is checked.
     constraints = ()
     if Ro_bounds != None:
       nlc = NonlinearConstraint(constr_f, Ro_bounds[0], Ro_bounds[1])
@@ -232,8 +237,13 @@ class SIR:
       lower.append(sigma_sens[0])
       upper.append(sigma_sens[1])
       y0.insert(1, 1.0)
-    # Provide a summary of the model soo
-    # far, and show the optimazation setup
+    # Population proportion boundaries
+    if self._search_pop:
+      lower.append(pop_sens[0])
+      upper.append(pop_sens[1])
+    # Provide a summary of the model 
+    # so far, and show the optimazation 
+    # setup
     if self.verbose:
       print("\t ├─ S(0) ─ I(0) ─ R(0) ─ ", y0)
       print("\t ├─ beta ─  ", x0[0], "  r ─  ", x0[1])
@@ -243,12 +253,12 @@ class SIR:
         print("\t ├─ sigma bound ─  ", lower[2], " ─ ", upper[2])
       print("\t ├─ equation weights ─  ", w)
       print("\t ├─ Running on ─ ", self.__search_alg, "SciPy Search Algorithm")
-    # Population proportion boundaries
-    if self._search_pop:
-      lower.append(pop_sens[0])
-      upper.append(pop_sens[1])
     # Run the searching algorithm to 
-    # minimize the cost function
+    # minimize the cost function... 
+    # There are three possible minimization
+    # algorithms to be used. This is 
+    # controlled by the flag on the 
+    # __init__ method.
     if self.__search_alg == "differential_evolution":
       summary = differential_evolution(
           self.cost_wrapper, 
@@ -279,11 +289,13 @@ class SIR:
           sampling_method="sobol",
           args=(datatrain, y0, t, w)
         )
-    # Simulando os dados
+    # Saving the estimated parameters
     self.parameters = summary.x
     # Printing summary
     if self.verbose:
       print("\t └─ Defined at: ", self.parameters[0], " ─ ", self.parameters[1], "\n")
+    if optim_verbose:
+      print(summary)
 
   def fit_multiple(self, Sd, Id, Bd, td, 
       threshold_prop=1,
