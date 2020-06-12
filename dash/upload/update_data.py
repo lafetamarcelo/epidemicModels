@@ -20,7 +20,7 @@ LOGGING_FILE = "./logging.pickle"
 DEFAULT_LOG = dict(country=list(), items=list())
 
 # The country list 
-country_list = [ "CN", "IT", "BR"]
+country_list = [/// "CN", "IT", "BR"]
 
 
 if __name__ == "__main__":
