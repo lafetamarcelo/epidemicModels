@@ -21,9 +21,9 @@ credentials = service_account.Credentials.from_service_account_file('../gkeys/ep
 
 
 # Configuration variables
-COUNTRY = "IT"
+COUNTRY = "CN"
 LOG_FILE = "./log_models.pickle"
-START_SIZE = 2000
+START_SIZE = 1000
 PEAK_EXISTS = True
 
 
@@ -147,7 +147,7 @@ if __name__ == "__main__":
       # Find the first point where the derivative
       # change signal
       peak_pos = int(len(Id) - np.argmax(signal))
-      peak_date = [time[0] + timedelta(days=peak_pos)] * len(pred_t)
+      peak_date = [time[0] + timedelta(days=peak_pos)] * len(saved_param["D"])
     else:
       estimated_peaks = []
       for data in saved_prediction["I"]:
