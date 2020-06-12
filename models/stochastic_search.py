@@ -18,7 +18,8 @@ from bokeh.io       import output_notebook, export_png
 
 from . import differential_models as dm
 from . import cost_functions as cm
-from . import regressors as rm
+from . import constraints as ct
+from . import discrete_models as dcm
 
 output_notebook()
 
@@ -52,6 +53,7 @@ class SIR:
       simulation="discrete",
       stochastic_search=False,
       forced_search_pop=False,
+      ode_full_output=False,
       verbose=True):
     # Main constants
     self.N = pop
@@ -64,6 +66,8 @@ class SIR:
     # Semi Local variables
     self._iter_error = [10**14]
     self._search_pop = forced_search_pop
+    # Simulation type
+    self.__sim_type = simulation
     # Algorithm focus variables
     if 'M' in self.focus:
       self.__class__.differential_model = dm.SIRD
@@ -71,9 +75,17 @@ class SIR:
     elif 'E' in self.focus:
       self.__class__.differential_model = dm.SEIR
       self.__class__.cost_function = cm.cost_SEIR
+    elif 'N' in self.focus:
+      self.__class__.differential_model = dm.NSIR
+      self.__class__.cost_function = cm.cost_NSIR
     else:
-      self.__class__.differential_model = dm.SIR
+      if self.__sim_type == "discrete":
+        self.__class__.differential_model = dcm.SIR
+      else:
+        self.__class__.differential_model = dm.SIR
       self.__class__.cost_function = cm.cost_SIR
+    # The ODE full output option
+    self.__ode_full_output = ode_full_output
     
     # Accumulating variables
     self.acc_error = dict()
@@ -100,6 +112,7 @@ class SIR:
       "time": []
     }
 
+
   def cost_wrapper(self, *args):
     """
       The method responsible for wrapping the cost function. 
@@ -112,6 +125,7 @@ class SIR:
     """
     response = self.cost_function(*args)
     return response
+
 
   def simulate(self, initial, time, theta):
     """
@@ -126,16 +140,26 @@ class SIR:
       :return: The values of the suceptible and infected, at time, respectivelly.
       :rtype: tuple
     """
-    # Create the ODE parameters
-    ode_args = (theta[0], theta[1])
-    if "E" in self.focus:
-      ode_args = (*ode_args, theta[2])
     
-    result = integrate.odeint(
-      self.differential_model, 
-      initial, time,
-      args=ode_args
-    ).T
+    if self.__sim_type == "continuous":
+      result = integrate.odeint(
+        self.differential_model, 
+        initial, 
+        time,
+        args=(theta),
+        full_output=self.__ode_full_output
+      ).T
+    elif self.__sim_type == "ivp_continuous":
+      result = integrate.solve_ivp(
+        self.differential_model,
+        (time[0], time[-1]), 
+        initial,
+        args=(theta),
+        t_eval=time
+      )
+    else:
+      result = self.differential_model(
+        initial, time, theta)
     return result
 
 
@@ -157,7 +181,9 @@ class SIR:
       if self._search_pop:
         initial = list(initial) # If touple => list
         initial[0] = initial[0] * self.parameters[-1]
-      return self.simulate(initial, t, self.parameters)
+      result = self.simulate(initial, t, self.parameters)
+      form_result = [r.astype(np.float64) for r in result]
+      return form_result
     else:
       print("Error! No parameter estimated!")
 
@@ -166,9 +192,10 @@ class SIR:
       search_pop=True,
       Ro_bounds=None,
       pop_sens=[1e-3,1e-4],
-      beta_sens=[100,10],
-      r_sens=[100,10],
+      Ro_sens=[0.8,15],
+      D_sens=[5,50],
       sigma_sens=None,
+      notified_sens=None,
       sample_ponder=None,
       optim_verbose=False,
       **kwargs):
@@ -209,18 +236,14 @@ class SIR:
     # Computing the approximate values 
     # of the parameters to build the 
     # parameter boundaries
-    beta_approx = 1 
-    r_approx = 1 / 7 
-    # Computing the parameter bounds
-    x0 = [beta_approx, r_approx]
-    lower = [x0[0]/beta_sens[0], x0[1]/r_sens[0]]
-    upper = [beta_sens[1]*x0[0], r_sens[1]*x0[1]]
+    lower = [Ro_sens[0], D_sens[0]]
+    upper = [Ro_sens[1], D_sens[1]]
     # Create the nonlinear constraints for 
     # the basic parameters. Now only the 
     # Ro parameter contraint is checked.
     constraints = ()
     if Ro_bounds != None:
-      nlc = NonlinearConstraint(constr_f, Ro_bounds[0], Ro_bounds[1])
+      nlc = NonlinearConstraint(ct.Ro_decimal_constr, Ro_bounds[0], Ro_bounds[1])
       constraints = (nlc)
     # Create the train data for minimization
     # and compute the initial conditions for 
@@ -237,6 +260,12 @@ class SIR:
       lower.append(sigma_sens[0])
       upper.append(sigma_sens[1])
       y0.insert(1, 1.0)
+    if "N" in self.focus:
+      for item in notified_sens.keys():
+        print("\t ├─ Including {} bound!".format(item))
+        lower.append(notified_sens[item][0])
+        upper.append(notified_sens[item][1])
+      y0.insert(2, I[0])
     # Population proportion boundaries
     if self._search_pop:
       lower.append(pop_sens[0])
@@ -246,9 +275,8 @@ class SIR:
     # setup
     if self.verbose:
       print("\t ├─ S(0) ─ I(0) ─ R(0) ─ ", y0)
-      print("\t ├─ beta ─  ", x0[0], "  r ─  ", x0[1])
-      print("\t ├─ beta bound ─  ", lower[0], " ─ ", upper[0])
-      print("\t ├─ r bound ─  ", lower[1], " ─ ", upper[1])
+      print("\t ├─ Ro bound ─  ", lower[0], " ─ ", upper[0])
+      print("\t ├─ D  bound ─  ", lower[1], " ─ ", upper[1])
       if self.__exposed_flag:
         print("\t ├─ sigma bound ─  ", lower[2], " ─ ", upper[2])
       print("\t ├─ equation weights ─  ", w)
@@ -267,7 +295,7 @@ class SIR:
           popsize=35,
           mutation=(0.5, 1.2),
           strategy="best1exp",
-          tol=1e-6,
+          tol=1e-4,
           args=(datatrain, y0, t, w),
           constraints=constraints,
           updating='deferred',
@@ -713,18 +741,3 @@ def findEpidemyBreaks(cases,
         end_points.append(k)
   return start_points, end_points
 
-
-
-def constr_f(x_par):
-  """
-    The function to compute the non linear contraint of the Ro parameter.
-    
-    :param list x_par: list of parameters, beta, r and pop.
-  
-    :return: the Ro value.
-    :rtype: float
-  """
-  if len(x_par) == 3:
-    return x_par[0] * x_par[2] / x_par[1]
-  else:
-    return x_par[0] / x_par[1]

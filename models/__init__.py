@@ -5,4 +5,3 @@
 """
 
 from . import stochastic_search as ss
-from . import optim_search as opt

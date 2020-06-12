@@ -3,7 +3,21 @@
 import numpy as np
 
 
-def SIR(self, y, t, Beta, r, *args):
+def NSIR(self, y, t, beta, r, betan, alpha, rn, *args):
+  """
+  """
+
+  S, I, In, R = y
+
+  Sdot  = -S*(alpha*I + beta*In)/self.N
+  Idot  =  S*(alpha*I + beta*In)/self.N - (r+betan) * I
+  Indot = betan*I - rn*In
+  Rdot  = rn*In + r*I
+
+  return Sdot, Idot, Indot, Rdot
+
+
+def SIR(self, y, t, parameters, *args):
   """
     The function that computes the diferential set of 
     equations of the SIR Epidemic Model.
@@ -16,6 +30,15 @@ def SIR(self, y, t, Beta, r, *args):
     :return: The derivative of the suceptible and infected data.
     :rtype: tuple
   """
+  # Creating the simulation parameters
+  if len(parameters) == 3:
+    Beta = parameters[0] / (parameters[1] * parameters[2])
+    r = 1 / parameters[1]
+  else:
+    Beta = parameters[0] / parameters[1]
+    r = 1 / parameters[1]
+
+  # Simulating the model
   if len(y) == 2:
     S, I = y
     Sdot = -Beta * S * I / self.N

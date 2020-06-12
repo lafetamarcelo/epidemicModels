@@ -98,5 +98,9 @@ html_extra_path = [
   "./media_content/slider_IT.html",
   "./media_content/slider_DE.html",
   "./media_content/slider_CN.html",
+  "./media_content/slider_IT_dark.html",
+  "./media_content/slider_DE_dark.html",
+  "./media_content/slider_CN_dark.html",
+  "./media_content/slider_BR_dark.html",
   "./media_content/SIR-sliders.html"
 ]
