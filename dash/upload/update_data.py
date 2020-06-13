@@ -16,11 +16,11 @@ import os
 project_id = "epidemicmodels"
 table_id   = "real_data.raw_content_tm"
 credentials = service_account.Credentials.from_service_account_file('../gkeys/epidemicModels-1fc10954f61b.json')
-LOGGING_FILE = "./logging.pickle"
+LOGGING_FILE = "./log_data.p"
 DEFAULT_LOG = dict(country=list(), items=list())
 
 # The country list 
-country_list = [/// "CN", "IT", "BR"]
+country_list = ["DE", "CN", "IT", "BR"]
 
 
 if __name__ == "__main__":

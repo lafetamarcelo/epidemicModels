@@ -21,12 +21,31 @@ credentials = service_account.Credentials.from_service_account_file('../gkeys/ep
 
 
 # Configuration variables
-COUNTRY = "CN"
+COUNTRY = "DE"
 LOG_FILE = "./log_models.pickle"
-START_SIZE = 1000
-PEAK_EXISTS = True
 
 
+SETUP_COUNTRY = {
+  "BR": {
+    "start_size": 4000,
+    "peak_exist": False
+  },
+  "CN": {
+    "start_size": 2000,
+    "peak_exist": True
+  },
+  "DE": {
+    "start_size": 2000,
+    "peak_exist": True
+  },
+  "IT": {
+    "start_size": 2000,
+    "peak_exist": True
+  }
+}
+
+START_SIZE = SETUP_COUNTRY[COUNTRY]["start_size"]
+PEAK_EXISTS = SETUP_COUNTRY[COUNTRY]["peak_exist"]
 
 if __name__ == "__main__":
 
@@ -97,7 +116,7 @@ if __name__ == "__main__":
   else:
     log_data[COUNTRY] = dict()
 
-  if start_day < len(I)-1:
+  if start_day < len(I):
     # If peak does not exists, predict 
     # 120 days ahead to find the peak
     if PEAK_EXISTS:

@@ -13,6 +13,18 @@ sua modelagem matemática até sua concepção computacional em Python. Sendo as
 por videos explicativos, notebooks em Python, e diversas visualizações, para ajudar com o 
 entendimento do conteúdo apresentado.
 
+.. raw:: html
+
+   <iframe 
+      width="600" 
+      height="450" 
+      src="https://datastudio.google.com/embed/reporting/4824fb05-ec67-4b16-bf21-b4b7ab47d958/page/gErTB" 
+      frameborder="0" 
+      style="border:0" 
+      allowfullscreen>
+   </iframe>
+
+
 Alguns resultados do século XX...
 =================================
 
