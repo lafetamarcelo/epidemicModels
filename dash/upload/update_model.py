@@ -21,7 +21,7 @@ credentials = service_account.Credentials.from_service_account_file('../gkeys/ep
 
 
 # Configuration variables
-COUNTRY = "DE"
+COUNTRY = "IT"
 LOG_FILE = "./log_models.pickle"
 
 

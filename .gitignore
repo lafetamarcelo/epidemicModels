@@ -11,5 +11,8 @@ estimation_summaries
 .vscode/
 /dash/gkeys
 *__pycache__*
+*.pyc
+
+DE_interactive*
 
 /dash/upload/models
