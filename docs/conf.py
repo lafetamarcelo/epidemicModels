@@ -102,7 +102,7 @@ html_extra_path = [
   "./media_content/slider_DE_dark.html",
   "./media_content/slider_CN_dark.html",
   "./media_content/slider_BR_dark.html",
-  "./media_content/slider_BR_dark_wide.html",
   "./media_content/doc_button_support.html",
-  "./media_content/SIR-sliders.html"
+  "./media_content/SIR-sliders.html",
+  "./author/card_summary.html"
 ]

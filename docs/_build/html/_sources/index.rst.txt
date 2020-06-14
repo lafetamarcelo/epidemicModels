@@ -21,7 +21,7 @@ entendimento do conteúdo apresentado.
          height="450" 
          src="https://datastudio.google.com/embed/reporting/4824fb05-ec67-4b16-bf21-b4b7ab47d958/page/gErTB" 
          frameborder="0" 
-         style="border:0" 
+         style="border:0; border-radius:15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7);" 
          allowfullscreen>
       </iframe>
    </h3>
@@ -391,6 +391,17 @@ Modelos COVID Brasil |:br:|
 
 
 
+.. raw:: html
+
+   <h3 style="text-align:center;">
+      <iframe 
+         src="card_summary.html"
+         width="100%"
+         height="900px"
+         style="border:none;">
+      </iframe>
+   </h3>
+      
 
 
 .. toctree::
