@@ -448,13 +448,6 @@ Modelos COVID Brasil |:br:|
    </h3>
 
 
-.. raw:: html
-
-   <h3 style="text-align:center;">
-   <iframe width="600" height="338" src="http://datastudio.google.com/embed/reporting/1WhloLyiBE-pOP0xw8Pee1Mamekc-CGgH/page/D1hT"></iframe>
-   </h3>
-
-
 Indices e tabelas
 =================
 

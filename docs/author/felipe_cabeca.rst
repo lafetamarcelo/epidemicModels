@@ -8,7 +8,7 @@ Felipe Andrade |user image|
 
 
 .. |user image| image:: ./images/felipe_cabeca.png
-  :scale: 30%
+  :scale: 7%
 
 .. |linkedIn| image:: ./images/linkedInButton.png
   :alt: LinkedIn Link
