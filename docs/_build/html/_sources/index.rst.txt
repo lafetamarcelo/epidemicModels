@@ -15,14 +15,16 @@ entendimento do conteúdo apresentado.
 
 .. raw:: html
 
-   <iframe 
-      width="600" 
-      height="450" 
-      src="https://datastudio.google.com/embed/reporting/4824fb05-ec67-4b16-bf21-b4b7ab47d958/page/gErTB" 
-      frameborder="0" 
-      style="border:0" 
-      allowfullscreen>
-   </iframe>
+   <h3 style="text-align:center;">
+      <iframe 
+         width="600" 
+         height="450" 
+         src="https://datastudio.google.com/embed/reporting/4824fb05-ec67-4b16-bf21-b4b7ab47d958/page/gErTB" 
+         frameborder="0" 
+         style="border:0" 
+         allowfullscreen>
+      </iframe>
+   </h3>
 
 
 Alguns resultados do século XX...

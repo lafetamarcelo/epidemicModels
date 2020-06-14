@@ -19,3 +19,9 @@
   :caption: Felipe Brandão Ippolito
 
   author/felipe
+
+.. toctree::
+  :maxdepth: 1
+  :caption: Felipe Andrade
+
+  author/felipe_cabeca
