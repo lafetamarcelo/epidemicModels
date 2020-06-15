@@ -18,7 +18,8 @@ entendimento do conteúdo apresentado.
    <h3 style="text-align:center;">
       <iframe 
          width="600" 
-         height="450" 
+         height="450"
+         scrolling="no"
          src="https://datastudio.google.com/embed/reporting/4824fb05-ec67-4b16-bf21-b4b7ab47d958/page/gErTB" 
          frameborder="0" 
          style="border:0; border-radius:15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7);" 
@@ -83,46 +84,17 @@ capacidade de previsão do algoritmo de aprendizado desenvolvido, nas visualiza�
 nós mostramos a previsão feita pelo algoritmo para cada país a medida que os tempo da epidemia 
 foi passando e mais dados foram utilizados para a aprendizagem:
 
-
 .. raw:: html
 
    <h3 style="text-align:center;">
       <iframe 
-         id="ItalyPredfiFrame"
+         scrolling="no"
          style="border:none;"
-         src="slider_IT.html"
-         height="480"
-         width="520"
+         src="sliders.html"
+         height="550"
+         width="745"
       ></iframe>
    </h3>
-
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="ChinaPredfiFrame"
-         style="border:none;"
-         src="slider_CN.html"
-         height="480"
-         width="520"
-      ></iframe>
-   </h3>
-
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="GermanyPredfiFrame"
-         style="border:none;"
-         src="slider_DE.html"
-         height="480"
-         width="520"
-      ></iframe>
-   </h3>
-
-
 
 Nosso modelo aprende com algoritmos de otimização os parâmetros da estrutura SIR, juntamente 
 com a proporção da população que está sendo registrada pelo sistema de saúde. No caso, ele 
@@ -217,7 +189,7 @@ caso os valores ajustados para cada país foram:
 
 .. raw:: html
 
-   <br><br><br><br><br><br><br>
+   <br><br><br>
 
 
 
@@ -242,35 +214,12 @@ parâmetro :math:`R_0` a medida que os dias da pandemia passaram:
 
    <h3 style="text-align:center;">
       <iframe 
-         id="ItalyRofiFrame"
+         id="RofiFrame"
+         scrolling="no"
          style="border:none;"
-         src="Ro_estimate_IT.html"
-         height="460"
-         width="750"
-      ></iframe>
-   </h3>
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="ItalyRofiFrame"
-         style="border:none;"
-         src="Ro_estimate_CN.html"
-         height="460"
-         width="750"
-      ></iframe>
-   </h3>
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="GermanyRofiFrame"
-         style="border:none;"
-         src="Ro_estimate_DE.html"
-         height="460"
-         width="750"
+         src="ro_results.html"
+         height="580"
+         width="745"
       ></iframe>
    </h3>
 
@@ -296,39 +245,14 @@ e o valor estimado por nosso modelo a cada dia da epidemia:
 
    <h3 style="text-align:center;">
       <iframe 
-         id="ItalyPSfiFrame"
+         id="PSfiFrame"
+         scrolling="no"
          style="border:none;"
-         src="Public_usage_IT.html"
-         height="460"
-         width="750"
+         src="public_results.html"
+         height="580"
+         width="745"
       ></iframe>
    </h3>
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="ChinaPSfiFrame"
-         style="border:none;"
-         src="Public_usage_CN.html"
-         height="460"
-         width="750"
-      ></iframe>
-   </h3>
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="GermanyPSfiFrame"
-         style="border:none;"
-         src="Public_usage_DE.html"
-         height="460"
-         width="750"
-      ></iframe>
-   </h3>
-
-
 
 
 Previsões dos picos epidêmicos do COVID
@@ -348,37 +272,11 @@ da epidemia:
       <iframe 
          id="ChinaInfiFrame"
          style="border:none;"
-         src="peak_estimate_CN.html"
-         height="530"
-         width="680"
+         src="peak_results.html"
+         height="580"
+         width="745"
       ></iframe>
    </h3>
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="ItalyInfiFrame"
-         style="border:none;"
-         src="peak_estimate_IT.html"
-         height="530"
-         width="680"
-      ></iframe>
-   </h3>
-
-.. raw:: html
-
-   <h3 style="text-align:center;">
-      <iframe 
-         id="GermanyInfiFrame"
-         style="border:none;"
-         src="peak_estimate_DE.html"
-         height="530"
-         width="680"
-      ></iframe>
-   </h3>
-
-
 
 
 Modelos COVID Brasil |:br:|
@@ -390,6 +288,8 @@ Modelos COVID Brasil |:br:|
    Em construção...
 
 
+Autores
+=======
 
 .. raw:: html
 
