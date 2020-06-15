@@ -297,7 +297,7 @@ Autores
       <iframe 
          src="card_summary.html"
          width="100%"
-         height="900px"
+         height="920px"
          style="border:none;">
       </iframe>
    </h3>
