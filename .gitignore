@@ -15,9 +15,10 @@ estimation_summaries
 
 DE_interactive*
 
-
-/web/app/keys
-/web/app/services/update-countries/keys/
+/app/keys
+/app/services/update-countries/keys/
 
 /web/content/
-/web/gkeys
+/app/gkeys
+/test_app/
+/test_web/
