@@ -9,10 +9,15 @@ estimation_summaries
 .DS_Store
 .pytest_cache/
 .vscode/
-/dash/gkeys
+*backup*
 *__pycache__*
 *.pyc
 
 DE_interactive*
 
-/dash/upload/models
+
+/web/app/keys
+/web/app/services/update-countries/keys/
+
+/web/content/
+/web/gkeys

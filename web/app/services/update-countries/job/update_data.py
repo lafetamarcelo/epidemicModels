@@ -1,3 +1,6 @@
+from flask                import Flask, request, jsonify
+from flask_restful        import Resource, Api
+from flask_request_params import bind_request_params
 
 from datetime import datetime, timedelta
 from google.oauth2 import service_account
@@ -11,29 +14,49 @@ import requests
 import pickle
 import os
 
-
 # Defualt variables
-project_id = "epidemicmodels"
-table_id   = "real_data.raw_content_tm"
-credentials = service_account.Credentials.from_service_account_file('../gkeys/epidemicModels-1fc10954f61b.json')
-LOGGING_FILE = "./log_data.p"
-DEFAULT_LOG = dict(country=list(), items=list())
+COUNTRY_LIST = ["BR", "IT", "CN", "DE"]
 
-# The country list 
-country_list = ["DE", "CN", "IT", "BR"]
+PROJECT_ID   = "epidemicmodels"
+TABLE_ID     = "countries.real_data"
+TABLE_LOG_ID = "countries.data_log"
+LOG_QUERY    = "SELECT * FROM countries.data_log"
+
+CREDENTIALS  = service_account.Credentials.from_service_account_file('./keys/epidemicModels-1fc10954f61b.json')
+pandas_gbq.context.credentials = CREDENTIALS
+
+DEFAULT_LOG  = dict(country=list(), items=list())
 
 
-if __name__ == "__main__":
+class real_data_trigger(Resource):
+  def get(self):
+    # Call the update all countries 
+    # pipeline 
+    # 
+    update_all_countries_pipe()
+
+
+def update_all_countries_pipe():
+  """
   
-  if os.path.isfile(LOGGING_FILE):
-    with open(LOGGING_FILE, "rb") as handle:
-      log_data = pickle.load(handle)
-  else:
+  """
+  # Check if logging file exists
+  # if does not, create the logging
+  # as default file
+  
+  try:
+    # Reading the log table...
+    log_df = pandas_gbq.read_gbq(LOG_QUERY, project_id=PROJECT_ID)
+    country_list = log_df["country"].to_list()
+    start_p_list = log_df["days_collected"].to_list()
+    log_data = dict(country=country_list, items=start_p_list)
+  except:
+    print("Country log table does not yet, exist...")
     log_data = DEFAULT_LOG
 
   # Get the data for each country
   covid_api = 'https://corona-api.com/countries/'
-  for country in country_list:
+  for country in COUNTRY_LIST:
     # Request the country data
     data_json =  requests.get(covid_api + country).json()
     # Get the population info
@@ -88,37 +111,41 @@ if __name__ == "__main__":
       items_size = log_data["items"][index]
       df = df.iloc[items_size:]
       # Print the uploaded content info
-      print(" UPDATING COUNTRY...")
+      print(" UPDATING COUNTRY {}...".format(country))
       print(" Uploading datatable of {}".format(country))
       print("    The item size: {}".format(items_size))
       print("    Table shape: {}".format(df.shape))
       print("    Table contents: {}".format(df.columns.to_list()))
       print("    Table ct types: {}".format(df.dtypes.to_list()))
-      print("Processing done... Upload to cloud: (y/n)")
-      input_data = input()
-      if input_data.upper() == "Y":
+      try:
         # Update the logging index track
         log_data["items"][index] += df.shape[0]
-        pandas_gbq.to_gbq(df, table_id, project_id=project_id, credentials=credentials, if_exists='append')
+        pandas_gbq.to_gbq(df, TABLE_ID, project_id=PROJECT_ID, credentials=CREDENTIALS, if_exists='append')
         print("Uploaded!")
+      except Exception as e:
+        print("Error on uploading {}...".format(e))
     else:
       # Print the uploaded content info
-      print(" NEW COUNTRY!!")
+      print(" NEW COUNTRY {}!!".format(country))
       print(" Uploading datatable of {}".format(country))
       print("    Table shape: {}".format(df.shape))
       print("    Table contents: {}".format(df.columns.to_list()))
       print("    Table ct types: {}".format(df.dtypes.to_list()))
-      print("Processing done... Upload to cloud: (y/n)")
-      input_data = input()
-      if input_data.upper() == "Y":
+      try:
         # Create the loggin index track
         log_data["country"].append(country)
         log_data["items"].append(df.shape[0])
-        pandas_gbq.to_gbq(df, table_id, project_id=project_id, credentials=credentials, if_exists='append')
+        pandas_gbq.to_gbq(df, TABLE_ID, project_id=PROJECT_ID, credentials=CREDENTIALS, if_exists='append')
         print("Uploaded!")
+      except Exception as e:
+        print("Error on uploading {}...".format(e))
+    # Save the log file into the log table server
+    try:
+      log_df = pd.DataFrame({"country": log_data["country"], "days_collected": log_data["items"]})
+      pandas_gbq.to_gbq(log_df, TABLE_LOG_ID, project_id=PROJECT_ID, credentials=CREDENTIALS, if_exists="replace")
+      print("Log saved into {}!".format(TABLE_LOG_ID))
+    except Exception as e:
+      print("Not able to save the logging, due to {}".format(e))
+    
+  print("DONE! -> Process from: {}".format(datetime.now()))
 
-  if input_data.upper() == "Y":
-    with open(LOGGING_FILE, "wb") as handle:
-      pickle.dump(log_data, handle)
-
-  print("DONE!")

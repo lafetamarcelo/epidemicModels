@@ -1,29 +1,34 @@
+from flask                import Flask, request, jsonify
+from flask_restful        import Resource, Api
+from flask_request_params import bind_request_params
 
 import os
 import pickle
 import requests
 import pandas_gbq
 
-
 import pandas as pd
-import numpy as np
+import numpy  as np
 
-from PyAstronomy import pyasl
-from datetime import datetime, timedelta
+from PyAstronomy   import pyasl
+from datetime      import datetime, timedelta
 from google.oauth2 import service_account
 
 from models import *
 
-project_id = "epidemicmodels"
-pred_table_id = "models_data.predictions"
-par_table_id = "models_data.parameters"
-credentials = service_account.Credentials.from_service_account_file('../gkeys/epidemicModels-1fc10954f61b.json')
+# Defualt variables
+PROJECT_ID    = "epidemicmodels"
+PRED_TABLE_ID = "countries.predictions"
+PAR_TABLE_ID  = "countries.parameters"
 
+TABLE_LOG_ID  = "countries.model_log"
+LOG_QUERY     = "SELECT * FROM countries.model_log"
+
+CREDENTIALS   = service_account.Credentials.from_service_account_file('./keys/epidemicModels-1fc10954f61b.json')
+pandas_gbq.context.credentials = CREDENTIALS
 
 # Configuration variables
-COUNTRY = "IT"
-LOG_FILE = "./log_models.pickle"
-
+COUNTRY_LIST = ["DE", "CN", "IT", "BR"]
 
 SETUP_COUNTRY = {
   "BR": {
@@ -44,22 +49,42 @@ SETUP_COUNTRY = {
   }
 }
 
-START_SIZE = SETUP_COUNTRY[COUNTRY]["start_size"]
-PEAK_EXISTS = SETUP_COUNTRY[COUNTRY]["peak_exist"]
 
-if __name__ == "__main__":
+class train_all_trigger(Resource):
+  def get(self):
+    # Call the update all countries 
+    # pipeline 
+    # 
+    train_all_countries_pipe()
 
-  print("Running update on : {} ...".format(COUNTRY))
+
+def train_all_countries_pipe():
+  """
+  """
+  for country in COUNTRY_LIST:
+    train_country_pipe(country=country)
+
+
+def train_country_pipe(country=None):
+  """
+  """
+  
+  # Setting some control variables
+  START_SIZE = SETUP_COUNTRY[country]["start_size"]
+  PEAK_EXISTS = SETUP_COUNTRY[country]["peak_exist"]
+
+  print("Running update on : {} ...".format(country))
 
   # Get the model data
   covid_api = 'https://corona-api.com/countries/'
   rest_countries = 'https://restcountries.eu/rest/v2/alpha/'
-  data_json =  requests.get(covid_api + COUNTRY).json()
-  country = requests.get(covid_api + COUNTRY).json()
+  data_json =  requests.get(covid_api + country).json()
+  # country = requests.get(covid_api + country).json()
   N = data_json['data']['population']
 
-  print("Organizing the data...")
+  print("\t(1) Organizing the data...")
   
+  # Creating the dataframe with the data
   df = pd.DataFrame(data_json['data']['timeline'])
   df = df.sort_values('date').reset_index()
   df['date'] = [datetime.fromisoformat(f) for f in df['date']]
@@ -74,26 +99,39 @@ if __name__ == "__main__":
   for col in new_df.columns[1:]:
     new_df[col] = new_df[col].interpolate(method='polynomial', order=1)
   df = new_df.dropna()
+  
   # Solve particular problems
-  if COUNTRY == "BR":
+  # 
+  # For Brazil, the measure on day 135 has an incorrect value
+  # so we interpolate that measure to not loose the final of 
+  # the time series.
+  if country == "BR":
     df.iloc[135,:] = [df.iloc[135, 0]] + [None]*7
     df = df.interpolate(method ='linear', limit_direction ='forward')
     df = df.where(df.active != 0.0).dropna()
+  
   # Creating the time vector --- for plotly
   datetime_64 = df["date"].values
   ts = (datetime_64 - np.datetime64('1970-01-01T00:00:00Z')) / np.timedelta64(1, 's')
   time = [datetime.utcfromtimestamp(t) for t in ts]
 
-  print("Reading the model log...")
-
-  if os.path.isfile(LOG_FILE):
-    with open(LOG_FILE, "rb") as handle:
-      log_data = pickle.load(handle)
-  else:
+  print("\t(2) Reading the model log...")
+  # If the model log does not exist, we create a model log 
+  # with a particular structure -> dictionary
+  
+  try:
+    # Reading the log table...
+    log_df = pandas_gbq.read_gbq(LOG_QUERY, project_id=PROJECT_ID)
+    country_list = log_df["country"].to_list()
+    start_p_list = log_df["start_point"].to_list()
+    log_data = dict(zip(country_list, start_p_list))
+  except:
     log_data = dict()
+    print("\t\tCountry log table does not yet, exist...")
+    
 
-  print("Creating SIR data...")
-
+  print("\t(3) Creating SIR data...")
+  # Create the SIR model structure, for the model trainning
   start_moment = np.argmax(df["active"].to_numpy() >= START_SIZE)
   time_ref = time[start_moment:]
   I = df['active'].to_numpy()[start_moment:]
@@ -102,20 +140,25 @@ if __name__ == "__main__":
   S = N - R - I
   # Creating the time vector
   t = np.linspace(0, len(I)-1, len(I))
-
+  # Create the trainning variables
   Sd, Id, Md, Rd, td = S, I, M, R, t
 
-  print("Running the time shift learning...")
-
+  print("\t(4) Running the time shift learning...")
+  # Create the structures to save the time shift results
   saved_param = {'Ro':[], 'D':[], 'pop':[], "date":[]}
   saved_prediction = {"S":[], "I":[], "R":[], "date":[], "at_date":[]}
 
+  # Check if the country exists in the logging
+  # if does not, create the logging structure
+  # for the country, if exists, start the 
+  # time shift learning from the logged one
   start_day = 8 # Starting with 8 day points
-  if COUNTRY in log_data.keys():
-    start_day = log_data[COUNTRY]["start_day"]
-  else:
-    log_data[COUNTRY] = dict()
+  if country in log_data.keys():
+    start_day = log_data[country]
 
+  # If start_day on the logging is less than 
+  # the size of the data, there is room for 
+  # running windowed shifting learning
   if start_day < len(I):
     # If peak does not exists, predict 
     # 120 days ahead to find the peak
@@ -129,7 +172,7 @@ if __name__ == "__main__":
     for i in range(start_day, len(I)):    
       # Compute this day data...
       current_date = time_ref[0] + timedelta(days=i)
-      at_date = [current_date]*len(pred_t)
+      current_date_vector = [current_date]*len(pred_t)
       # Get a partial window of the dataset
       dataset = dict(S=Sd[:i], I=Id[:i], R=Rd[:i])
       # Create the model
@@ -151,11 +194,11 @@ if __name__ == "__main__":
       saved_prediction["I"].append(result[1])
       saved_prediction["R"].append(result[2])
       saved_prediction["date"] += time_vector
-      saved_prediction["at_date"] += at_date
+      saved_prediction["at_date"] += current_date_vector
       # Print the progress...
-      print("߷ Run {} of {}".format(i-start_day+1, len(I)-start_day))
+      print("\t\t߷ Run {} of {}".format(i-start_day+1, len(I)-start_day))
     
-    print("Determining the peak...")
+    print("\t(5) Determining the peak...")
     if PEAK_EXISTS:
       # Compute the derivative of the smoothed 
       # active infected time series
@@ -180,6 +223,7 @@ if __name__ == "__main__":
       # print(estimated_peaks)
       peak_date = [time_ref[0] + timedelta(days=int(p)) for p in estimated_peaks]
 
+    print("\t(6) Transforming data to lists...")
     # Transform all in lists
     for item in ["S", "I", "R"]:
       auxiliar_list = []
@@ -187,38 +231,39 @@ if __name__ == "__main__":
         auxiliar_list += data.tolist()
       saved_prediction[item] = auxiliar_list
 
-    print("Processing done... Upload to cloud: (y/n)")
-    input_data = input()
-    if input_data.upper() == "Y":
+    print("\t(7) Uploading data to cloud...")
+    try:
       # Build the data tables to upload
-      print("Uploading the parameters...")
+      print("\t\tUploading the parameters...")
       par_df = pd.DataFrame(data=saved_param)
-      par_df["country"] = COUNTRY # Create the country column
+      par_df["country"] = country # Create the country column
       par_df["peak_est"] = peak_date # Creating the column of peak dates
-      pandas_gbq.to_gbq(par_df, par_table_id, project_id=project_id, credentials=credentials, if_exists='append')
+      pandas_gbq.to_gbq(par_df, PAR_TABLE_ID, project_id=PROJECT_ID, credentials=CREDENTIALS, if_exists='append')
       
-      print("Uploading the predictions...")
+      print("\t\tUploading the predictions...")
       pred_df = pd.DataFrame(data=saved_prediction)
-      pred_df["country"] = COUNTRY # Create the country column
-      pandas_gbq.to_gbq(pred_df, pred_table_id, project_id=project_id, credentials=credentials, if_exists='append')
+      pred_df["country"] = country # Create the country column
+      pandas_gbq.to_gbq(pred_df, PRED_TABLE_ID, project_id=PROJECT_ID, credentials=CREDENTIALS, if_exists='append')
 
       # Update the logging values
-      print("Updating the log...")
-      log_data[COUNTRY]["start_day"] = len(I)
-
-      print("Saving log data...")
-      # Saving the log file
-      with open(LOG_FILE, "wb") as handle:
-        pickle.dump(log_data, handle)
-
+      print("\t\tUpdating the log...")
+      log_data[country] = len(I)
+    except:
+      print("\t\tCloud uploading error!")
+    
+    # Saving the log data into the cloud
+    print("\t(8) Saving log data...")
+    try:
+      log_upload = {"country":[], "start_point":[]}
+      for c in log_data.keys():
+        log_upload["country"].append(c)
+        log_upload["start_point"].append(log_data[c])
+      df_log = pd.DataFrame(log_upload)
+      pandas_gbq.to_gbq(df_log, TABLE_LOG_ID, project_id=PROJECT_ID, credentials=CREDENTIALS, if_exists="replace")
+    except Exception as e:
+      print("\t\tUnable to upload log due to {}".format(e))
   else:
-    print("߷ Nothing to update...")
+    print("\t߷ Nothing to update...")
 
-  print("DONE!")
-
-
-  
-
-
-
+  print("DONE! -> Model Update - Process from: {}".format(datetime.now()))
 

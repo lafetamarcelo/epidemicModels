@@ -353,7 +353,8 @@ Autores
          src="https://discordapp.com/widget?id=713442259210600448&theme=dark" 
          width="500" 
          height="300"
-         allowtransparency="true" 
+         allowtransparency="true"
+         style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7);"
          frameborder="0"
       ></iframe>
    </h3>
