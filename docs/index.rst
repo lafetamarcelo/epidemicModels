@@ -47,7 +47,7 @@ estão apresentadas na figura a seguir:
          id="UKiFrame"
          style="border:none;"
          src="UK_result.html"
-         height="780"
+         height="750"
          width="610"
       ></iframe>
    </h3>
@@ -91,7 +91,7 @@ foi passando e mais dados foram utilizados para a aprendizagem:
          scrolling="no"
          style="border:none;"
          src="sliders.html"
-         height="540"
+         height="530"
          width="690"
       ></iframe>
    </h3>
