@@ -1,5 +1,3 @@
-
-
 contents:
-	cp *.html ../media_content/
-	cp *.css ../media_content/
+	cp -rf *.html ../media_content/
+	cp -rf *.css ../media_content/
