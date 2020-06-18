@@ -1,27 +1,26 @@
-
-
 .. toctree::
   :maxdepth: 1
   :caption: Vanderlei Cunha Parro
 
-  author/vanderlei
+  authors/vanderlei-parro
 
 
 .. toctree::
   :maxdepth: 1
   :caption: Marcelo Mendes Lafetá Lima
 
-  author/marcelo
+  authors/marcelo-lafeta
 
 
 .. toctree::
   :maxdepth: 1
   :caption: Felipe Brandão Ippolito
 
-  author/felipe
+  authors/felipe-ippolito
+
 
 .. toctree::
   :maxdepth: 1
-  :caption: Felipe Andrade
+  :caption: Felipe Antonio Silva de Andrade
 
-  author/felipe_cabeca
+  authors/felipe-andrade

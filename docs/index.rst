@@ -20,12 +20,16 @@ entendimento do conteúdo apresentado.
          width="600" 
          height="450"
          scrolling="no"
-         src="https://datastudio.google.com/embed/reporting/4824fb05-ec67-4b16-bf21-b4b7ab47d958/page/gErTB" 
+         src="https://datastudio.google.com/embed/reporting/0b096305-086c-4379-89ea-9c40a1c73c12/page/gErTB" 
          frameborder="0" 
-         style="border:0; border-radius:15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7);" 
+         style="border:0; border-radius:15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);" 
          allowfullscreen>
       </iframe>
    </h3>
+
+.. raw:: html
+
+   <br><br><br>
 
 
 Alguns resultados do século XX...
@@ -44,17 +48,9 @@ estão apresentadas na figura a seguir:
          style="border:none;"
          src="UK_result.html"
          height="780"
-         width="680"
+         width="610"
       ></iframe>
    </h3>
-   <script>
-      const iframe = document.getElementById("UKiFrame")
-      if (screen.width < 600) {
-         iframe.setAttribute("src", "UK_result.html")
-         iframe.setAttribute("height", 780)
-         iframe.setAttribute("width", 680)
-      }
-   </script>
 
 Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades 
 durante os períodos de epidemias do Reino Unido:
@@ -62,6 +58,10 @@ durante os períodos de epidemias do Reino Unido:
 .. image:: images/res/UK_models_corr.png
    :align: center
    :width: 500
+
+.. raw:: html
+
+   <br><br><br>
 
 
 Previsões do COVID
@@ -91,8 +91,8 @@ foi passando e mais dados foram utilizados para a aprendizagem:
          scrolling="no"
          style="border:none;"
          src="sliders.html"
-         height="550"
-         width="745"
+         height="540"
+         width="690"
       ></iframe>
    </h3>
 
@@ -107,35 +107,41 @@ caso os valores ajustados para cada país foram:
 .. raw:: html
 
    <h3 style="text-align:center;">
-      <blockquote>
-      <div><table class="docutils align-default">
-      <colgroup>
-      <col style="text-align:center;width: 39%" />
-      <col style="text-align:center;width: 34%" />
-      <col style="text-align:center;width: 27%" />
-      </colgroup>
-      <thead>
-      <tr class="row-odd"><th class="head"><p>País</p></th>
-      <th class="head"><p><span class="math notranslate nohighlight">\(\beta\)</span></p></th>
-      <th class="head"><p><span class="math notranslate nohighlight">\(r\)</span></p></th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr class="row-even"><td><p>Itália 🇮🇹</p></td>
-      <td><p>0.2038</p></td>
-      <td><p>0.0233</p></td>
-      </tr>
-      <tr class="row-odd"><td><p>China 🇨🇳</p></td>
-      <td><p>0.3133</p></td>
-      <td><p>0.0445</p></td>
-      </tr>
-      <tr class="row-even"><td><p>Alemanha 🇩🇪</p></td>
-      <td><p>0.2195</p></td>
-      <td><p>0.0576</p></td>
-      </tr>
-      </tbody>
-      </table>
-      </div></blockquote>
+      <blockquote style="margin:0;">
+         <div>
+            <table style="width:100%;" class="docutils align-default">
+               <colgroup>
+                  <col style="text-align:center;width:39%;" />
+                  <col style="text-align:center;width:34%;" />
+                  <col style="text-align:center;width:27%;" />
+               </colgroup>
+               <thead>
+                  <tr style="text-align:center;" class="row-odd">
+                     <th class="head"><p>País</p></th>
+                     <th class="head"><p><span class="math notranslate nohighlight">\(\beta\)</span></p></th>
+                     <th class="head"><p><span class="math notranslate nohighlight">\(r\)</span></p></th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="row-even">
+                     <td><p>Itália 🇮🇹</p></td>
+                     <td><p>0.2038</p></td>
+                     <td><p>0.0233</p></td>
+                  </tr>
+                  <tr class="row-odd">
+                     <td><p>China 🇨🇳</p></td>
+                     <td><p>0.3133</p></td>
+                     <td><p>0.0445</p></td>
+                  </tr>
+                  <tr class="row-even">
+                     <td><p>Alemanha 🇩🇪</p></td>
+                     <td><p>0.2195</p></td>
+                     <td><p>0.0576</p></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </blockquote>
    </h3>
 
 
@@ -150,47 +156,40 @@ caso os valores ajustados para cada país foram:
                <head>
                   <style>
                      .button {
-                     border: none;
-                     color: white;
-                     border-radius: 32px;
-                     padding: 16px 32px;
-                     text-align: center;
-                     text-decoration: none;
-                     display: inline-block;
-                     font-size: 16px;
-                     margin: 4px 2px;
-                     cursor: pointer;
-                     border-radius: 45px;
-                     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-                     transition: all 0.3s ease 0s;
+                        border: 2px solid #2980b9;
+                        border-radius: 32px;
+                        padding: 16px 32px;
+                        text-align: center;
+                        text-decoration: none;
+                        display: inline-block;
+                        font-size: 16px;
+                        margin: 4px 2px;
+                        cursor: pointer;
+                        border-radius: 45px;
+                        box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+                        transition: all 0.3s ease 0s;
+                        background-color: white;
+                        color: #404040;
                      }
 
-                     .button1 {
-                     background-color: white;
-                     color: black;
-                     border: 2px solid #4CAF50;
-                     }
-
-                     .button1:hover {
-                     background-color: #4CAF50;
-                     color: white;
-                     box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-                     transform: translateY(-7px);
+                     .button:hover {
+                        background-color: #2980b9;
+                        color: white;
+                        box-shadow: 0px 5px 10px rgba(41, 128, 185, 0.4);
+                        transform: translateY(-7px);
                      }
                   </style>
                </head>
                <body>
-                  <button class="button button1">Tente você mesmo!</button>
+                  <button class="button">Tente você mesmo!</button>
                </body>
          </html> 
       </a>
    </h3>
 
-
 .. raw:: html
 
    <br><br><br>
-
 
 
 Determinação do :math:`R_0`
@@ -209,7 +208,6 @@ a população é alcançavel ao vírus, devido a políticas públicas, isolament
 Dito isso, é possível definir os valores encontrados pelo algoritmo de aprendizagem para o 
 parâmetro :math:`R_0` a medida que os dias da pandemia passaram:
 
-
 .. raw:: html
 
    <h3 style="text-align:center;">
@@ -219,10 +217,9 @@ parâmetro :math:`R_0` a medida que os dias da pandemia passaram:
          style="border:none;"
          src="ro_results.html"
          height="580"
-         width="745"
+         width="690"
       ></iframe>
    </h3>
-
 
 
 Previsões do consumo do sistema público
@@ -240,7 +237,6 @@ novo dia de dados temos uma nova previsão de qual será a quantidade de pessoas
 de saúde. Nos gráficos a seguir conseguimos mostrar o erro percentual entre o real valor de :math:`R(\infty)`
 e o valor estimado por nosso modelo a cada dia da epidemia:
 
-
 .. raw:: html
 
    <h3 style="text-align:center;">
@@ -250,7 +246,7 @@ e o valor estimado por nosso modelo a cada dia da epidemia:
          style="border:none;"
          src="public_results.html"
          height="580"
-         width="745"
+         width="690"
       ></iframe>
    </h3>
 
@@ -274,14 +270,13 @@ da epidemia:
          style="border:none;"
          src="peak_results.html"
          height="580"
-         width="745"
+         width="690"
       ></iframe>
    </h3>
 
 
 Modelos COVID Brasil |:br:|
 ============================
-
 
 .. admonition:: And, by the way...
 
@@ -295,13 +290,12 @@ Autores
 
    <h3 style="text-align:center;">
       <iframe 
-         src="card_summary.html"
+         src="authors.html"
          width="100%"
          height="920px"
          style="border:none;">
       </iframe>
    </h3>
-      
 
 
 .. toctree::
@@ -368,7 +362,6 @@ Indices e tabelas
 * :ref:`search`
 
 
-
 .. |join discord| image:: https://img.shields.io/discord/713442259210600448?label=join%20discord
    :alt: Join discussion Discord
    :target: https://discord.gg/EenaYE5
@@ -380,12 +373,10 @@ Indices e tabelas
 .. |most used lang| image:: https://img.shields.io/github/languages/top/lafetamarcelo/epidemicModels   
    :alt: GitHub top language
 
-
 .. |last commit| image:: https://img.shields.io/github/last-commit/lafetamarcelo/epidemicModels   
    :alt: GitHub last commit
-   :target: https://github.com/lafetamarcelo/epidemicModels/
-
+   :target: https://github.com/lafetamarcelo/epidemicModels
 
 .. |docs| image:: https://readthedocs.org/projects/epidemicmodels/badge/?version=latest
    :alt: Documentation Status
-   :target: https://readthedocs.org/projects/epidemicmodels/
+   :target: https://readthedocs.org/projects/epidemicmodels
