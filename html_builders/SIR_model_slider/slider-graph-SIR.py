@@ -225,6 +225,6 @@ layout = row(
 )
 
 
-output_file("SIR-slider.html", title="Modelo SIR")
+output_file("SIR-sliders.html", title="Modelo SIR")
 
 show(layout)
