@@ -282,6 +282,10 @@ Modelos COVID Brasil |:br:|
 
    Em construção...
 
+.. raw:: html
+
+   <br><br><br>
+
 
 Autores
 =======
@@ -291,8 +295,8 @@ Autores
    <h3 style="text-align:center;">
       <iframe 
          src="authors.html"
-         width="100%"
-         height="920px"
+         width="570px"
+         height="800px"
          style="border:none;">
       </iframe>
    </h3>

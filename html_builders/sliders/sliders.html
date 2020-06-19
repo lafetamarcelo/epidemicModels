@@ -1,74 +1,81 @@
-
-
-
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="//twemoji.maxcdn.com/twemoji.min.js"></script>
-    <link rel="stylesheet" href="twemoji-awesome.css">
-    <link rel="stylesheet" href="sliders.css">
-  </head>
-  <body>
-    <h1>Análises de previsão</h1>
-    <div class="tabs">
-      
-      <input type="radio" id="tab1" name="tab-control" checked>
-      <input type="radio" id="tab2" name="tab-control">
-      <input type="radio" id="tab3" name="tab-control">  
-      <input type="radio" id="tab4" name="tab-control">
-      <ul>
-        <li title="Brasil"><label for="tab1" role="button"><br><span>Brasil</span></label></li>
-        <li title="Itália"><label for="tab2" role="button"><br><span>Itália</span></label></li>
-        <li title="Alemanha"><label for="tab3" role="button"><br><span>Alemanha</span></label></li>    
-        <li title="China"><label for="tab4" role="button"><br><span>China</span></label></li>
-      </ul>
-      
-      <div class="slider"><div class="indicator"></div></div>
-      <div class="content">
-        <section>
-          <h3 style="text-align:center;">
-            <iframe 
-              src="slider_BR_dark.html"
-              style="border:none;"
-              height="500px"
-              width="100%">
-            </iframe>
-          </h3>  
-        </section>
-        <section>
-          <h3 style="text-align:center;">
-            <iframe 
-              src="slider_IT_dark.html"
-              style="border:none;"
-              height="500px"
-              width="100%">
-            </iframe>
-          </h3>  
-        </section> 
-        <section>
-          <h3 style="text-align:center;">
-            <iframe 
-              src="slider_DE_dark.html"
-              style="border:none;"
-              height="500px"
-              width="100%">
-            </iframe>
-          </h3>  
-        </section>
-        <section>
-          <h3 style="text-align:center;">
-            <iframe 
-              src="slider_CN_dark.html"
-              style="border:none;"
-              height="500px"
-              width="100%">
-            </iframe>
-          </h3>  
-        </section>  
-      </div>
-    </div>
 
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://twemoji.maxcdn.com/twemoji.min.js"></script>
+  <link rel="stylesheet" href="twemoji-awesome.css">
+  <link rel="stylesheet" href="sliders.css">
+</head>
+
+<body>
+  <h1>Análises de previsão</h1>
+  <div class="tabs">
+    <input type="radio" id="tab1" name="tab-control" checked>
+    <input type="radio" id="tab2" name="tab-control">
+    <input type="radio" id="tab3" name="tab-control">
+    <input type="radio" id="tab4" name="tab-control">
+    <ul>
+      <li title="Brasil">
+        <label for="tab1" role="button"><br><span>Brasil</span></label>
+      </li>
+      <li title="Itália">
+        <label for="tab2" role="button"><br><span>Itália</span></label>
+      </li>
+      <li title="Alemanha">
+        <label for="tab3" role="button"><br><span>Alemanha</span></label>
+      </li>
+      <li title="China">
+        <label for="tab4" role="button"><br><span>China</span></label>
+      </li>
+    </ul>
+    <div class="slider">
+      <div class="indicator"></div>
+    </div>
+    <div class="content">
+      <section>
+        <h3 style="text-align:center;">
+          <iframe src="slider_BR_dark.html" style="border:none;" height="500px" width="100%">
+          </iframe>
+        </h3>
+      </section>
+      <section>
+        <h3 style="text-align:center;">
+          <iframe src="slider_IT_dark.html" style="border:none;" height="500px" width="100%">
+          </iframe>
+        </h3>
+      </section>
+      <section>
+        <h3 style="text-align:center;">
+          <iframe src="slider_DE_dark.html" style="border:none;" height="500px" width="100%">
+          </iframe>
+        </h3>
+      </section>
+      <section>
+        <h3 style="text-align:center;">
+          <iframe src="slider_CN_dark.html" style="border:none;" height="500px" width="100%">
+          </iframe>
+        </h3>
+      </section>
+    </div>
+  </div>
+  <script>
+    (function() {
+      document.addEventListener('readystatechange', function(evt) {
+        if (document.readyState !== 'complete') return
+
+        var iframes = document.querySelectorAll('.content iframe')
+
+        iframes.forEach(iframe => {
+          setTimeout(function() {
+            iframe.contentDocument.querySelector('.bk.bk-slider-title').style.color = "#fff"
+          }, 0)
+        })
+      })
+    })()
+  </script>
+
+</body>
+
 </html>
