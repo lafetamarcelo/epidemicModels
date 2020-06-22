@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,12 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="_static/Small_white_background.ico"/>
   
@@ -19,7 +24,9 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -33,18 +40,12 @@
         <script src="_static/twemoji.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="Modelo SIR" href="analytic.html" /> 
@@ -61,7 +62,7 @@
           
 
           
-            <a href="#" class="icon icon-home"> IMT Epidemic Models
+            <a href="#" class="icon icon-home" alt="Documentation Home"> IMT Epidemic Models
           
 
           
@@ -87,6 +88,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -122,15 +124,16 @@
 </ul>
 <p class="caption"><span class="caption-text">Autores</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="author/vanderlei.html">Vanderlei Cunha Parro </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/felipe.html">Felipe Brandão Ippolito </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/felipe_cabeca.html">Felipe Andrade </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/vanderlei-parro.html">Vanderlei Cunha Parro </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/marcelo-lafeta.html">Marcelo Mendes Lafetá Lima </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/felipe-ippolito.html">Felipe Brandão Ippolito </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/felipe-andrade.html">Felipe Antonio Silva de Andrade </a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -169,7 +172,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="#">Docs</a> &raquo;</li>
+      <li><a href="#" class="icon icon-home"></a> &raquo;</li>
         
       <li>Welcome to IMT Epidemic Models’s documentation!</li>
     
@@ -216,7 +219,7 @@
 </style>
 <div class="section" id="welcome-to-imt-epidemic-models-s-documentation">
 <h1>Welcome to IMT Epidemic Models’s documentation!<a class="headerlink" href="#welcome-to-imt-epidemic-models-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p><a class="reference external" href="https://readthedocs.org/projects/epidemicmodels/"><img alt="Documentation Status" src="https://readthedocs.org/projects/epidemicmodels/badge/?version=latest" /></a> <a class="reference external" href="https://github.com/lafetamarcelo/epidemicModels/"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/lafetamarcelo/epidemicModels" /></a> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/lafetamarcelo/epidemicModels" /> <a class="reference external" href="https://discord.gg/EenaYE5"><img alt="Join discussion Discord" src="https://img.shields.io/discord/713442259210600448?label=join%20discord" /></a></p>
+<p><a class="reference external" href="https://readthedocs.org/projects/epidemicmodels"><img alt="Documentation Status" src="https://readthedocs.org/projects/epidemicmodels/badge/?version=latest" /></a> <a class="reference external" href="https://github.com/lafetamarcelo/epidemicModels"><img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/lafetamarcelo/epidemicModels" /></a> <img alt="GitHub top language" src="https://img.shields.io/github/languages/top/lafetamarcelo/epidemicModels" /> <a class="reference external" href="https://discord.gg/EenaYE5"><img alt="Join discussion Discord" src="https://img.shields.io/discord/713442259210600448?label=join%20discord" /></a></p>
 <p>Este projeto tem o objetivo de divulgar como desenvolver modelos para epidemias, desde
 sua modelagem matemática até sua concepção computacional em Python. Sendo assim composto
 por videos explicativos, notebooks em Python, e diversas visualizações, para ajudar com o
@@ -228,10 +231,10 @@ entendimento do conteúdo apresentado.</p>
       scrolling="no"
       src="https://datastudio.google.com/embed/reporting/0b096305-086c-4379-89ea-9c40a1c73c12/page/gErTB"
       frameborder="0"
-      style="border:0; border-radius:15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.7);"
+      style="border:0; border-radius:15px;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.4);"
       allowfullscreen>
    </iframe>
-</h3></div>
+</h3><br><br><br></div>
 <div class="section" id="alguns-resultados-do-seculo-xx">
 <h1>Alguns resultados do século XX…<a class="headerlink" href="#alguns-resultados-do-seculo-xx" title="Permalink to this headline">¶</a></h1>
 <p>Para dar um gosto do conteúdo aprensentado, foi desenvolvida uma análise com dados
@@ -243,21 +246,13 @@ estão apresentadas na figura a seguir:</p>
       id="UKiFrame"
       style="border:none;"
       src="UK_result.html"
-      height="780"
-      width="680"
+      height="750"
+      width="610"
    ></iframe>
-</h3>
-<script>
-   const iframe = document.getElementById("UKiFrame")
-   if (screen.width < 600) {
-      iframe.setAttribute("src", "UK_result.html")
-      iframe.setAttribute("height", 780)
-      iframe.setAttribute("width", 680)
-   }
-</script><p>Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades
+</h3><p>Assim como o estudo de correlação entre os modelos SIR obtidos para cada uma das cidades
 durante os períodos de epidemias do Reino Unido:</p>
 <a class="reference internal image-reference" href="_images/UK_models_corr.png"><img alt="_images/UK_models_corr.png" class="align-center" src="_images/UK_models_corr.png" style="width: 500px;" /></a>
-</div>
+<br><br><br></div>
 <div class="section" id="previsoes-do-covid">
 <h1>Previsões do COVID<a class="headerlink" href="#previsoes-do-covid" title="Permalink to this headline">¶</a></h1>
 <p>Nesta análise utilizamos o modelo desenvolvido para tentar prever os comportamentos do
@@ -281,8 +276,8 @@ foi passando e mais dados foram utilizados para a aprendizagem:</p>
       scrolling="no"
       style="border:none;"
       src="sliders.html"
-      height="550"
-      width="745"
+      height="530"
+      width="690"
    ></iframe>
 </h3><p>Nosso modelo aprende com algoritmos de otimização os parâmetros da estrutura SIR, juntamente
 com a proporção da população que está sendo registrada pelo sistema de saúde. No caso, ele
@@ -291,35 +286,41 @@ aprende três parâmetros fundamentais do modelo: <span class="math notranslate 
 inicial de suscetíveis), para que a epidemia tenha o comportamento que os dados mostram. No
 caso os valores ajustados para cada país foram:</p>
 <h3 style="text-align:center;">
-   <blockquote>
-   <div><table class="docutils align-default">
-   <colgroup>
-   <col style="text-align:center;width: 39%" />
-   <col style="text-align:center;width: 34%" />
-   <col style="text-align:center;width: 27%" />
-   </colgroup>
-   <thead>
-   <tr class="row-odd"><th class="head"><p>País</p></th>
-   <th class="head"><p><span class="math notranslate nohighlight">\(\beta\)</span></p></th>
-   <th class="head"><p><span class="math notranslate nohighlight">\(r\)</span></p></th>
-   </tr>
-   </thead>
-   <tbody>
-   <tr class="row-even"><td><p>Itália 🇮🇹</p></td>
-   <td><p>0.2038</p></td>
-   <td><p>0.0233</p></td>
-   </tr>
-   <tr class="row-odd"><td><p>China 🇨🇳</p></td>
-   <td><p>0.3133</p></td>
-   <td><p>0.0445</p></td>
-   </tr>
-   <tr class="row-even"><td><p>Alemanha 🇩🇪</p></td>
-   <td><p>0.2195</p></td>
-   <td><p>0.0576</p></td>
-   </tr>
-   </tbody>
-   </table>
-   </div></blockquote>
+   <blockquote style="margin:0;">
+      <div>
+         <table style="width:100%;" class="docutils align-default">
+            <colgroup>
+               <col style="text-align:center;width:39%;" />
+               <col style="text-align:center;width:34%;" />
+               <col style="text-align:center;width:27%;" />
+            </colgroup>
+            <thead>
+               <tr style="text-align:center;" class="row-odd">
+                  <th class="head"><p>País</p></th>
+                  <th class="head"><p><span class="math notranslate nohighlight">\(\beta\)</span></p></th>
+                  <th class="head"><p><span class="math notranslate nohighlight">\(r\)</span></p></th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="row-even">
+                  <td><p>Itália 🇮🇹</p></td>
+                  <td><p>0.2038</p></td>
+                  <td><p>0.0233</p></td>
+               </tr>
+               <tr class="row-odd">
+                  <td><p>China 🇨🇳</p></td>
+                  <td><p>0.3133</p></td>
+                  <td><p>0.0445</p></td>
+               </tr>
+               <tr class="row-even">
+                  <td><p>Alemanha 🇩🇪</p></td>
+                  <td><p>0.2195</p></td>
+                  <td><p>0.0576</p></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </blockquote>
 </h3><p><strong>Caso você mesmo queira se divertir e tentar ajustar os parâmetros, é possível, clicando no botão abaixo!</strong></p>
 <h3 style="text-align:center;">
    <a href="SIR-sliders.html">
@@ -328,37 +329,32 @@ caso os valores ajustados para cada país foram:</p>
             <head>
                <style>
                   .button {
-                  border: none;
-                  color: white;
-                  border-radius: 32px;
-                  padding: 16px 32px;
-                  text-align: center;
-                  text-decoration: none;
-                  display: inline-block;
-                  font-size: 16px;
-                  margin: 4px 2px;
-                  cursor: pointer;
-                  border-radius: 45px;
-                  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
-                  transition: all 0.3s ease 0s;
+                     border: 2px solid #2980b9;
+                     border-radius: 32px;
+                     padding: 16px 32px;
+                     text-align: center;
+                     text-decoration: none;
+                     display: inline-block;
+                     font-size: 16px;
+                     margin: 4px 2px;
+                     cursor: pointer;
+                     border-radius: 45px;
+                     box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.1);
+                     transition: all 0.3s ease 0s;
+                     background-color: white;
+                     color: #404040;
                   }
 
-                  .button1 {
-                  background-color: white;
-                  color: black;
-                  border: 2px solid #4CAF50;
-                  }
-
-                  .button1:hover {
-                  background-color: #4CAF50;
-                  color: white;
-                  box-shadow: 0px 15px 20px rgba(46, 229, 157, 0.4);
-                  transform: translateY(-7px);
+                  .button:hover {
+                     background-color: #2980b9;
+                     color: white;
+                     box-shadow: 0px 5px 10px rgba(41, 128, 185, 0.4);
+                     transform: translateY(-7px);
                   }
                </style>
             </head>
             <body>
-               <button class="button button1">Tente você mesmo!</button>
+               <button class="button">Tente você mesmo!</button>
             </body>
       </html>
    </a>
@@ -383,7 +379,7 @@ parâmetro <span class="math notranslate nohighlight">\(R_0\)</span> a medida qu
       style="border:none;"
       src="ro_results.html"
       height="580"
-      width="745"
+      width="690"
    ></iframe>
 </h3></div>
 <div class="section" id="previsoes-do-consumo-do-sistema-publico">
@@ -406,7 +402,7 @@ e o valor estimado por nosso modelo a cada dia da epidemia:</p>
       style="border:none;"
       src="public_results.html"
       height="580"
-      width="745"
+      width="690"
    ></iframe>
 </h3></div>
 <div class="section" id="previsoes-dos-picos-epidemicos-do-covid">
@@ -424,7 +420,7 @@ da epidemia:</p>
       style="border:none;"
       src="peak_results.html"
       height="580"
-      width="745"
+      width="690"
    ></iframe>
 </h3></div>
 </div>
@@ -434,14 +430,14 @@ da epidemia:</p>
 <p class="admonition-title">And, by the way…</p>
 <p>Em construção…</p>
 </div>
-</div>
+<br><br><br></div>
 <div class="section" id="autores">
 <h1>Autores<a class="headerlink" href="#autores" title="Permalink to this headline">¶</a></h1>
 <h3 style="text-align:center;">
    <iframe
-      src="card_summary.html"
-      width="100%"
-      height="920px"
+      src="authors.html"
+      width="570px"
+      height="800px"
       style="border:none;">
    </iframe>
 </h3><div class="toctree-wrapper compound">
@@ -573,10 +569,10 @@ da epidemia:</p>
 <div class="toctree-wrapper compound">
 <p class="caption"><span class="caption-text">Autores</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="author/vanderlei.html">Vanderlei Cunha Parro </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/felipe.html">Felipe Brandão Ippolito </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/felipe_cabeca.html">Felipe Andrade </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/vanderlei-parro.html">Vanderlei Cunha Parro </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/marcelo-lafeta.html">Marcelo Mendes Lafetá Lima </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/felipe-ippolito.html">Felipe Brandão Ippolito </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/felipe-andrade.html">Felipe Antonio Silva de Andrade </a></li>
 </ul>
 </div>
 <h3 style="text-align:center;">
@@ -616,11 +612,19 @@ da epidemia:</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Vanderlei Parro, Marcelo Lima e Felipe Ippolito
+        
+        &copy; Copyright 2020, Vanderlei Parro, Marcelo Lima, Felipe Ippolito e Felipe Andrade
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -631,7 +635,6 @@ da epidemia:</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {

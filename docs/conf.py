@@ -23,8 +23,8 @@ def setup(app):
 # -- Project information -----------------------------------------------------
 
 project = 'IMT Epidemic Models'
-copyright = '2020, Vanderlei Parro, Marcelo Lima e Felipe Ippolito'
-author = 'Vanderlei Parro, Marcelo Lima e Felipe Ippolito'
+copyright = '2020, Vanderlei Parro, Marcelo Lima, Felipe Ippolito e Felipe Andrade'
+author = 'Vanderlei Parro, Marcelo Lima, Felipe Ippolito e Felipe Andrade'
 
 # The full version, including alpha/beta/rc tags
 release = 'v0.1'
@@ -81,27 +81,5 @@ html_short_title = 'EM'
 html_static_path = ['_static']
 
 html_extra_path = [
-  "./media_content/",
-  # "./media_content/SP_result.html",
-  # "./media_content/BR_result.html",
-  # "./media_content/IT_infectados_COVID.html",
-  # "./media_content/IT_COVID.html",
-  # "./media_content/peak_estimate_IT.html",
-  # "./media_content/peak_estimate_DE.html",
-  # "./media_content/peak_estimate_CN.html",
-  # "./media_content/Public_usage_IT.html",
-  # "./media_content/Public_usage_DE.html",
-  # "./media_content/Public_usage_CN.html",
-  # "./media_content/Ro_estimate_IT.html",
-  # "./media_content/Ro_estimate_DE.html",
-  # "./media_content/Ro_estimate_CN.html",
-  # "./media_content/slider_IT_dark.html",
-  # "./media_content/slider_DE_dark.html",
-  # "./media_content/slider_CN_dark.html",
-  # "./media_content/slider_BR_dark.html",
-  # "./media_content/sliders.html",
-  # "./media_content/sliders.css",
-  # "./media_content/doc_button_support.html",
-  # "./media_content/SIR-sliders.html",
-  # "./author/card_summary.html"
+  "./media_content/"
 ]

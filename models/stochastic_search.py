@@ -70,8 +70,11 @@ class SIR:
     # Simulation type
     self.__sim_type = simulation
     # Algorithm focus variables
-    if 'M' in self.focus:
-      self.__class__.differential_model = dm.SIRD
+    if 'D' in self.focus:
+      if self.__sim_type == "discrete":
+        self.__class__.differential_model = dcm.SIRD
+      else:
+        self.__class__.differential_model = dm.SIRD
       self.__class__.cost_function = cm.cost_SIRD
     elif 'E' in self.focus:
       self.__class__.differential_model = dm.SEIR
@@ -142,7 +145,7 @@ class SIR:
       :return: The values of the suceptible and infected, at time, respectivelly.
       :rtype: tuple
     """
-    
+
     if self.__sim_type == "continuous":
       result = integrate.odeint(
         self.differential_model, 
@@ -197,6 +200,7 @@ class SIR:
       Ro_sens=[0.8,15],
       D_sens=[5,50],
       sigma_sens=None,
+      mu_sens=[0.0001, 0.02],
       notified_sens=None,
       sample_ponder=None,
       optim_verbose=False,
@@ -272,6 +276,12 @@ class SIR:
         lower.append(notified_sens[item][0])
         upper.append(notified_sens[item][1])
       y0.insert(2, I[0])
+    if "D" in self.focus:
+        lower.append(mu_sens[0])
+        upper.append(mu_sens[1])
+        datatrain.append(D)
+        y0.append(D[0])
+        w.append(1/np.mean(D))
     # Population proportion boundaries
     if self._search_pop:
       lower.append(pop_sens[0])

@@ -1,8 +1,7 @@
 
 
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="en" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="en" > <!--<![endif]-->
+<html class="writer-html5" lang="en" >
 <head>
   <meta charset="utf-8">
   
@@ -12,6 +11,12 @@
   
 
   
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
+  <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
+
+  
   
     <link rel="shortcut icon" href="_static/Small_white_background.ico"/>
   
@@ -19,7 +24,9 @@
   
 
   
-  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
   
     
       <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
@@ -33,18 +40,12 @@
         <script src="_static/twemoji.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.10/require.min.js"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
+        <script async="async" src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.7/latest.js?config=TeX-AMS-MML_HTMLorMML"></script>
         <script type="text/x-mathjax-config">MathJax.Hub.Config({"tex2jax": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true, "ignoreClass": "document", "processClass": "math|output_area"}})</script>
     
     <script type="text/javascript" src="_static/js/theme.js"></script>
 
     
-
-  
-  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="_static/copybutton.css" type="text/css" />
-  <link rel="stylesheet" href="_static/twemoji.css" type="text/css" />
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
     <link rel="next" title="&lt;no title&gt;" href="authors.html" />
@@ -62,7 +63,7 @@
           
 
           
-            <a href="index.html" class="icon icon-home"> IMT Epidemic Models
+            <a href="index.html" class="icon icon-home" alt="Documentation Home"> IMT Epidemic Models
           
 
           
@@ -88,6 +89,7 @@
           
         </div>
 
+        
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
           
             
@@ -132,15 +134,16 @@
 </ul>
 <p class="caption"><span class="caption-text">Autores</span></p>
 <ul>
-<li class="toctree-l1"><a class="reference internal" href="author/vanderlei.html">Vanderlei Cunha Parro </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/marcelo.html">Marcelo Mendes Lafetá Lima </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/felipe.html">Felipe Brandão Ippolito </a></li>
-<li class="toctree-l1"><a class="reference internal" href="author/felipe_cabeca.html">Felipe Andrade </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/vanderlei-parro.html">Vanderlei Cunha Parro </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/marcelo-lafeta.html">Marcelo Mendes Lafetá Lima </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/felipe-ippolito.html">Felipe Brandão Ippolito </a></li>
+<li class="toctree-l1"><a class="reference internal" href="authors/felipe-andrade.html">Felipe Antonio Silva de Andrade </a></li>
 </ul>
 
             
           
         </div>
+        
       </div>
     </nav>
 
@@ -179,7 +182,7 @@
 
   <ul class="wy-breadcrumbs">
     
-      <li><a href="index.html">Docs</a> &raquo;</li>
+      <li><a href="index.html" class="icon icon-home"></a> &raquo;</li>
         
           <li><a href="modules.html">epidemicModels</a> &raquo;</li>
         
@@ -230,16 +233,16 @@
 <h1>models package<a class="headerlink" href="#models-package" title="Permalink to this headline">¶</a></h1>
 <div class="section" id="module-models.stochastic_search">
 <span id="stochastic-search-learning-models"></span><h2>Stochastic Search - Learning models<a class="headerlink" href="#module-models.stochastic_search" title="Permalink to this headline">¶</a></h2>
-<dl class="class">
+<dl class="py class">
 <dt id="models.stochastic_search.SIR">
-<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">pop=2000000, focus=['I', 'R'], algorithm='differential_evolution', simulation='discrete', stochastic_search=False, forced_search_pop=False, ode_full_output=False, verbose=True</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
+<em class="property">class </em><code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">pop</span><span class="o">=</span><span class="default_value">2000000</span></em>, <em class="sig-param"><span class="n">focus</span><span class="o">=</span><span class="default_value">['I', 'R']</span></em>, <em class="sig-param"><span class="n">algorithm</span><span class="o">=</span><span class="default_value">'differential_evolution'</span></em>, <em class="sig-param"><span class="n">simulation</span><span class="o">=</span><span class="default_value">'discrete'</span></em>, <em class="sig-param"><span class="n">stochastic_search</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">forced_search_pop</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">ode_full_output</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">verbose</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>This model concentrate all the developed algorithms to 
 represent data driven SIR model. Using the Scipy default 
 model structure.</p>
-<dl class="method">
+<dl class="py method">
 <dt id="models.stochastic_search.SIR.cost_wrapper">
-<code class="sig-name descname">cost_wrapper</code><span class="sig-paren">(</span><em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.cost_wrapper" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">cost_wrapper</code><span class="sig-paren">(</span><em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.cost_wrapper" title="Permalink to this definition">¶</a></dt>
 <dd><p>The method responsible for wrapping the cost function. 
 This allows differential evolution algorithm to run with parallel processing.</p>
 <dl class="field-list simple">
@@ -256,9 +259,9 @@ This allows differential evolution algorithm to run with parallel processing.</p
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="models.stochastic_search.SIR.fit">
-<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param">dataset, t, search_pop=True, Ro_bounds=None, pop_sens=[0.001, 0.0001], Ro_sens=[0.8, 15], D_sens=[5, 50], sigma_sens=None, notified_sens=None, sample_ponder=None, optim_verbose=False, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">search_pop</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">Ro_bounds</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">pop_sens</span><span class="o">=</span><span class="default_value">[0.001, 0.0001]</span></em>, <em class="sig-param"><span class="n">Ro_sens</span><span class="o">=</span><span class="default_value">[0.8, 15]</span></em>, <em class="sig-param"><span class="n">D_sens</span><span class="o">=</span><span class="default_value">[5, 50]</span></em>, <em class="sig-param"><span class="n">sigma_sens</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">notified_sens</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">sample_ponder</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">optim_verbose</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit" title="Permalink to this definition">¶</a></dt>
 <dd><p>The method responsible for estimating a set of beta and r 
 parameters for the provided data set. It assumes that in 
 the data there is only one epidemic period.</p>
@@ -281,9 +284,9 @@ the data there is only one epidemic period.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="models.stochastic_search.SIR.fit_multiple">
-<code class="sig-name descname">fit_multiple</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Bd, td, threshold_prop=1, cases_before=10, filt_estimate=False, filt_window=55, beta_sens=[100, 10], r_sens=[100, 10], out_type=0, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit_multiple" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">fit_multiple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Sd</span></em>, <em class="sig-param"><span class="n">Id</span></em>, <em class="sig-param"><span class="n">Bd</span></em>, <em class="sig-param"><span class="n">td</span></em>, <em class="sig-param"><span class="n">threshold_prop</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">cases_before</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">filt_estimate</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">filt_window</span><span class="o">=</span><span class="default_value">55</span></em>, <em class="sig-param"><span class="n">beta_sens</span><span class="o">=</span><span class="default_value">[100, 10]</span></em>, <em class="sig-param"><span class="n">r_sens</span><span class="o">=</span><span class="default_value">[100, 10]</span></em>, <em class="sig-param"><span class="n">out_type</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.fit_multiple" title="Permalink to this definition">¶</a></dt>
 <dd><p>The method responsible for estimating a set of beta and r 
 parameters for each epidemy period existent in the provided
 dataset. It assumes that in the data there are several epidemic
@@ -313,9 +316,9 @@ periods.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="models.stochastic_search.SIR.monteCarlo_multiple">
-<code class="sig-name descname">monteCarlo_multiple</code><span class="sig-paren">(</span><em class="sig-param">Sd, Id, Bd, td, threshold_prop=1, cases_before=10, minimum_days=60, steps_indays=10, filt_estimate=False, filt_window=55, beta_sens=[1000, 10], r_sens=[1000, 10], out_type=0, **kwargs</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.monteCarlo_multiple" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">monteCarlo_multiple</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">Sd</span></em>, <em class="sig-param"><span class="n">Id</span></em>, <em class="sig-param"><span class="n">Bd</span></em>, <em class="sig-param"><span class="n">td</span></em>, <em class="sig-param"><span class="n">threshold_prop</span><span class="o">=</span><span class="default_value">1</span></em>, <em class="sig-param"><span class="n">cases_before</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">minimum_days</span><span class="o">=</span><span class="default_value">60</span></em>, <em class="sig-param"><span class="n">steps_indays</span><span class="o">=</span><span class="default_value">10</span></em>, <em class="sig-param"><span class="n">filt_estimate</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">filt_window</span><span class="o">=</span><span class="default_value">55</span></em>, <em class="sig-param"><span class="n">beta_sens</span><span class="o">=</span><span class="default_value">[1000, 10]</span></em>, <em class="sig-param"><span class="n">r_sens</span><span class="o">=</span><span class="default_value">[1000, 10]</span></em>, <em class="sig-param"><span class="n">out_type</span><span class="o">=</span><span class="default_value">0</span></em>, <em class="sig-param"><span class="o">**</span><span class="n">kwargs</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.monteCarlo_multiple" title="Permalink to this definition">¶</a></dt>
 <dd><p>The method responsible for estimating a set of beta and r 
 parameters for each epidemy period existent in the provided
 dataset. It assumes that in the data there are several epidemic
@@ -345,9 +348,9 @@ periods.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="models.stochastic_search.SIR.predict">
-<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param">initial</em>, <em class="sig-param">t</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.predict" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">predict</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">t</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.predict" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function that uses the estimated parameters of the SIR model
 to predict the epidemy outputs (Suceptible, Infected and Recoverd)
 for the time samples provided, provided the initial conditions.</p>
@@ -367,9 +370,9 @@ for the time samples provided, provided the initial conditions.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="models.stochastic_search.SIR.result_summary">
-<code class="sig-name descname">result_summary</code><span class="sig-paren">(</span><em class="sig-param">out_plot=False, plot_size=[600, 400], save_results=False, folder_path='./', file_name='SIR_result_summary.png'</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.result_summary" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">result_summary</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">out_plot</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">plot_size</span><span class="o">=</span><span class="default_value">[600, 400]</span></em>, <em class="sig-param"><span class="n">save_results</span><span class="o">=</span><span class="default_value">False</span></em>, <em class="sig-param"><span class="n">folder_path</span><span class="o">=</span><span class="default_value">'./'</span></em>, <em class="sig-param"><span class="n">file_name</span><span class="o">=</span><span class="default_value">'SIR_result_summary.png'</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.result_summary" title="Permalink to this definition">¶</a></dt>
 <dd><p>Method responsible for building a proper summary plot of 
 the estimate process of the SIR model.</p>
 <dl class="field-list simple">
@@ -391,9 +394,9 @@ the estimate process of the SIR model.</p>
 </dl>
 </dd></dl>
 
-<dl class="method">
+<dl class="py method">
 <dt id="models.stochastic_search.SIR.simulate">
-<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param">initial</em>, <em class="sig-param">time</em>, <em class="sig-param">theta</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.simulate" title="Permalink to this definition">¶</a></dt>
+<code class="sig-name descname">simulate</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">time</span></em>, <em class="sig-param"><span class="n">theta</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.SIR.simulate" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function that simulate the differential SIR
 model, by computing the integration of the 
 differential equations.</p>
@@ -416,9 +419,9 @@ differential equations.</p>
 
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="models.stochastic_search.findEpidemyBreaks">
-<code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">findEpidemyBreaks</code><span class="sig-paren">(</span><em class="sig-param">cases</em>, <em class="sig-param">threshold_prop=1.0</em>, <em class="sig-param">cases_before=10</em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.findEpidemyBreaks" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.stochastic_search.</code><code class="sig-name descname">findEpidemyBreaks</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">cases</span></em>, <em class="sig-param"><span class="n">threshold_prop</span><span class="o">=</span><span class="default_value">1.0</span></em>, <em class="sig-param"><span class="n">cases_before</span><span class="o">=</span><span class="default_value">10</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.stochastic_search.findEpidemyBreaks" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function responsible for determining the initial 
 and final points of the epidemies windows.</p>
 <dl class="field-list simple">
@@ -441,14 +444,14 @@ and final points of the epidemies windows.</p>
 </div>
 <div class="section" id="module-models.cost_functions">
 <span id="cost-functions"></span><h2>Cost Functions<a class="headerlink" href="#module-models.cost_functions" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="models.cost_functions.cost_NSIR">
-<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_NSIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">dataset</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_NSIR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_NSIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">pars</span></em>, <em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_NSIR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="models.cost_functions.cost_SEIR">
-<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_SEIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">dataset</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_SEIR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_SEIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">pars</span></em>, <em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_SEIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function to compute the error to guide the learning
 algorithm. It computes the quadratic error.</p>
 <dl class="field-list simple">
@@ -470,9 +473,9 @@ algorithm. It computes the quadratic error.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="models.cost_functions.cost_SIR">
-<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_SIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">dataset</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_SIR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_SIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">pars</span></em>, <em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_SIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function to compute the error to guide the learning
 algorithm. It computes the quadratic error.</p>
 <dl class="field-list simple">
@@ -495,9 +498,9 @@ algorithm. It computes the quadratic error.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="models.cost_functions.cost_dSIR">
-<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_dSIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">pars</em>, <em class="sig-param">dataset</em>, <em class="sig-param">initial</em>, <em class="sig-param">t</em>, <em class="sig-param">w</em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_dSIR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.cost_functions.</code><code class="sig-name descname">cost_dSIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">pars</span></em>, <em class="sig-param"><span class="n">dataset</span></em>, <em class="sig-param"><span class="n">initial</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">w</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.cost_functions.cost_dSIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function to compute the error to guide the learning
 algorithm. It computes the quadratic error.</p>
 <dl class="field-list simple">
@@ -523,14 +526,14 @@ algorithm. It computes the quadratic error.</p>
 </div>
 <div class="section" id="module-models.differential_models">
 <span id="differential-models"></span><h2>Differential Models<a class="headerlink" href="#module-models.differential_models" title="Permalink to this headline">¶</a></h2>
-<dl class="function">
+<dl class="py function">
 <dt id="models.differential_models.NSIR">
-<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">NSIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">beta</em>, <em class="sig-param">r</em>, <em class="sig-param">betan</em>, <em class="sig-param">alpha</em>, <em class="sig-param">rn</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.NSIR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">NSIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">beta</span></em>, <em class="sig-param"><span class="n">r</span></em>, <em class="sig-param"><span class="n">betan</span></em>, <em class="sig-param"><span class="n">alpha</span></em>, <em class="sig-param"><span class="n">rn</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.NSIR" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="models.differential_models.SEIR">
-<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SEIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">Beta</em>, <em class="sig-param">r</em>, <em class="sig-param">sigma</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SEIR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SEIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">Beta</span></em>, <em class="sig-param"><span class="n">r</span></em>, <em class="sig-param"><span class="n">sigma</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SEIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function that computes the diferential set of 
 equations of the SEIR Epidemic Model.</p>
 <dl class="field-list simple">
@@ -552,9 +555,9 @@ equations of the SEIR Epidemic Model.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="models.differential_models.SIR">
-<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">parameters</em>, <em class="sig-param">*args</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SIR" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SIR</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">parameters</span></em>, <em class="sig-param"><span class="o">*</span><span class="n">args</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SIR" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function that computes the diferential set of 
 equations of the SIR Epidemic Model.</p>
 <dl class="field-list simple">
@@ -575,9 +578,9 @@ equations of the SIR Epidemic Model.</p>
 </dl>
 </dd></dl>
 
-<dl class="function">
+<dl class="py function">
 <dt id="models.differential_models.SIRD">
-<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SIRD</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">y</em>, <em class="sig-param">t</em>, <em class="sig-param">Beta</em>, <em class="sig-param">r</em>, <em class="sig-param">mi</em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SIRD" title="Permalink to this definition">¶</a></dt>
+<code class="sig-prename descclassname">models.differential_models.</code><code class="sig-name descname">SIRD</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">self</span></em>, <em class="sig-param"><span class="n">y</span></em>, <em class="sig-param"><span class="n">t</span></em>, <em class="sig-param"><span class="n">Beta</span></em>, <em class="sig-param"><span class="n">r</span></em>, <em class="sig-param"><span class="n">mi</span></em><span class="sig-paren">)</span><a class="headerlink" href="#models.differential_models.SIRD" title="Permalink to this definition">¶</a></dt>
 <dd><p>The function that computes the diferential set of 
 equations of the SIRD Epidemic Model.</p>
 <dl class="field-list simple">
@@ -633,11 +636,19 @@ equations of the SIRD Epidemic Model.</p>
 
   <div role="contentinfo">
     <p>
-        &copy; Copyright 2020, Vanderlei Parro, Marcelo Lima e Felipe Ippolito
+        
+        &copy; Copyright 2020, Vanderlei Parro, Marcelo Lima, Felipe Ippolito e Felipe Andrade
 
     </p>
   </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+    
+    
+    
+    Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a
+    
+    <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a>
+    
+    provided by <a href="https://readthedocs.org">Read the Docs</a>. 
 
 </footer>
 
@@ -648,7 +659,6 @@ equations of the SIRD Epidemic Model.</p>
 
   </div>
   
-
 
   <script type="text/javascript">
       jQuery(function () {
