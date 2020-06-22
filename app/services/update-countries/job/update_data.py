@@ -17,12 +17,12 @@ import os
 # Defualt variables
 COUNTRY_LIST = ["BR", "IT", "CN", "DE"]
 
-PROJECT_ID   = "epidemicmodels"
+PROJECT_ID   = "epidemicapp-280600"
 TABLE_ID     = "countries.real_data"
 TABLE_LOG_ID = "countries.data_log"
 LOG_QUERY    = "SELECT * FROM countries.data_log"
 
-CREDENTIALS  = service_account.Credentials.from_service_account_file('./keys/epidemicModels-1fc10954f61b.json')
+CREDENTIALS  = service_account.Credentials.from_service_account_file('./keys/epidemicapp-62d0d471b86f.json')
 pandas_gbq.context.credentials = CREDENTIALS
 
 DEFAULT_LOG  = dict(country=list(), items=list())

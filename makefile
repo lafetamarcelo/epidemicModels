@@ -10,5 +10,8 @@ contents:
 	cp ./html_builders/*/*.html ./docs/media_content/
 	cp ./html_builders/*/*.css ./docs/media_content/
 
+authors_contents:
+	cd ./docs/authors && make contents && cd ../..
+
 dash_content:
 	cp ./html_builders/*/*.html ./dash/content/

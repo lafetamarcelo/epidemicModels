@@ -1,8 +1,8 @@
 dispatch:
   # Send all mobile traffic to the mobile frontend.
-  - url: "epidemicmodels.rj.r.appspot.com/countries/*"
+  - url: "epidemicapp-280600.rj.r.appspot.com/countries/*"
     service: update-countries
 
   # Send all work to the one static backend.
-  - url: "epidemicmodels.rj.r.appspot.com/"
+  - url: "epidemicapp-280600.rj.r.appspot.com/"
     service: default

@@ -60,6 +60,7 @@ def cost_SIR(self, pars, dataset, initial, t, w):
     # Simulate the differential equation system
     result = self.simulate(model_init, t, model_pars)
     # Compute the error for all samples
+    
     erro["S"] = (np.sqrt(w[0]) * result[0].astype(np.float128) - np.sqrt(w[0]) * S.astype(np.float128))**2
     erro["I"] = (np.sqrt(w[1]) * result[1].astype(np.float128) - np.sqrt(w[1]) * I.astype(np.float128))**2
     erro["R"] = (np.sqrt(w[2]) * result[2].astype(np.float128) - np.sqrt(w[2]) * R.astype(np.float128))**2

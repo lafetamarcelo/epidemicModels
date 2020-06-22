@@ -16,6 +16,7 @@ from bokeh.plotting import figure, show
 from bokeh.layouts  import column
 from bokeh.io       import output_notebook, export_png
 
+from . import preprocessing as pp
 from . import differential_models as dm
 from . import cost_functions as cm
 from . import constraints as ct
@@ -86,7 +87,9 @@ class SIR:
       self.__class__.cost_function = cm.cost_SIR
     # The ODE full output option
     self.__ode_full_output = ode_full_output
-    
+    # The preprocessing modules
+    self.__class__.learn_points = pp.define_learning_points
+
     # Accumulating variables
     self.acc_error = dict()
     for m in ["S", "E", "I", "R"]:
@@ -111,7 +114,6 @@ class SIR:
       },
       "time": []
     }
-
 
   def cost_wrapper(self, *args):
     """
@@ -233,6 +235,10 @@ class SIR:
     self.ponder = sample_ponder != None
     self.__exposed_flag = sigma_sens != None
     self._search_pop = search_pop
+    # Check for possible zero values 
+    # on the components and create 
+    # the disconsideration indexes
+    self._consider_points = self.learn_points(S,I,R,D)
     # Computing the approximate values 
     # of the parameters to build the 
     # parameter boundaries
@@ -292,10 +298,10 @@ class SIR:
           self.cost_wrapper, 
           list(zip(lower, upper)),
           maxiter=10000,
-          popsize=35,
-          mutation=(0.5, 1.2),
+          popsize=60,
+          mutation=(0.5, 1.5),
           strategy="best1exp",
-          tol=1e-4,
+          tol=1e-6,
           args=(datatrain, y0, t, w),
           constraints=constraints,
           updating='deferred',

@@ -17,14 +17,14 @@ from google.oauth2 import service_account
 from models import *
 
 # Defualt variables
-PROJECT_ID    = "epidemicmodels"
+PROJECT_ID    = "epidemicapp-280600"
 PRED_TABLE_ID = "countries.predictions"
 PAR_TABLE_ID  = "countries.parameters"
 
 TABLE_LOG_ID  = "countries.model_log"
 LOG_QUERY     = "SELECT * FROM countries.model_log"
 
-CREDENTIALS   = service_account.Credentials.from_service_account_file('./keys/epidemicModels-1fc10954f61b.json')
+CREDENTIALS   = service_account.Credentials.from_service_account_file('./keys/epidemicapp-62d0d471b86f.json')
 pandas_gbq.context.credentials = CREDENTIALS
 
 # Configuration variables
