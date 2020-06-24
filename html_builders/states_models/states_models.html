@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="states_models.css">
+</head>
+
+<body>
+  <h1>Modelos dos estados brasileiros</h1>
+  <div class="tabs">
+
+    <input type="radio" id="tab1" name="tab-control" checked>
+    <input type="radio" id="tab2" name="tab-control">
+    <input type="radio" id="tab3" name="tab-control">
+    <ul>
+      <li title="Itália"><label for="tab1" role="button"><br><span>Itália</span></label></li>
+      <li title="Alemanha"><label for="tab2" role="button"><br><span>Alemanha</span></label></li>
+      <li title="China"><label for="tab3" role="button"><br><span>China</span></label></li>
+    </ul>
+
+    <div class="slider">
+      <div class="indicator"></div>
+    </div>
+    <div class="content">
+      <section>
+        <h3 style="text-align:center;">
+          <iframe src="peak_estimate_IT.html" style="border:none;" height="380px" width="100%">
+          </iframe>
+        </h3>
+      </section>
+      <section>
+        <h3 style="text-align:center;">
+          <iframe src="peak_estimate_DE.html" style="border:none;" height="380px" width="100%">
+          </iframe>
+        </h3>
+      </section>
+      <section>
+        <h3 style="text-align:center;">
+          <iframe src="peak_estimate_CN.html" style="border:none;" height="380px" width="100%">
+          </iframe>
+        </h3>
+      </section>
+    </div>
+  </div>
+  <script>
+    (function() {
+      document.addEventListener('readystatechange', function(evt) {
+        if (document.readyState !== 'complete') return
+
+        function forceReloadOnFirstChange(iframe) {
+          var iframesReloaded = {}
+
+          return function(evt) {
+            if (iframesReloaded[iframe] == null) {
+              iframesReloaded[iframe] = true;
+              setTimeout(function() { iframe.contentWindow.location.reload() }, 0)
+            }
+          }
+        }
+
+        var iframes = document.querySelectorAll('.content iframe')
+        var tab2 = document.getElementById('tab2');
+        var tab3 = document.getElementById('tab3');
+
+        tab2.addEventListener('change', forceReloadOnFirstChange(iframes[1]));
+        tab3.addEventListener('change', forceReloadOnFirstChange(iframes[2]));
+      })
+    })()
+  </script>
+
+</body>
+
+</html>

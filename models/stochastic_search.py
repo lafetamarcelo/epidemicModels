@@ -118,7 +118,19 @@ class SIR:
       "time": []
     }
 
-  def cost_wrapper(self, *args):
+  def show_consider_points(self, full_output=False):
+    
+    print("Consider points Summary:")
+    print("\t ├─ n of components: {}".format(len(self._consider_points)))
+    for i, comp in enumerate(self._consider_points):
+      print("\t ├─ {} ─ component size: {}".format(i, len(comp)))
+    if full_output:
+      for i, comp in enumerate(self._consider_points):
+        print("\t ├─ {} ─ component: {}".format(i, comp))
+    print("\t └─ Done!")
+    
+
+  def _cost_wrapper(self, *args):
     """
       The method responsible for wrapping the cost function. 
       This allows differential evolution algorithm to run with parallel processing.
@@ -196,12 +208,12 @@ class SIR:
   def fit(self, dataset, t,
       search_pop=True,
       Ro_bounds=None,
-      pop_sens=[1e-3,1e-4],
-      Ro_sens=[0.8,15],
-      D_sens=[5,50],
-      sigma_sens=None,
-      mu_sens=[0.0001, 0.02],
-      notified_sens=None,
+      pop_sens=[1e-3,1e-4],        # The population component
+      Ro_sens=[0.8,15],            # The S, I components
+      D_sens=[5,50],               # The I, R components 
+      sigma_sens=None,             # The E component
+      mu_sens=[0.0001, 0.02],      # The D component
+      notified_sens=None,         
       sample_ponder=None,
       optim_verbose=False,
       **kwargs):
@@ -237,12 +249,11 @@ class SIR:
     # pondering variables and create
     # the flags to ensure pondering
     self.ponder = sample_ponder != None
-    self.__exposed_flag = sigma_sens != None
     self._search_pop = search_pop
     # Check for possible zero values 
     # on the components and create 
     # the disconsideration indexes
-    self._consider_points = self.learn_points(S,I,R,D)
+    self._consider_points = self.learn_points(dataset)
     # Computing the approximate values 
     # of the parameters to build the 
     # parameter boundaries
@@ -290,12 +301,10 @@ class SIR:
     # so far, and show the optimazation 
     # setup
     if self.verbose:
-      print("\t ├─ S(0) ─ I(0) ─ R(0) ─ ", y0)
-      print("\t ├─ Ro bound ─  ", lower[0], " ─ ", upper[0])
-      print("\t ├─ D  bound ─  ", lower[1], " ─ ", upper[1])
-      if self.__exposed_flag:
-        print("\t ├─ sigma bound ─  ", lower[2], " ─ ", upper[2])
-      print("\t ├─ equation weights ─  ", w)
+      print("\t ├─ initial conditions ─ ", y0)
+      print("\t ├─ Ro bound ─ ", lower[0], " ─ ", upper[0])
+      print("\t ├─ D  bound ─ ", lower[1], " ─ ", upper[1])
+      print("\t ├─ equation weights ─ ", w)
       print("\t ├─ Running on ─ ", self.__search_alg, "SciPy Search Algorithm")
     # Run the searching algorithm to 
     # minimize the cost function... 
@@ -305,13 +314,13 @@ class SIR:
     # __init__ method.
     if self.__search_alg == "differential_evolution":
       summary = differential_evolution(
-          self.cost_wrapper, 
+          self._cost_wrapper, 
           list(zip(lower, upper)),
           maxiter=10000,
-          popsize=60,
-          mutation=(0.5, 1.5),
+          popsize=35,
+          mutation=(0.5, 1.2),
           strategy="best1exp",
-          tol=1e-6,
+          tol=1e-4,
           args=(datatrain, y0, t, w),
           constraints=constraints,
           updating='deferred',
@@ -320,14 +329,14 @@ class SIR:
         )
     elif self.__search_alg == "dual_annealing":
       summary = dual_annealing(
-          self.cost_wrapper, 
+          self._cost_wrapper, 
           list(zip(lower, upper)),
           maxiter=10000,
           args=(datatrain, y0, t, w)
         )
     elif self.__search_alg == "shgo":
       summary = shgo(
-          self.cost_wrapper,
+          self._cost_wrapper,
           list(zip(lower, upper)),
           n=500, iters=10,
           sampling_method="sobol",
