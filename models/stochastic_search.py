@@ -129,7 +129,6 @@ class SIR:
         print("\t ├─ {} ─ component: {}".format(i, comp))
     print("\t └─ Done!")
     
-
   def _cost_wrapper(self, *args):
     """
       The method responsible for wrapping the cost function. 
@@ -142,7 +141,6 @@ class SIR:
     """
     response = self.cost_function(*args)
     return response
-
 
   def simulate(self, initial, time, theta):
     """
@@ -163,7 +161,7 @@ class SIR:
         self.differential_model, 
         initial, 
         time,
-        args=(theta),
+        args=(theta,),
         full_output=self.__ode_full_output
       ).T
     elif self.__sim_type == "ivp_continuous":
@@ -174,11 +172,21 @@ class SIR:
         args=(theta),
         t_eval=time
       )
+    elif self.__sim_type == 'step':
+      model_init = initial
+      result = [[i] for i in initial]
+      for t1, t2 in zip(time[:-1], time[1:]):
+        dt = t2 - t1
+        step_out = self.differential_model(model_init, theta)
+        for i, r in enumerate(step_out):
+          result[i].append( result[i][-1] + dt * r ) 
+        model_init = [r[-1] for r in result]
+      result = [np.array(i) for i in result]
+
     else:
       result = self.differential_model(
         initial, time, theta)
     return result
-
 
   def predict(self, initial, t):
     """
@@ -203,7 +211,6 @@ class SIR:
       return form_result
     else:
       print("Error! No parameter estimated!")
-
 
   def fit(self, dataset, t,
       search_pop=True,
@@ -467,7 +474,6 @@ class SIR:
       )
     return self.data
 
-
   def monteCarlo_multiple(self, Sd, Id, Bd, td, 
       threshold_prop=1,
       cases_before=10,
@@ -608,6 +614,114 @@ class SIR:
       print("└─ Done! ✓")
     return self.mc
 
+  def create_model(self, model_function, type='discrete'):
+    """
+      The method allows the user to create a custom epidemic model.
+
+      :param model_function function: new epidemic model function
+      :param type string: type of the epidemic model function ('ivp_continuous', 'continuous' or 'discrete')
+    """
+    if type == 'discrete':
+      self.__sim_type = 'step'
+    else:
+      self.__sim_type = type
+    self.__class__.differential_model = model_function
+    self.__class__.fit = self.custom_fit
+    self.__class__.cost_function = cm.custom_cost
+
+  def set_parameters(self, parameters):
+    """
+      The method is responsible for changing the model parameters.
+
+      :param tuple parameters: new model parameters
+    """
+    self.parameters =  parameters
+
+  def custom_fit(self, dataset, t, optim_verbose = False, **kwargs):
+    """
+      The method responsible for estimating a set of custom parameters 
+      for the provided custom model and data set.
+
+      :param array dataset: list with the respective arrays of data points respective to the custom model.
+      :param array t: The time respective to each set of samples.
+      :param bool optim_verbose: If :code:`True`, after fitting will show the optimization summary.
+      :param dict **kwargs: Search boundries for each custom parameter as a list. e.g. :code:`[lower_boundry, upper_broundry]`.
+
+    """
+    assert len(kwargs) == len(self.parameters), 'Make sure each parameter has a boundry'
+
+    lower = [v[0] for v in kwargs.values()]
+    upper = [v[1] for v in kwargs.values()]
+
+
+    if type(dataset) == dict:
+      datatrain = list(dataset.values())
+    elif type(dataset) == list:
+      datatrain = dataset
+    else:
+      raise TypeError('Make sure dataset is a list or a dictonary')
+      
+    w = [np.mean(i) for i in datatrain]
+    print(w)
+    y0 = [d[0] for d in datatrain]
+
+    # Run the searching algorithm to 
+      # minimize the cost function... 
+      # There are three possible minimization
+      # algorithms to be used. This is 
+      # controlled by the flag on the 
+      # __init__ method.
+    if self.verbose:
+      print("\t ├─ Training custom function")
+      print("\t ├─ initial conditions ─ ", y0)
+      for k, v in kwargs.items():
+        print("\t ├─ ",k ," bound ─ ", v[0], " ─ ", v[1])
+      print("\t ├─ equation weights ─ ", w)
+      print("\t ├─ Running on ─ ", self.__search_alg, "SciPy Search Algorithm")
+    # Run the searching algorithm to 
+    # minimize the cost function... 
+    # There are three possible minimization
+    # algorithms to be used. This is 
+    # controlled by the flag on the 
+    # __init__ method.
+    if self.__search_alg == "differential_evolution":
+      summary = differential_evolution(
+          self._cost_wrapper, 
+          list(zip(lower, upper)),
+          maxiter=10000,
+          popsize=35,
+          mutation=(0.5, 1.2),
+          strategy="best1exp",
+          tol=1e-4,
+          args=(datatrain, y0, t, w),
+          #constraints=constraints,
+          updating='deferred',
+          workers=-1,
+          # disp=True
+        )
+    elif self.__search_alg == "dual_annealing":
+      summary = dual_annealing(
+          self._cost_wrapper, 
+          list(zip(lower, upper)),
+          maxiter=10000,
+          args=(datatrain, y0, t, w)
+        )
+    elif self.__search_alg == "shgo":
+      summary = shgo(
+          self._cost_wrapper,
+          list(zip(lower, upper)),
+          n=500, iters=10,
+          sampling_method="sobol",
+          args=(datatrain, y0, t, w)
+        )
+    # Saving the estimated parameters
+    self.parameters = summary.x
+    # Printing summary
+    if self.verbose:
+      print("\t └─ Defined at: ", self.parameters[0], " ─ ", self.parameters[1], "\n")
+    if optim_verbose:
+      print(summary)
+
   def result_summary(self,
       out_plot=False,
       plot_size=[600,400],
@@ -720,7 +834,6 @@ class SIR:
       export_png(column(p,p1), filename=file_path)
     if out_plot:
       return column(p,p1)
-
 
 def findEpidemyBreaks(cases, 
     threshold_prop=1.0, 
