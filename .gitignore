@@ -25,3 +25,5 @@ DE_interactive*
 Untitled.ipynb
 .DS_Store
 state_pop.yaml
+/local_files/
+*.log
