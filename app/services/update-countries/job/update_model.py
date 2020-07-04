@@ -18,11 +18,11 @@ from models import *
 
 # Defualt variables
 PROJECT_ID    = "epidemicapp-280600"
-PRED_TABLE_ID = "countries.predictions"
-PAR_TABLE_ID  = "countries.parameters"
+PRED_TABLE_ID = "countries.predictions_SIRD"
+PAR_TABLE_ID  = "countries.parameters_SIRD"
 
-TABLE_LOG_ID  = "countries.model_log"
-LOG_QUERY     = "SELECT * FROM countries.model_log"
+TABLE_LOG_ID  = "countries.model_log_SIRD"
+LOG_QUERY     = "SELECT * FROM countries.model_log_SIRD"
 
 CREDENTIALS   = service_account.Credentials.from_service_account_file('./keys/epidemicapp-62d0d471b86f.json')
 pandas_gbq.context.credentials = CREDENTIALS
@@ -136,17 +136,17 @@ def train_country_pipe(country=None):
   time_ref = time[start_moment:]
   I = df['active'].to_numpy()[start_moment:]
   R = df['recovered'].to_numpy()[start_moment:]
-  M = df['deaths'].to_numpy()[start_moment:]
-  S = N - R - I
+  D = df['deaths'].to_numpy()[start_moment:]
+  S = N - R - I - D
   # Creating the time vector
   t = np.linspace(0, len(I)-1, len(I))
   # Create the trainning variables
-  Sd, Id, Md, Rd, td = S, I, M, R, t
+  Sd, Id, Dd, Rd, td = S, I, D, R, t
 
   print("\t(4) Running the time shift learning...")
   # Create the structures to save the time shift results
-  saved_param = {'Ro':[], 'D':[], 'pop':[], "date":[]}
-  saved_prediction = {"S":[], "I":[], "R":[], "date":[], "at_date":[]}
+  saved_param = {'Ro':[], 'D':[], 'pop':[], 'mu':[], "date":[]}
+  saved_prediction = {"S":[], "I":[], "R":[], "D":[], "date":[], "at_date":[]}
 
   # Check if the country exists in the logging
   # if does not, create the logging structure
@@ -174,25 +174,28 @@ def train_country_pipe(country=None):
       current_date = time_ref[0] + timedelta(days=i)
       current_date_vector = [current_date]*len(pred_t)
       # Get a partial window of the dataset
-      dataset = dict(S=Sd[:i], I=Id[:i], R=Rd[:i])
+      dataset = dict(S=Sd[:i], I=Id[:i], R=Rd[:i], D=Dd[:i])
       # Create the model
-      sir_model = ss.SIR(pop=N, focus=["S", "I", "R"], verbose=False)
+      sir_model = ss.SIR(pop=N, focus=["S", "I", "R", "D"], verbose=False)
       # Adjust the parameters
       sir_model.fit(dataset, td[:i],
                     search_pop=True,
-                    pop_sens=[0.001, 0.05],
-                    Ro_sens=[0.8, 15.0], 
-                    D_sens=[5.0, 40.0])
+                    Ro_sens=[0.8, 15], 
+                    D_sens=[5, 60],
+                    mu_sens = [0.1, 0.001],
+                    pop_sens=[0.01,0.00005])
       # Save the estimated parameters
       saved_param['Ro'].append(sir_model.parameters[0])
       saved_param['D'].append(sir_model.parameters[1])
-      saved_param['pop'].append(sir_model.parameters[2])
+      saved_param['pop'].append(sir_model.parameters[3])
       saved_param['date'].append(current_date)
+      saved_param['mu'].append(sir_model.parameters[2])
       # Save the model prediction
-      result = sir_model.predict((Sd[0], Id[0], Rd[0]), pred_t)
+      result = sir_model.predict((Sd[0], Id[0], Rd[0], Dd[0]), pred_t)
       saved_prediction["S"].append(result[0])
       saved_prediction["I"].append(result[1])
       saved_prediction["R"].append(result[2])
+      saved_prediction["D"].append(result[3])
       saved_prediction["date"] += time_vector
       saved_prediction["at_date"] += current_date_vector
       # Print the progress...
@@ -225,7 +228,7 @@ def train_country_pipe(country=None):
 
     print("\t(6) Transforming data to lists...")
     # Transform all in lists
-    for item in ["S", "I", "R"]:
+    for item in ["S", "I", "R", "D"]:
       auxiliar_list = []
       for data in saved_prediction[item]:
         auxiliar_list += data.tolist()
