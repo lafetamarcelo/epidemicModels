@@ -17,6 +17,7 @@ DE_interactive*
 
 /app/keys
 /app/services/update-countries/keys/
+/app/services/upload-file/keys/
 
 /web/content/
 /app/gkeys
@@ -27,3 +28,4 @@ Untitled.ipynb
 state_pop.yaml
 /local_files/
 *.log
+

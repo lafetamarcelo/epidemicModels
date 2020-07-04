@@ -18,11 +18,11 @@ from models import *
 
 # Defualt variables
 PROJECT_ID    = "epidemicapp-280600"
-PRED_TABLE_ID = "countries.predictions"
-PAR_TABLE_ID  = "countries.parameters"
+PRED_TABLE_ID = "countries.predictions_test"
+PAR_TABLE_ID  = "countries.parameters_test"
 
-TABLE_LOG_ID  = "countries.model_log"
-LOG_QUERY     = "SELECT * FROM countries.model_log"
+TABLE_LOG_ID  = "countries.model_log_test"
+LOG_QUERY     = "SELECT * FROM countries.model_log_test"
 
 CREDENTIALS   = service_account.Credentials.from_service_account_file('./keys/epidemicapp-62d0d471b86f.json')
 pandas_gbq.context.credentials = CREDENTIALS
