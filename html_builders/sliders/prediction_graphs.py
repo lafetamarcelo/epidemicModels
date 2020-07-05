@@ -1,9 +1,10 @@
 
 # ======== SETUP VARIABLES ==========
-DATA_SOURCE = 'corona-api' #'big-query' / 'corona-api'
 
-PRED_SOURCE = 'pickle'     #'big-query' / 'pickle' 
-COUNTRY = 'DE'
+#'big-query' / 'corona-api'
+DATA_SOURCE = 'big-query'
+PRED_SOURCE = 'big-query'  
+COUNTRY = 'BR'
 
 # PLOT 
 BOKEH_THEME = 'Dark'       #'Light' / 'Dark'  
@@ -34,12 +35,13 @@ title_dict = {'CN': '🇨🇳 China',
               'BR': '🇧🇷 Brasil',
               'DE': '🇩🇪 Alemanha'}
 
-start_days = {'IT':35,
-              'DE':45,
-              'CN':10}
+start_days = {'IT':8,
+              'DE':8,
+              'CN':8,
+              'BR':8}
 
-credential_path = ''
-project_id = "epidemicmodels"
+credential_path = '../../app/services/update-countries/keys/epidemicapp-62d0d471b86f.json'
+project_id = "epidemicapp-280600"
 credentials = service_account.Credentials.from_service_account_file(    
                                 credential_path
                                 )
@@ -131,8 +133,8 @@ if __name__ == '__main__':
 
     elif DATA_SOURCE == 'big-query': 
         _, _, _, _, N, _ = get_corona_api_data(COUNTRY)
-        sql_command = 'SELECT * FROM `real_data.raw_content_tm` WHERE country=' + COUNTRY
-        data_frame = pandas_gbq.read_gbq(
+        sql_command = 'SELECT * FROM `countries.real_data` WHERE country= "' + COUNTRY + '"'
+        df_d = pandas_gbq.read_gbq(
                                          sql_command,
                                          project_id=project_id,
                                          col_order=['date','deaths','confirmed',
@@ -147,7 +149,11 @@ if __name__ == '__main__':
         S =  N - R - I
         t = np.linspace(0,len(I), len(I) + 1)
         
-        df_d['date'] = [datetime.fromisoformat(f) for f in df_d['date']]
+        try:
+            df_d['date'] = pd.to_datetime(df_d['date'])
+        # df_d['date'] = [datetime.fromisoformat(f) for f in df_d['date']]
+        except:
+            pass
         first_date = df_d['date'].dt.tz_localize(None)[0] 
 
     # Get prediction
@@ -167,15 +173,22 @@ if __name__ == '__main__':
         delta = 0
 
     elif PRED_SOURCE == 'big-query':
-        sql_command = 'SELECT * FROM `models_data.predictions` WHERE country=' + COUNTRY
+        sql_command = 'SELECT * FROM `countries.predictions_SIRD` WHERE country= "' + COUNTRY + '"'
         df_p = pandas_gbq.read_gbq(
                                  sql_command,
                                  project_id=project_id,
-                                 col_order=['S','I','R','date','at_date','country'])
+                                 col_order=['S','I','R', 'D','date','at_date','country'],
+                                 
+                                 )
 
         df_p = df_p.sort_values(by = ['date','at_date']).reset_index()
 
-        df_p['at_date'] = [datetime.fromisoformat(f) for f in df_p['at_date']]
+        try:
+            df_d['date'] = pd.to_datetime(df_d['date'])
+        # df_d['date'] = [datetime.fromisoformat(f) for f in df_d['date']]
+        except:
+            pass
+        # df_p['at_date'] = [datetime.fromisoformat(f) for f in df_p['at_date']]
         df_p['at_date'] = df_p['at_date'].dt.tz_localize(None)
         first_pred = df_p['at_date'].iloc[0]
 

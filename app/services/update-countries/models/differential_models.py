@@ -77,7 +77,7 @@ def SEIR(self, y, t, Beta, r, sigma):
 
 
 
-def SIRD(self, y, t, Beta, r, mi):
+def SIRD(self, y, t, parameters):
   """
   The function that computes the diferential set of 
   equations of the SIRD Epidemic Model.
@@ -91,9 +91,18 @@ def SIRD(self, y, t, Beta, r, mi):
   :return: The derivative of the suceptible and infected data.
   :rtype: tuple
   """
-  S, I, R = y
-  Sdot = -Beta * I * S
-  Idot = Beta * I * S - r * I - mi * I
+  
+  if len(parameters) == 4:
+    Ro, D, mu, pop = parameters
+    Beta = Ro / (D * pop)
+  else:
+    Ro, D, mu = parameters
+    Beta = Ro / D
+  r = 1 / D
+
+  S, I, R, D = y
+  Sdot = -Beta * I * S / self.N
+  Idot = Beta * I * S  / self.N - r * I - mu * I
   Rdot = r * I
-  Ddot = mi* I
+  Ddot = mu* I
   return Sdot, Idot, Rdot, Ddot

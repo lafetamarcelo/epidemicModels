@@ -16,6 +16,7 @@ from bokeh.plotting import figure, show
 from bokeh.layouts  import column
 from bokeh.io       import output_notebook, export_png
 
+from . import preprocessing as pp
 from . import differential_models as dm
 from . import cost_functions as cm
 from . import constraints as ct
@@ -69,8 +70,11 @@ class SIR:
     # Simulation type
     self.__sim_type = simulation
     # Algorithm focus variables
-    if 'M' in self.focus:
-      self.__class__.differential_model = dm.SIRD
+    if 'D' in self.focus:
+      if self.__sim_type == "discrete":
+        self.__class__.differential_model = dcm.SIRD
+      else:
+        self.__class__.differential_model = dm.SIRD
       self.__class__.cost_function = cm.cost_SIRD
     elif 'E' in self.focus:
       self.__class__.differential_model = dm.SEIR
@@ -86,7 +90,9 @@ class SIR:
       self.__class__.cost_function = cm.cost_SIR
     # The ODE full output option
     self.__ode_full_output = ode_full_output
-    
+    # The preprocessing modules
+    self.__class__.learn_points = pp.define_learning_points
+
     # Accumulating variables
     self.acc_error = dict()
     for m in ["S", "E", "I", "R"]:
@@ -112,8 +118,18 @@ class SIR:
       "time": []
     }
 
-
-  def cost_wrapper(self, *args):
+  def show_consider_points(self, full_output=False):
+    
+    print("Consider points Summary:")
+    print("\t ├─ n of components: {}".format(len(self._consider_points)))
+    for i, comp in enumerate(self._consider_points):
+      print("\t ├─ {} ─ component size: {}".format(i, len(comp)))
+    if full_output:
+      for i, comp in enumerate(self._consider_points):
+        print("\t ├─ {} ─ component: {}".format(i, comp))
+    print("\t └─ Done!")
+    
+  def _cost_wrapper(self, *args):
     """
       The method responsible for wrapping the cost function. 
       This allows differential evolution algorithm to run with parallel processing.
@@ -125,7 +141,6 @@ class SIR:
     """
     response = self.cost_function(*args)
     return response
-
 
   def simulate(self, initial, time, theta):
     """
@@ -140,13 +155,13 @@ class SIR:
       :return: The values of the suceptible and infected, at time, respectivelly.
       :rtype: tuple
     """
-    
+
     if self.__sim_type == "continuous":
       result = integrate.odeint(
         self.differential_model, 
         initial, 
         time,
-        args=(theta),
+        args=(theta,),
         full_output=self.__ode_full_output
       ).T
     elif self.__sim_type == "ivp_continuous":
@@ -157,11 +172,21 @@ class SIR:
         args=(theta),
         t_eval=time
       )
+    elif self.__sim_type == 'step':
+      model_init = initial
+      result = [[i] for i in initial]
+      for t1, t2 in zip(time[:-1], time[1:]):
+        dt = t2 - t1
+        step_out = self.differential_model(model_init, theta)
+        for i, r in enumerate(step_out):
+          result[i].append( result[i][-1] + dt * r ) 
+        model_init = [r[-1] for r in result]
+      result = [np.array(i) for i in result]
+
     else:
       result = self.differential_model(
         initial, time, theta)
     return result
-
 
   def predict(self, initial, t):
     """
@@ -187,15 +212,15 @@ class SIR:
     else:
       print("Error! No parameter estimated!")
 
-
   def fit(self, dataset, t,
       search_pop=True,
       Ro_bounds=None,
-      pop_sens=[1e-3,1e-4],
-      Ro_sens=[0.8,15],
-      D_sens=[5,50],
-      sigma_sens=None,
-      notified_sens=None,
+      pop_sens=[1e-3,1e-4],        # The population component
+      Ro_sens=[0.8,15],            # The S, I components
+      D_sens=[5,50],               # The I, R components 
+      sigma_sens=None,             # The E component
+      mu_sens=[0.0001, 0.02],      # The D component
+      notified_sens=None,         
       sample_ponder=None,
       optim_verbose=False,
       **kwargs):
@@ -231,8 +256,11 @@ class SIR:
     # pondering variables and create
     # the flags to ensure pondering
     self.ponder = sample_ponder != None
-    self.__exposed_flag = sigma_sens != None
     self._search_pop = search_pop
+    # Check for possible zero values 
+    # on the components and create 
+    # the disconsideration indexes
+    self._consider_points = self.learn_points(dataset)
     # Computing the approximate values 
     # of the parameters to build the 
     # parameter boundaries
@@ -266,6 +294,12 @@ class SIR:
         lower.append(notified_sens[item][0])
         upper.append(notified_sens[item][1])
       y0.insert(2, I[0])
+    if "D" in self.focus:
+        lower.append(mu_sens[0])
+        upper.append(mu_sens[1])
+        datatrain.append(D)
+        y0.append(D[0])
+        w.append(1/np.mean(D))
     # Population proportion boundaries
     if self._search_pop:
       lower.append(pop_sens[0])
@@ -274,12 +308,10 @@ class SIR:
     # so far, and show the optimazation 
     # setup
     if self.verbose:
-      print("\t ├─ S(0) ─ I(0) ─ R(0) ─ ", y0)
-      print("\t ├─ Ro bound ─  ", lower[0], " ─ ", upper[0])
-      print("\t ├─ D  bound ─  ", lower[1], " ─ ", upper[1])
-      if self.__exposed_flag:
-        print("\t ├─ sigma bound ─  ", lower[2], " ─ ", upper[2])
-      print("\t ├─ equation weights ─  ", w)
+      print("\t ├─ initial conditions ─ ", y0)
+      print("\t ├─ Ro bound ─ ", lower[0], " ─ ", upper[0])
+      print("\t ├─ D  bound ─ ", lower[1], " ─ ", upper[1])
+      print("\t ├─ equation weights ─ ", w)
       print("\t ├─ Running on ─ ", self.__search_alg, "SciPy Search Algorithm")
     # Run the searching algorithm to 
     # minimize the cost function... 
@@ -289,7 +321,7 @@ class SIR:
     # __init__ method.
     if self.__search_alg == "differential_evolution":
       summary = differential_evolution(
-          self.cost_wrapper, 
+          self._cost_wrapper, 
           list(zip(lower, upper)),
           maxiter=10000,
           popsize=35,
@@ -298,20 +330,20 @@ class SIR:
           tol=1e-4,
           args=(datatrain, y0, t, w),
           constraints=constraints,
-          # updating='deferred',
-          # workers=-1,
+          updating='deferred',
+          workers=-1,
           # disp=True
         )
     elif self.__search_alg == "dual_annealing":
       summary = dual_annealing(
-          self.cost_wrapper, 
+          self._cost_wrapper, 
           list(zip(lower, upper)),
           maxiter=10000,
           args=(datatrain, y0, t, w)
         )
     elif self.__search_alg == "shgo":
       summary = shgo(
-          self.cost_wrapper,
+          self._cost_wrapper,
           list(zip(lower, upper)),
           n=500, iters=10,
           sampling_method="sobol",
@@ -441,7 +473,6 @@ class SIR:
         self.data["time"] 
       )
     return self.data
-
 
   def monteCarlo_multiple(self, Sd, Id, Bd, td, 
       threshold_prop=1,
@@ -583,6 +614,114 @@ class SIR:
       print("└─ Done! ✓")
     return self.mc
 
+  def create_model(self, model_function, type='discrete'):
+    """
+      The method allows the user to create a custom epidemic model.
+
+      :param model_function function: new epidemic model function
+      :param type string: type of the epidemic model function ('ivp_continuous', 'continuous' or 'discrete')
+    """
+    if type == 'discrete':
+      self.__sim_type = 'step'
+    else:
+      self.__sim_type = type
+    self.__class__.differential_model = model_function
+    self.__class__.fit = self.custom_fit
+    self.__class__.cost_function = cm.custom_cost
+
+  def set_parameters(self, parameters):
+    """
+      The method is responsible for changing the model parameters.
+
+      :param tuple parameters: new model parameters
+    """
+    self.parameters =  parameters
+
+  def custom_fit(self, dataset, t, optim_verbose = False, **kwargs):
+    """
+      The method responsible for estimating a set of custom parameters 
+      for the provided custom model and data set.
+
+      :param array dataset: list with the respective arrays of data points respective to the custom model.
+      :param array t: The time respective to each set of samples.
+      :param bool optim_verbose: If :code:`True`, after fitting will show the optimization summary.
+      :param dict **kwargs: Search boundries for each custom parameter as a list. e.g. :code:`[lower_boundry, upper_broundry]`.
+
+    """
+    assert len(kwargs) == len(self.parameters), 'Make sure each parameter has a boundry'
+
+    lower = [v[0] for v in kwargs.values()]
+    upper = [v[1] for v in kwargs.values()]
+
+
+    if type(dataset) == dict:
+      datatrain = list(dataset.values())
+    elif type(dataset) == list:
+      datatrain = dataset
+    else:
+      raise TypeError('Make sure dataset is a list or a dictonary')
+      
+    w = [np.mean(i) for i in datatrain]
+    print(w)
+    y0 = [d[0] for d in datatrain]
+
+    # Run the searching algorithm to 
+      # minimize the cost function... 
+      # There are three possible minimization
+      # algorithms to be used. This is 
+      # controlled by the flag on the 
+      # __init__ method.
+    if self.verbose:
+      print("\t ├─ Training custom function")
+      print("\t ├─ initial conditions ─ ", y0)
+      for k, v in kwargs.items():
+        print("\t ├─ ",k ," bound ─ ", v[0], " ─ ", v[1])
+      print("\t ├─ equation weights ─ ", w)
+      print("\t ├─ Running on ─ ", self.__search_alg, "SciPy Search Algorithm")
+    # Run the searching algorithm to 
+    # minimize the cost function... 
+    # There are three possible minimization
+    # algorithms to be used. This is 
+    # controlled by the flag on the 
+    # __init__ method.
+    if self.__search_alg == "differential_evolution":
+      summary = differential_evolution(
+          self._cost_wrapper, 
+          list(zip(lower, upper)),
+          maxiter=10000,
+          popsize=35,
+          mutation=(0.5, 1.2),
+          strategy="best1exp",
+          tol=1e-4,
+          args=(datatrain, y0, t, w),
+          #constraints=constraints,
+          updating='deferred',
+          workers=-1,
+          # disp=True
+        )
+    elif self.__search_alg == "dual_annealing":
+      summary = dual_annealing(
+          self._cost_wrapper, 
+          list(zip(lower, upper)),
+          maxiter=10000,
+          args=(datatrain, y0, t, w)
+        )
+    elif self.__search_alg == "shgo":
+      summary = shgo(
+          self._cost_wrapper,
+          list(zip(lower, upper)),
+          n=500, iters=10,
+          sampling_method="sobol",
+          args=(datatrain, y0, t, w)
+        )
+    # Saving the estimated parameters
+    self.parameters = summary.x
+    # Printing summary
+    if self.verbose:
+      print("\t └─ Defined at: ", self.parameters[0], " ─ ", self.parameters[1], "\n")
+    if optim_verbose:
+      print(summary)
+
   def result_summary(self,
       out_plot=False,
       plot_size=[600,400],
@@ -695,7 +834,6 @@ class SIR:
       export_png(column(p,p1), filename=file_path)
     if out_plot:
       return column(p,p1)
-
 
 def findEpidemyBreaks(cases, 
     threshold_prop=1.0, 

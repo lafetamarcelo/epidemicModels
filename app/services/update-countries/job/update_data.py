@@ -18,9 +18,9 @@ import os
 COUNTRY_LIST = ["BR", "IT", "CN", "DE"]
 
 PROJECT_ID   = "epidemicapp-280600"
-TABLE_ID     = "countries.real_data"
-TABLE_LOG_ID = "countries.data_log"
-LOG_QUERY    = "SELECT * FROM countries.data_log"
+TABLE_ID     = "countries.real_data_test"
+TABLE_LOG_ID = "countries.data_log_test"
+LOG_QUERY    = "SELECT * FROM countries.data_log_test"
 
 CREDENTIALS  = service_account.Credentials.from_service_account_file('./keys/epidemicapp-62d0d471b86f.json')
 pandas_gbq.context.credentials = CREDENTIALS

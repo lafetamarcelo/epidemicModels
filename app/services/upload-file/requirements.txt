@@ -18,3 +18,4 @@ ipywidgets
 ipython
 bokeh
 setuptools
+pyarrow
