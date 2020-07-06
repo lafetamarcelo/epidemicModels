@@ -187,7 +187,7 @@ def update_user_log(email=None, table_id=None, output_type=None):
   """
   """
   # Create the Big Query Client
-  client = bigquery.Client(project=PROJECT_ID, credentials=CREDENTIALS)
+  client = bigquery.Client(project=PROJECT_ID, credentils=CREDENTIALS)
   # Query to include user at the logging
   sql = """
     INSERT INTO users_log.process_log_content
@@ -200,6 +200,7 @@ def update_user_log(email=None, table_id=None, output_type=None):
   query_job.result() # Wait for the job to complete.
 
   # Include a new job in the task queue
+  
 
 
 
