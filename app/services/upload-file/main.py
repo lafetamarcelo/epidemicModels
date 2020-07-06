@@ -9,9 +9,8 @@ import json
 import datetime
 import pandas as pd
 
-from google.cloud import bigquery
+from google.cloud import bigquery, tasks_v2
 from google.oauth2 import service_account
-
 
 # GCloud authentication process
 JSON_KEY_PATH = './keys/epidemicapp-62d0d471b86f.json'
@@ -26,18 +25,22 @@ def validate_email(email):
     return True
   return False
 
-
+#
 # Support Global variables
- 
+#
+#  
 DEF_COLUMNS = ["index","date","deaths","confirmed","active",
   "recovered","new_confirmed","new_recovered","new_deaths","habitantes"]
-
-PROJECT_ID = "epidemicapp-280600"
+#
+#
 USERS_DATASET_ID = "users_data."
 USERS_LOG_TABLE_ID = "users_log.process_log_content"
-
+#
 # 
-
+PROJECT_ID = "epidemicapp-280600"
+QUEUE_LOCATION = "southamerica-east1"
+QUEUE_ID = "user-process-queue"
+QUEUE_SERVICE_URL = ""
 
 
 # Initialize the restful app
@@ -145,42 +148,57 @@ def upload_data_content(data=None, email=None, output_type=None):
 
   if (email == None) or (output_type == None) or (data is None):
     return 500, json.dumps({"erro": "Algum erro aconteceu no processamento inicial dos dados..."})
-
+  #
+  #
+  #
   try:
     # Create the Google Cloud - Big Query Client
     client = bigquery.Client(project=PROJECT_ID, credentials=CREDENTIALS)
-
     # Create the table id
     current_time = datetime.datetime.now()
     table_id = USERS_DATASET_ID + "{}_{}".format(
       email.split("@")[0], 
       current_time
     ).replace(" ", "").replace(":", "").replace(".", "").replace("-", "")
-
     # Changing the columns name
     data = data[DEF_COLUMNS[1:]]
-
   except Exception as e:
     return 500, json.dumps({
       "error": "Erro interno do servidor. Por favor tente mais tarde!",
       "details": "Error at Big Query Client creating => {}".format(e)})
-
+  #
+  #
+  #
   try:
     job = client.load_table_from_dataframe(data, table_id, job_config=bigquery.LoadJobConfig())
-    job.result()
+    job.result() # Wait for the job to complete.
   except Exception as e:
     return 500, json.dumps({
       "error": "Erro interno do servidor. Por favor tente mais tarde!",
       "details": "Error at Big Query loading job => {}".format(e)})
-
+  #
+  #
+  #
   try:
-    update_user_log(email, table_id, output_type)
+    job = update_user_log(email, table_id, output_type)
+    job.result() # Wait for the job to complete.
   except Exception as e:
     return 500, json.dumps({
       "error": "Erro interno do servidor. Por favor tente mais tarde!",
       "details": "Error at Big Query users log loading job => {}".format(e)})
-
-  return 200, json.dumps({"OK": True})
+  #
+  #
+  #
+  try:
+    response_ = queue_task(email, table_id, output_type)
+  except Exception as e:
+    return 500, json.dumps({
+      "error": "Erro interno do servidor. Por favor tente mais tarde!",
+      "details": "Error at Big Query users log loading job => {}".format(e)})
+  ###
+  #   -> 
+  ###
+  return 200, json.dumps({"OK": True, "scheduler_response":"{}".format(response_)})
 
 
 def update_user_log(email=None, table_id=None, output_type=None):
@@ -193,13 +211,39 @@ def update_user_log(email=None, table_id=None, output_type=None):
     INSERT INTO users_log.process_log_content
     VALUES ('{}', '{}', '{}', {}, '{}');
   """.format(email, table_id, datetime.datetime.now(), False, output_type)
-  # Create the query job configuration
-  job_config = bigquery.QueryJobConfig()
   # Execute the query job and include the new user
-  query_job = client.query(sql, job_config=job_config)
-  query_job.result() # Wait for the job to complete.
+  return client.query(sql, job_config=bigquery.QueryJobConfig())
 
-  # Include a new job in the task queue
+
+def queue_task(email=None, table_id=None, output_type=None):
+  """
+  """
+
+  # Create the Task Client
+  client = tasks_v2.CloudTasksClient()
+
+  # Specify the cloud task in hand
+  parent = client.queue_path(PROJECT_ID, QUEUE_LOCATION, QUEUE_ID)
+
+  # Build the task structure
+  task = {
+    'app_engine_http_request': {  # Specify the type of request.
+      'http_method': 'POST',
+      'relative_uri': QUEUE_SERVICE_URL
+    }
+  } 
+
+  # Create the task payload
+  payload = json.dumps({"emial":email, "table_id":table_id, "output_type":output_type})
+  converted_payload = payload.encode()
+  # Add the payload to the taks
+  task['app_engine_http_request']['body'] = converted_payload
+  # Create the task and request
+  # Use the client to build and send the task.
+  response = client.create_task(parent, task)
+
+  return response
+  
   
 
 
