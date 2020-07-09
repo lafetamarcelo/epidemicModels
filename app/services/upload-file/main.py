@@ -40,7 +40,7 @@ USERS_LOG_TABLE_ID = "users_log.process_log_content"
 PROJECT_ID = "epidemicapp-280600"
 QUEUE_LOCATION = "southamerica-east1"
 QUEUE_ID = "user-process-queue"
-QUEUE_SERVICE_URL = ""
+QUEUE_SERVICE_URL = "https://user-process-dot-epidemicapp-280600.rj.r.appspot.com/process_file"
 
 
 # Initialize the restful app
@@ -194,7 +194,7 @@ def upload_data_content(data=None, email=None, output_type=None):
   except Exception as e:
     return 500, json.dumps({
       "error": "Erro interno do servidor. Por favor tente mais tarde!",
-      "details": "Error at Big Query users log loading job => {}".format(e)})
+      "details": "Error at queue task including => {}".format(e)})
   ###
   #   -> 
   ###
@@ -205,7 +205,7 @@ def update_user_log(email=None, table_id=None, output_type=None):
   """
   """
   # Create the Big Query Client
-  client = bigquery.Client(project=PROJECT_ID, credentils=CREDENTIALS)
+  client = bigquery.Client(project=PROJECT_ID, credentials=CREDENTIALS)
   # Query to include user at the logging
   sql = """
     INSERT INTO users_log.process_log_content
@@ -220,34 +220,31 @@ def queue_task(email=None, table_id=None, output_type=None):
   """
 
   # Create the Task Client
-  client = tasks_v2.CloudTasksClient()
+  client = tasks_v2.CloudTasksClient(credentials=CREDENTIALS)
 
   # Specify the cloud task in hand
   parent = client.queue_path(PROJECT_ID, QUEUE_LOCATION, QUEUE_ID)
 
   # Build the task structure
   task = {
-    'app_engine_http_request': {  # Specify the type of request.
+    'http_request': {  # Specify the type of request.
       'http_method': 'POST',
-      'relative_uri': QUEUE_SERVICE_URL
+      'url': QUEUE_SERVICE_URL  # The full url path that the task will be sent to.
     }
   } 
 
   # Create the task payload
-  payload = json.dumps({"emial":email, "table_id":table_id, "output_type":output_type})
+  payload = json.dumps({"email":email, "table_id":table_id, "output_type":output_type})
   converted_payload = payload.encode()
   # Add the payload to the taks
-  task['app_engine_http_request']['body'] = converted_payload
+  #task['app_engine_http_request']['body'] = converted_payload
+  task['http_request']['body'] = converted_payload
   # Create the task and request
   # Use the client to build and send the task.
   response = client.create_task(parent, task)
 
   return response
   
-  
-
-
-
   
 
 # Create each resource...

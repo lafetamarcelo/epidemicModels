@@ -1,6 +1,8 @@
 dispatch:
+  
   - url: "epidemicapp-280600.rj.r.appspot.com/user_process/*"
     service: user-process
+
 
   - url: "epidemicapp-280600.rj.r.appspot.com/upload/*"
     service: upload-file
