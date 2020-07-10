@@ -1,11 +1,248 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="/style.css">
   <title>Epidemic Models</title>
 </head>
-<body>
-  
+
+<body class="index">
+  <header class="hero">
+    <div class="hero__header">
+      <a href="https://maua.br">
+        <img class="hero__logo" src="/images/maua.png" alt="Logo do Instituto Mauá de Tecnologia">
+      </a>
+      <a class="button" href="https://datastudio.google.com/u/0/reporting/0b096305-086c-4379-89ea-9c40a1c73c12/page/gErTB">Dashboard COVID-19</a>
+    </div>
+    <div class="hero__main">
+      <h1 class="hero__title">Epidemic Models</h1>
+      <div class="hero__body">
+        <div class="hero__side">
+          <p class="hero__description">Este projeto tem o objetivo de divulgar como desenvolver modelos para epidemias,
+            desde sua modelagem matemática até sua concepção computacional em Python, sendo composto por vídeos
+            explicativos, Jupyter notebooks e diversas visualizações, para ajudar com o entendimento do conteúdo
+            apresentado.</p>
+          <a class="button button--dark" href="https://epidemicmodels.readthedocs.io">Documentação</a>
+        </div>
+        <a href="https://epidemicmodels.readthedocs.io">
+          <img class="hero__image" src="images/epidemic-models.png" alt="Logo do Epidemic Models">
+        </a>
+      </div>
+    </div>
+  </header>
+
+  <main class="model">
+    <h2 class="model__title">Crie seu próprio modelo</h2>
+    <div>
+      <p class="model__description">Para que todos e todas consigam fazer uso das técnicas elaboradas no projeto,
+        desenvolvemos um mecanismo para permitir que você também crie um modelo baseado na nossa análise com os dados
+        que você possui.</p>
+      <p class="model__description">Para isso, basta enviar um arquivo <strong>CSV</strong> com seus dados, no formato
+        especificado na tabela abaixo, separados por <strong>vírgula</strong>. Também é necessário que o arquivo tenha
+        no mínimo <strong>8</strong> registros para que o modelo comece a aprender corretamente.</p>
+    </div>
+    <table>
+      <caption>Tabela de exemplo</caption>
+      <thead>
+        <tr>
+          <th></th>
+          <th>data</th>
+          <th>mortes</th>
+          <th>confirmados</th>
+          <th>recuperados</th>
+          <th>novos_confirmados</th>
+          <th>habitantes</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>0</td>
+          <td>2020-01-27</td>
+          <td>0.0</td>
+          <td>4.0</td>
+          <td>0.0</td>
+          <td>4.0</td>
+          <td>20000</td>
+        </tr>
+        <tr>
+          <td>1</td>
+          <td>2020-01-28</td>
+          <td>0.0</td>
+          <td>4.0</td>
+          <td>2.0</td>
+          <td>0.0</td>
+          <td>20000</td>
+        </tr>
+        <tr>
+          <td>2</td>
+          <td>2020-01-29</td>
+          <td>1.0</td>
+          <td>4.0</td>
+          <td>0.0</td>
+          <td>0.0</td>
+          <td>20000</td>
+        </tr>
+        <tr>
+          <td>3</td>
+          <td>2020-01-30</td>
+          <td>0.0</td>
+          <td>5.0</td>
+          <td>1.0</td>
+          <td>1.0</td>
+          <td>20000</td>
+        </tr>
+        <tr>
+          <td>4</td>
+          <td>2020-01-31</td>
+          <td>2.0</td>
+          <td>8.0</td>
+          <td>1.0</td>
+          <td>3.0</td>
+          <td>20000</td>
+        </tr>
+      </tbody>
+    </table>
+    <!-- <span class="model__separator">&dArr;</span>
+    <fieldset class="model__example">
+      <legend>&nbsp;dados.csv&nbsp;</legend>
+      <code><strong>,data,mortes,confirmados,recuperados,novos_confirmados,habitantes</strong></code>
+      <code>0,2020-01-27,0.0,4.0,0.0,4.0,20000</code>
+      <code>1,2020-01-28,0.0,4.0,2.0,0.0,20000</code>
+      <code>2,2020-01-29,1.0,4.0,0.0,0.0,20000</code>
+      <code>3,2020-01-30,0.0,5.0,1.0,1.0,20000</code>
+      <code>4,2020-01-31,2.0,8.0,1.0,3.0,20000</code>
+    </fieldset> -->
+    <p class="model__description">Tendo essas informações em mãos, aplicaremos as técnicas que desenvolvemos e
+      retornaremos tudo isso pra você em um Jupyter notebook que terá todos os
+      <span class="tooltip__text">gráficos e códigos<span class="tooltip">Você pode optar por receber ambos ou apenas os gráficos</span></span>
+      que geramos, para que você possa fazer suas próprias análises e contribuir no modelamento da pandemia que estiver estudando.</span>
+    <h3 class="model__subtitle">Como ter seu modelo gerado?</h3>
+    <img class="model__process" src="/images/model-process.png" alt="Explicação de como é o processo de geração do modelo">
+    <h3 class="model__subtitle">Tente agora mesmo!</h3>
+    <div class="model__dropzone" id="model-dropzone">
+      <div class="model__dropform">
+        <svg class="model__icon" xmlns="http://www.w3.org/2000/svg" width="50" height="43" viewBox="0 0 50 43"><path d="M48.4 26.5c-.9 0-1.7.7-1.7 1.7v11.6h-43.3v-11.6c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v13.2c0 .9.7 1.7 1.7 1.7h46.7c.9 0 1.7-.7 1.7-1.7v-13.2c0-1-.7-1.7-1.7-1.7zm-24.5 6.1c.3.3.8.5 1.2.5.4 0 .9-.2 1.2-.5l10-11.6c.7-.7.7-1.7 0-2.4s-1.7-.7-2.4 0l-7.1 8.3v-25.3c0-.9-.7-1.7-1.7-1.7s-1.7.7-1.7 1.7v25.3l-7.1-8.3c-.7-.7-1.7-.7-2.4 0s-.7 1.7 0 2.4l10 11.6z"></path></svg>
+        <div class="model__file">
+          <input type="file" id="model-file" accept=".csv" style="display: none;">
+          <label class="model__file__button" for="model-file"><strong>Escolha um arquivo</strong></label>
+          <p>&nbsp;ou arraste ele aqui</p>
+        </div>
+        <p class="model__file__name" id="model-file-name"></p>
+      </div>
+    </div>
+    <div class="model__send">
+      <fieldset class="model__formats" id="model-formats">
+        <legend>&nbsp;Formato de recebimento&nbsp;</legend>
+        <div class="model__format">
+          <input type="radio" id="model-jupyter" name="model-format" value="jupyter" checked>
+          <label for="model-jupyter">Jupyter notebook <span class="tooltip__icon"><span class="tooltip">Modelo interativo no Jupyter notebook</span></span></label>
+        </div>
+        <div class="model__format">
+          <input type="radio" id="model-pdf" name="model-format" value="pdf">
+          <label for="model-pdf">Jupyter notebook - PDF <span class="tooltip__icon"><span class="tooltip">Modelo em PDF do Jupyter notebook (inclui códigos e gráficos)</span></span></label>
+        </div>
+        <div class="model__format">
+          <input type="radio" id="model-reporty" name="model-format" value="report">
+          <label for="model-reporty">Jupyter notebook - Relatório <span class="tooltip__icon"><span class="tooltip">Modelo em PDF do Jupyter notebook (inclui apenas gráficos)</span></span></label>
+        </div>
+      </fieldset>
+      <div class="model__info">
+        <div class="model__email">
+          <label for="model-email">Email de recebimento</label>
+          <input class="input" type="email" id="model-email" name="model-email" placeholder="fulano.beltrano@provedor.com" required>
+        </div>
+        <button class="button button--dark button--squared" type="button" id="model-send">Gerar modelo</button>
+      </div>
+    </div>
+  </main>
+
+  <article class="maua">
+    <div class="maua__side">
+      <h3 class="maua__title">Instituto Mauá de Tecnologia</h3>
+      <p class="maua__description">O Instituto Mauá de Tecnologia - IMT, fundado em 11 de dezembro de 1961,
+        é uma entidade de direito privado - associação sem fins lucrativos - de utilidade pública, dedicada ao
+        ensino e à pesquisa científica e tecnológica, visando à formação de recursos humanos altamente qualificados
+        que contribuam para o desenvolvimento do País.</p>
+    </div>
+    <a href="https://maua.br">
+      <img class="maua__image" src="images/maua-entrance.jpg" alt="Foto da entrada do Instituto Mauá de Tecnologia">
+    </a>
+  </article>
+
+  <article class="authors">
+    <h3 class="authors__title">Autores</h3>
+    <div class="authors__container">
+      <a class="author" href="https://github.com/vparro">
+        <img src="/images/vanderlei-parro.png" alt="Foto de perfil de Vanderlei Parro" class="author__image">
+        <div class="author__description">
+          <h1 class="author__name">Vanderlei Parro</h1>
+          <h3 class="author__role">Modelagem Epidemiologica</h3>
+        </div>
+      </a>
+      <a class="author" href="https://github.com/lafetamarcelo">
+        <img src="/images/marcelo-lafeta.png" alt="Foto de perfil de Vanderlei Parro" class="author__image">
+        <div class="author__description">
+          <h1 class="author__name">Marcelo Lima</h1>
+          <h3 class="author__role">Machine Learning</h3>
+        </div>
+      </a>
+      <a class="author" href="https://github.com/feippolito">
+        <img src="/images/felipe-ippolito.png" alt="Foto de perfil de Vanderlei Parro" class="author__image">
+        <div class="author__description">
+          <h1 class="author__name">Felipe Ippolito</h1>
+          <h3 class="author__role">Machine Learning</h3>
+        </div>
+      </a>
+      <a class="author" href="https://github.com/Kaisen-san">
+        <img src="/images/felipe-andrade.png" alt="Foto de perfil de Vanderlei Parro" class="author__image">
+        <div class="author__description">
+          <h1 class="author__name">Felipe Andrade</h1>
+          <h3 class="author__role">Desenvolvedor Web</h3>
+        </div>
+      </a>
+    </div>
+  </article>
+
+  <footer class="project">
+    <div class="project__links">
+      <div class="project__links__container">
+        <h5 class="project__link__title">Sobre o projeto</h5>
+        <hr>
+        <a href="https://datastudio.google.com/embed/reporting/0b096305-086c-4379-89ea-9c40a1c73c12/page/gErTB" class="project__link">Dashboard</a>
+        <a href="https://github.com/lafetamarcelo/epidemicModels" class="project__link">GitHub</a>
+        <a href="https://epidemicmodels.readthedocs.io" class="project__link">Documentação</a>
+      </div>
+      <div class="project__links__container">
+        <h5 class="project__link__title">Pesquisas</h5>
+        <hr>
+        <a href="https://corot-contributions.readthedocs.io" class="project__link">CoRoT Contributions</a>
+        <a href="https://www.linkedin.com/feed/update/urn:li:activity:6669026129640255488" class="project__link">Giant Magellan Telescope</a>
+      </div>
+      <div class="project__links__container">
+        <h5 class="project__link__title">Outros links</h5>
+        <hr>
+        <a href="https://www.youtube.com/channel/UCUtWl9yb-vtyXYyC1tO-btQ" class="project__link">Canal no YouTube</a>
+        <a href="https://discord.gg/EenaYE5" class="project__link">Grupo no Discord</a>
+      </div>
+    </div>
+    <div class="project__copyright">
+      <p>Desenvolvido por <a href="https://github.com/Kaisen-san"><strong>Felipe Andrade</strong></a></p>
+    </div>
+  </footer>
+
+  <div class="modal" id="modal">
+    <div class="modal__content">
+      <span class="modal__close">&times;</span>
+      <div class="modal__loader"></div>
+      <p class="modal__icon"></p>
+      <p class="modal__message"></p>
+    </div>
+  </div>
+
+  <script src="main.js" defer></script>
 </body>
+
 </html>
