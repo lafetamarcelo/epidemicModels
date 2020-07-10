@@ -11,7 +11,7 @@ import numpy as np
 import pandas as pd
 
 from models import *
-from email  import *
+from email_func import *
 
 from datetime import datetime, timedelta
 from google.cloud import bigquery, tasks_v2
@@ -200,12 +200,12 @@ class process_user_file(Resource):
     #
     try:
       if user_output_type == "jupyter":
-        email.do_main(user_table_id)
-      elif user_output_type == "pdf":
-        pass
-      elif user_output_type == "report":
-        pass
-    except:
+        email_func.do_main(user_table_id)
+      # elif user_output_type == "pdf":
+      #   pass
+      # elif user_output_type == "report":
+      #   pass
+    except Exception as e:
       response.status_code = 500
       print("Exception at Updating user log table {}".format(e))
       response.response = json.dumps({
