@@ -1,5 +1,8 @@
 dispatch:
   
+  - url: "epidemicapp-280600.rj.r.appspot.com/visual-data/*"
+    service: visual-data
+
   - url: "epidemicapp-280600.rj.r.appspot.com/user_process/*"
     service: user-process
 

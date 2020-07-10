@@ -21,7 +21,7 @@ CREDENTIALS = service_account.Credentials.from_service_account_file(JSON_KEY_PAT
 # Support functions
 
 def validate_email(email):
-  regex = '^[a-z0-9]+[._]?[a-z0-9]+[@]\w+[.]\w+(\.\w+)*$'
+  regex = '^\w+[._]?\w+([._]?\w*)*[@]\w+[.]\w+([.]\w+)*$'
   if re.search(regex, email.lower()): 
     return True
   return False
@@ -72,17 +72,17 @@ class validate_content(Resource):
       # Getting output type
       output_type = request.form["output"]
     except Exception as e:
-      response.response = json.dumps({"erro": "No email/output", "detail": "{}".format(e)})
+      response.response = json.dumps({"erro": "Email inválido.", "detail": "{}".format(e)})
       return response
       
     # Getting file content
     try:
       f = request.files['file']
       if not f:
-        response.response = json.dumps({"erro": "No file"})
+        response.response = json.dumps({"erro": "Sem arquivo."})
         return response
     except Exception as e:
-      response.response = json.dumps({"erro": "No file", "detail": "{}".format(e)})
+      response.response = json.dumps({"erro": "Sem arquivo.", "detail": "{}".format(e)})
       return response
     
     try:
@@ -91,25 +91,25 @@ class validate_content(Resource):
       df = pd.read_csv(stream, sep=",")
       # (1) check -> If enough data
       if len(df) < 8:
-        response.response = json.dumps({"erro": "Not enought lines on file"})
+        response.response = json.dumps({"erro": "Arquivo com poucas amostras."})
         return response
       # (2) check -> If columns has size
       if len(df.columns) != len(DEF_COLUMNS):
         response.response = json.dumps({
-          "erro": "Columns size does not match", 
+          "erro": "Tamanho das colunas inválido.", 
           "details": "File has {} columns...".format(len(df.columns))})
         return response
       # (3) check -> If columns names does not match
       if len(df.columns) != len(DEF_COLUMNS):
         response.response = json.dumps({
-          "erro": "Columns size does not match",
+          "erro": "Tamanho das colunas inválido.",
           "details": "File has {} columns...".format(len(df.columns))})
         return response
       
       # Email checks
       # (1) check -> If @ in email
       if not validate_email(email):
-        response.response = json.dumps({"erro": "Invalid email"})
+        response.response = json.dumps({"erro": "Email inválido."})
         return response
 
       # (2) check -> If Tiago Bolinha
@@ -120,7 +120,7 @@ class validate_content(Resource):
       # Output checks
       # (1) check -> If output type match options
       if output_type not in ["jupyter", "pdf", "report"]:
-        response.response = json.dumps({"erro": "O tipo de saída não foi informado. Por favor informe o tipo de saída."})
+        response.response = json.dumps({"erro": "Informe o tipo de saída."})
         return response
 
       response.response = json.dumps({"OK": True})
@@ -166,7 +166,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     data = data[DEF_COLUMNS[1:]]
   except Exception as e:
     return 500, json.dumps({
-      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Tente mais tarde!",
       "details": "Error at Big Query Client creating => {}".format(e)})
   #
   #
@@ -176,7 +176,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     job.result() # Wait for the job to complete.
   except Exception as e:
     return 500, json.dumps({
-      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Tente mais tarde!",
       "details": "Error at Big Query loading job => {}".format(e)})
   #
   #
@@ -186,7 +186,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     job.result() # Wait for the job to complete.
   except Exception as e:
     return 500, json.dumps({
-      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Tente mais tarde!",
       "details": "Error at Big Query users log loading job => {}".format(e)})
   #
   #
@@ -195,7 +195,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     response_ = queue_task(email, table_id, output_type)
   except Exception as e:
     return 500, json.dumps({
-      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Tente mais tarde!",
       "details": "Error at queue task including => {}".format(e)})
   ###
   #   -> 

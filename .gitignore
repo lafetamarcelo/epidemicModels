@@ -20,6 +20,7 @@ DE_interactive*
 /app/services/update-countries/keys/
 /app/services/upload-file/keys/
 /app/services/user-process/keys/
+/app/services/visual-data/keys/
 
 /web/content/
 /app/gkeys
