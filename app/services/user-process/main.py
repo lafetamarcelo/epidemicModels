@@ -11,6 +11,7 @@ import numpy as np
 import pandas as pd
 
 from models import *
+from email  import *
 
 from datetime import datetime, timedelta
 from google.cloud import bigquery, tasks_v2
@@ -194,13 +195,27 @@ class process_user_file(Resource):
         "exception": "Exception -> {}".format(e)})
       return response
 
-    ## Build email task for user
+    ## Send results email
     #
     #
+    try:
+      if user_output_type == "jupyter":
+        email.do_main(user_table_id)
+      elif user_output_type == "pdf":
+        pass
+      elif user_output_type == "report":
+        pass
+    except:
+      response.status_code = 500
+      print("Exception at Updating user log table {}".format(e))
+      response.response = json.dumps({
+        "erro": "Erro interno do servidor. Por favor tente mais tarde!",
+        "details": "Error updating the user log table...",
+        "exception": "Exception -> {}".format(e)})
+      return response
 
     response.response = json.dumps({"OK": True, "details": "Task successful."})
     response.status_code = 200
-
     return response
 
 # Append each URL resource
