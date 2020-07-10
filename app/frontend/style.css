@@ -575,11 +575,14 @@ body {
   :root {
     font-size: 24px;
   }
+  .tooltip__icon {
+    line-height: 1.2rem;
+  }
   .hero__logo {
     transform: translateX(-100%);
   }
   .hero__header .button {
-    transform: translateX(100%);
+    transform: translateX(75%);
   }
   .hero__header {
     justify-content: space-evenly;
