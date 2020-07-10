@@ -6,6 +6,7 @@ SIRpd
 estimation_summaries
 *.p
 *.csv
+*.geojson
 .DS_Store
 .pytest_cache/
 .vscode/

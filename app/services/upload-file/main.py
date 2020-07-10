@@ -1,6 +1,7 @@
 from flask                import Flask, request, jsonify, Response
 from flask_restful        import Resource, Api
 from flask_request_params import bind_request_params
+from flask_cors           import CORS
 
 import re
 import io
@@ -45,6 +46,7 @@ QUEUE_SERVICE_URL = "https://user-process-dot-epidemicapp-280600.rj.r.appspot.co
 
 # Initialize the restful app
 app = Flask(__name__)
+CORS(app)
 api = Api(app)
 app.before_request(bind_request_params)
 
@@ -164,7 +166,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     data = data[DEF_COLUMNS[1:]]
   except Exception as e:
     return 500, json.dumps({
-      "error": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
       "details": "Error at Big Query Client creating => {}".format(e)})
   #
   #
@@ -174,7 +176,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     job.result() # Wait for the job to complete.
   except Exception as e:
     return 500, json.dumps({
-      "error": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
       "details": "Error at Big Query loading job => {}".format(e)})
   #
   #
@@ -184,7 +186,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     job.result() # Wait for the job to complete.
   except Exception as e:
     return 500, json.dumps({
-      "error": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
       "details": "Error at Big Query users log loading job => {}".format(e)})
   #
   #
@@ -193,7 +195,7 @@ def upload_data_content(data=None, email=None, output_type=None):
     response_ = queue_task(email, table_id, output_type)
   except Exception as e:
     return 500, json.dumps({
-      "error": "Erro interno do servidor. Por favor tente mais tarde!",
+      "erro": "Erro interno do servidor. Por favor tente mais tarde!",
       "details": "Error at queue task including => {}".format(e)})
   ###
   #   -> 

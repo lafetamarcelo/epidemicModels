@@ -20,3 +20,4 @@ ipython
 bokeh
 setuptools
 pyarrow
+flask-cors
