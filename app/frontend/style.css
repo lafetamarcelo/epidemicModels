@@ -275,7 +275,7 @@ input {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  padding: 4em;
+  padding: 4em 4em 5em;
   background-color: #f3f6f6;
 }
 .authors__title {
@@ -587,8 +587,8 @@ body {
   .hero__header {
     justify-content: space-evenly;
   }
-  .hero__body {
-    align-items: center;
+  .hero__side {
+    padding-top: 1em;
   }
   .hero__image {
     width: 400px;
