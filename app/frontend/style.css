@@ -356,12 +356,13 @@ body {
 }
 .hero__logo {
   width: 150px;
+  height: 100%;
 }
 .hero__title {
   font-family: 'Roboto Slab', serif;
   font-size: 5rem;
   letter-spacing: 1.5px;
-  margin-bottom: .5em;
+  margin: .25em 0 .5em;
 }
 .hero__body {
   display: flex;
