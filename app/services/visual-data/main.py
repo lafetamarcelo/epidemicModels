@@ -69,7 +69,26 @@ class visual_real_data(Resource):
     return response
 
 
+class state_parameters(Resource):
+
+  def get(self):
+
+    try:
+      sql = "SELECT * from states.last_parameters;"
+
+      bigquery_client = bigquery.Client(project=PROJECT_ID, credentials=CREDENTIALS)
+      df = bigquery_client.query(sql).to_dataframe()
+
+      response = df.to_dict()
+    except Exception as e:
+      response = {
+        "erro": "Internal server error...", 
+        "details": "{}".format(e)
+      }
+    return response
+
 # Append each URL resource
+api.add_resource(state_parameters, '/state_parameters')
 api.add_resource(visual_predictions, '/predictions')
 api.add_resource(visual_real_data, '/real_data')
 

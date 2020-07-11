@@ -1,9 +1,12 @@
+
+from google.oauth2 import service_account
+from nbconvert.preprocessors import ExecutePreprocessor
+
+import os
+import base64
 import nbformat as nbf
 import pandas_gbq
 import pandas as pd
-from google.oauth2 import service_account
-from nbconvert.preprocessors import ExecutePreprocessor
-import os
 
 # email 
 import smtplib 
@@ -11,13 +14,18 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText 
 from email.mime.base import MIMEBase 
 from email import encoders 
-
+from string import Template
 from datetime import datetime
-import base64
+
+DEBUG = True
 
 fromaddr = 'epidemicmodels.covid@gmail.com'
 password = 'tgpasdlxgugvvopc'
-credential_path = './keys/epidemicapp-62d0d471b86f.json'
+
+if DEBUG:
+  credential_path = '../keys/epidemicapp-62d0d471b86f.json'
+else:
+  credential_path = './keys/epidemicapp-62d0d471b86f.json'
 
 email_subject = "Aqui estão os resultados!"
 email_body  = "Predições EpidemicModels"
@@ -26,6 +34,8 @@ nb_filename = "ResultadosEpidemicModels.ipynb"
 project_id = "epidemicapp-280600"
 
 RUN_NOTEBOOK = False
+
+
 
 def send_email(nb, toaddr):
   msg = MIMEMultipart()
@@ -51,35 +61,25 @@ def send_email(nb, toaddr):
 
 def get_data(table_id):
 
-  credentials = service_account.Credentials.from_service_account_file(    
-                                  credential_path)
+  credentials = service_account.Credentials.from_service_account_file(credential_path)
   sql_command = f'SELECT * FROM `users_log.estimation_log_parameters` WHERE table_id = "{table_id}"'
-  data = pandas_gbq.read_gbq(sql_command,
-                             project_id=project_id,  credentials=credentials )
+  data = pandas_gbq.read_gbq(sql_command,project_id=project_id,  credentials=credentials )
 
   return data
-
-def run_notebook(nb):
-
-  nb = nbf.reads(nb, as_version = 4)
-         
-  proc = ExecutePreprocessor(timeout=600, kernel_name='python3')
-  proc.allow_errors = True
-  proc.preprocess(nb, {'metadata': {'path': '/'}})
-
-  nb = nbf.writes(nb)
-
-  return nb
 
 def edit_notebook(nb,user_data, user_id):
 
   Ro, D   = user_data['Ro'][0], user_data['D'][0]
   mu, pop = user_data['mu'][0], user_data['pop'][0]
-
-  nb = edit_string(nb, 'Ro'     , Ro,  True)
-  nb = edit_string(nb, 'D'      , D ,  True)
-  nb = edit_string(nb, 'mu'     , mu,  True)
-  nb = edit_string(nb, 'pop'    , pop, True)
+  r = 1 / D
+  beta = Ro * r / pop
+  
+  nb = edit_string(nb, 'Ro'     , Ro,   True)
+  nb = edit_string(nb, 'D'      , D ,   True)
+  nb = edit_string(nb, 'mu'     , mu,   True)
+  nb = edit_string(nb, 'pop'    , pop,  True)
+  nb = edit_string(nb, 'beta'   , beta, True)
+  nb = edit_string(nb, 'r'      , r,    True)
   nb = edit_string(nb, 'user_id', user_id, False)
 
   return nb
@@ -96,21 +96,26 @@ def edit_string(nb, search_for, replace_with, format_num):
 
   return nb
 
-def do_main(table_id):
+def do_main(table_id, send_email=True):
   data = get_data(table_id)
   ltable_id = table_id.split('.', 1)
   user_id = ltable_id[-1]
-
-  nb = open('./email_func/nb_model.ipynb').read()
+  
+  if DEBUG:
+    nb = open("./nb_model.ipynb").read()
+  else:
+    nb = open('./email_func/nb_model.ipynb').read()
+  
   nb = edit_notebook(nb, data, user_id)
-  if RUN_NOTEBOOK:
-    nb = run_notebook(nb)
   toaddr = data['email'][0]
-  now = datetime.now()
-
-  status = send_email(nb, toaddr)
+  
+  if send_email:
+    status = send_email(nb, toaddr)
+  else:
+    with open('./test_notebook.ipynb', 'w', encoding='utf-8') as f:
+      nbf.write(nbf.reads(nb, as_version=4), f)
   
 
 if __name__ == '__main__':
   table_id = 'users_data.sp_teste_20200706213733897154'   # test id
-  do_main(table_id)
+  do_main(table_id, send_email=False)

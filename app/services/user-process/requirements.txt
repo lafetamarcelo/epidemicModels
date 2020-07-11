@@ -23,5 +23,3 @@ pyarrow
 secure-smtplib
 nbconvert
 nbformat
-email
-base64
