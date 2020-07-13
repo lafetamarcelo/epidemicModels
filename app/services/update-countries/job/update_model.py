@@ -179,11 +179,11 @@ def train_country_pipe(country=None):
       sir_model = ss.SIR(pop=N, focus=["S", "I", "R", "D"], verbose=False)
       # Adjust the parameters
       sir_model.fit(dataset, td[:i],
-                    search_pop=True,
-                    Ro_sens=[0.8, 15], 
-                    D_sens=[5, 60],
-                    mu_sens = [0.1, 0.001],
-                    pop_sens=[0.01,0.00005])
+                    search_pop= True,
+                    Ro_sens   = [0.8, 15], 
+                    D_sens    = [5, 60],
+                    mu_sens   = [0.001, 0.1],
+                    pop_sens  = [0.00005, 0.01])
       # Save the estimated parameters
       saved_param['Ro'].append(sir_model.parameters[0])
       saved_param['D'].append(sir_model.parameters[1])
