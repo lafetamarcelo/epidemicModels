@@ -3,8 +3,8 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to IMT Epidemic Models's documentation!
-===============================================
+Welcome to Epidemic Models' documentation!
+==========================================
 
 |docs| |last commit| |most used lang| |join discord| 
 
@@ -18,7 +18,7 @@ entendimento do conteúdo apresentado.
    <h3 style="text-align:center;">
       <iframe 
          width="600" 
-         height="450"
+         height="350"
          scrolling="no"
          src="https://datastudio.google.com/embed/reporting/0b096305-086c-4379-89ea-9c40a1c73c12/page/gErTB" 
          frameborder="0" 
@@ -271,18 +271,6 @@ Nestas figuras é mostrado o erro do modelo ao tentar prever o dia de pico, para
          width="690"
       ></iframe>
    </h3>
-
-
-Modelos COVID-19 Brasil |:br:|
-==============================
-
-.. admonition:: And, by the way...
-
-   Em construção...
-
-.. raw:: html
-
-   <br><br><br>
 
 
 Autores
