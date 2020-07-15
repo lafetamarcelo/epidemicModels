@@ -36,7 +36,7 @@ Alguns resultados do século XX...
 =================================
 
 Para exemplificar o desempenho do conteúdo apresentado, foi feita uma análise com dados do século 
-passado no Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos é possível 
+passado do Reino Unido (United Kingdom), e utilizando os modelos aqui desenvolvidos é possível 
 obter previsões do comportamento dos dados. Essas previsões, juntamente com os dados reais, 
 estão apresentadas na figura a seguir: 
 
