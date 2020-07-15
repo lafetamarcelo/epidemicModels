@@ -29,7 +29,7 @@ entendimento do conteúdo apresentado.
 
 .. raw:: html
 
-   <br><br><br>
+   <br>
 
 
 Alguns resultados do século XX...
@@ -61,7 +61,7 @@ durante os períodos de epidemias do Reino Unido:
 
 .. raw:: html
 
-   <br><br><br>
+   <br>
 
 
 Previsões da COVID-19
@@ -91,7 +91,7 @@ foi passando e mais dados foram utilizados para a aprendizagem:
          scrolling="no"
          style="border:none;"
          src="sliders.html"
-         height="530"
+         height="460"
          width="690"
       ></iframe>
    </h3>
@@ -144,7 +144,7 @@ caso os valores ajustados para cada país foram:
    </h3>
 
 
-**Caso queira tentar ajustar os parâmetros você mesmo, é possível clicando no botão abaixo!**
+**Caso queira tentar ajustar os parâmetros você mesmo, basta clicar no botão abaixo!**
 
 .. raw:: html
 
@@ -188,7 +188,7 @@ caso os valores ajustados para cada país foram:
 
 .. raw:: html
 
-   <br><br><br>
+   <br>
 
 
 Determinação do :math:`R_0`
@@ -215,7 +215,7 @@ parâmetro :math:`R_0` a medida que os dias da pandemia passaram:
          scrolling="no"
          style="border:none;"
          src="ro_results.html"
-         height="580"
+         height="490"
          width="690"
       ></iframe>
    </h3>
@@ -244,7 +244,7 @@ e o valor estimado por nosso modelo a cada dia da epidemia:
          scrolling="no"
          style="border:none;"
          src="public_results.html"
-         height="580"
+         height="490"
          width="690"
       ></iframe>
    </h3>
@@ -267,7 +267,7 @@ Nestas figuras é mostrado o erro do modelo ao tentar prever o dia de pico, para
          id="ChinaInfiFrame"
          style="border:none;"
          src="peak_results.html"
-         height="580"
+         height="490"
          width="690"
       ></iframe>
    </h3>
@@ -282,7 +282,7 @@ Autores
       <iframe 
          src="authors.html"
          width="570px"
-         height="800px"
+         height="760px"
          style="border:none;">
       </iframe>
    </h3>
