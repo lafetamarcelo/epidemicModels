@@ -707,6 +707,7 @@ body {
   }
   .model__title {
     font-size: 2.5rem;
+    text-align: center;
   }
   .model__subtitle:first-of-type {
     display: none;
@@ -735,6 +736,12 @@ body {
   }
   .maua {
     padding: 3em 2em;
+  }
+  .maua__title {
+    font-size: 1.5rem;
+  }
+  .maua__description {
+    font-size: 1rem;
   }
   .maua__image {
     width: 300px;
