@@ -58,6 +58,7 @@ input::placeholder {
 table {
   border-collapse: collapse;
   margin-bottom: 2em;
+  font-size: .9rem;
 }
 caption {
   font-weight: 700;
@@ -71,7 +72,7 @@ th,
 td {
   text-align: center;
   border: 1px solid #ccc;
-  padding: .5em 1em;
+  padding: .5em .5em;
   white-space: nowrap;
 }
 fieldset,
@@ -637,8 +638,8 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  td {
-    padding: .5em .5em;
+  table {
+    display: none;
   }
   .maua {
     flex-direction: column;
@@ -664,6 +665,9 @@ body {
     padding-top: 0;
     margin-right: 0;
   }
+  .model__process {
+    width: 650px;
+  }
   .project__link__title {
     font-size: 1.75rem;
   }
@@ -673,9 +677,6 @@ body {
 }
 
 @media screen and (max-width: 425px) {
-  table {
-    display: none;
-  }
   .tooltip {
     right: 0;
   }
