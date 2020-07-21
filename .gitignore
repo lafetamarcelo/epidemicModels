@@ -29,3 +29,7 @@ state_pop.yaml
 /local_files/
 *.log
 
+app/frontend/.firebase
+
+Untitled*
+*.eps

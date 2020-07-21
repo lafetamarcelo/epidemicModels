@@ -1,0 +1,20 @@
+\begin{tabular}{cccccccccccc}
+\toprule
+{} &   AC &   BA &   MT &   MG &   AL &   RS &   DF &   RO &   PA &   RR &   MS \\
+\midrule
+R\textasciicircum 2 & 0.99 & 0.98 & 0.98 & 0.97 & 0.97 & 0.96 & 0.96 & 0.95 & 0.95 & 0.95 & 0.94 \\
+\bottomrule
+\end{tabular}
+
+space{5mm} 
+
+\begin{tabular}{ccccccccccccc}
+\toprule
+{} &   MA &   AP &   CE &   PR &   PB &   SP &   PE &   ES &   AM &   PI &   RN &   RJ \\
+\midrule
+R\textasciicircum 2 & 0.94 & 0.91 & 0.91 & 0.90 & 0.88 & 0.86 & 0.83 & 0.82 & 0.82 & 0.67 & 0.63 & 0.24 \\
+\bottomrule
+\end{tabular}
+
+space{5mm} 
+
