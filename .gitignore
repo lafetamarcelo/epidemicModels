@@ -33,3 +33,6 @@ app/frontend/.firebase
 
 Untitled*
 *.eps
+*.png
+/paper_results/models
+*.geojson
