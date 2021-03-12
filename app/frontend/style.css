@@ -85,6 +85,7 @@ input {
 
 /*** BUTTON */
 .button {
+  width: max-content;
   border: 2px solid #2980b9;
   border-radius: 2em;
   padding: 1em 2em;
@@ -107,14 +108,29 @@ input {
 .button--dark {
   background-color: #2980b9;
   color: #fff;
-  transition: all .2s ease-in-out;
 }
 .button--dark:hover {
   border: 2px solid #084973;
   background-color: #084973;
 }
+.button--light {
+  border: 2px solid #fff;
+}
+.button--light:hover {
+  border: 2px solid #fff;
+  background-color: #fff;
+  color: var(--text-clr);
+}
 .button--squared {
   border-radius: 1em;
+}
+.button--shrink {
+}
+.button--shrink:hover {
+  transform: none;
+}
+.button--shrink:active {
+  transform: scale(.95);
 }
 
 /*** INPUT */
@@ -252,6 +268,9 @@ input {
   color: #fff;
 }
 .maua__side {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
   max-width: 575px;
   margin-right: 4em;
 }
@@ -260,7 +279,7 @@ input {
   margin-bottom: 1.25em;
 }
 .maua__description {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   text-align: justify;
   letter-spacing: .5px;
   line-height: 1.4em;
@@ -268,6 +287,9 @@ input {
 .maua__image {
   width: 400px;
   height: 100%;
+}
+.maua .button {
+  margin-top: 1.5em;
 }
 
 /*** AUTHORS */
@@ -293,18 +315,19 @@ input {
   border-radius: 1em;
   display: flex;
   align-items: center;
-  justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, .15);
   color: #333;
   background-color: #fff;
-  padding: 1em;
-  transition: background-color .3s ease-in-out;
+  padding: 1em 1em 1em 1.5em;
+  transition: background-color .3s ease-in-out,
+              transform .3s ease-in-out;
 }
 .author:hover {
   background-color: #eee;
 }
 .author:active {
   background-color: #ddd;
+  transform: scale(.95);
 }
 .author__description {
   display: flex;
@@ -504,12 +527,6 @@ body {
   width: 100%;
   box-shadow: none;
 }
-.model__info .button:hover {
-  transform: none;
-}
-.model__info .button:active {
-  transform: translateY(-.25em);
-}
 .model__email {
   display: flex;
   flex-direction: column;
@@ -545,7 +562,7 @@ body {
   margin-right: 0;
 }
 .project__link__title {
-  font-size: 2rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: .25em;
 }
@@ -553,7 +570,7 @@ body {
   margin-bottom: 2em;
 }
 .project__link {
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   margin-bottom: 1.5em;
 }
 .project__link:hover {
@@ -575,10 +592,7 @@ body {
 /* QUERIES */
 @media screen and (min-width: 1600px) {
   :root {
-    font-size: 24px;
-  }
-  table {
-    font-size: .75rem;
+    font-size: 18px;
   }
   .tooltip__icon {
     line-height: 1.2rem;
@@ -586,20 +600,20 @@ body {
   .hero__logo {
     transform: translateX(-100%);
   }
-  .hero__header .button {
-    transform: translateX(75%);
+  .hero__header .button--shrink {
+    transform: translateX(50%);
+  }
+  .hero__header .button--shrink:active {
+    transform: translateX(50%) scale(.95);
   }
   .hero__header {
     justify-content: space-evenly;
-  }
-  .hero__side {
-    padding-top: 1em;
   }
   .hero__image {
     width: 400px;
   }
   .model__process {
-    width: 1000px;
+    width: 900px;
   }
   .model__dropzone {
     width: 825px;
@@ -615,25 +629,18 @@ body {
     max-width: 700px;
   }
   .maua__image {
-    width: 600px;
+    width: 500px;
+  }
+  .authors__container {
+    grid-template-columns: 25em 25em;
+  }
+  .author__role {
+    font-size: 1rem;
   }
   .modal {
     width: 600px;
     height: 300px;
     margin: calc(50vh - 300px) calc(50vw - 600px);
-  }
-  .authors__container {
-    grid-template-columns: 25em 25em;
-  }
-  .author__image {
-    width: 150px;
-    height: 170px;
-  }
-  .author__name {
-    font-size: 1.75rem;
-  }
-  .author__role {
-    font-size: 1.15rem;
   }
 }
 
@@ -659,9 +666,10 @@ body {
   }
   .maua__title {
     font-size: 2rem;
+    margin: 0 auto 1.25em;
   }
-  .maua__description {
-    margin-bottom: 1em;
+  .maua .button {
+    margin: 1.5em auto;
   }
   .hero__title {
     font-size: 4rem;
@@ -676,6 +684,9 @@ body {
   }
   .model__process {
     width: 650px;
+  }
+  .authors__container {
+    grid-gap: 2em;
   }
   .project__link__title {
     font-size: 1.75rem;
@@ -748,6 +759,7 @@ body {
   }
   .authors__container {
     grid-template-columns: 18em;
+    grid-gap: 3em;
   }
   .project__links {
     flex-direction: column;
